@@ -14,14 +14,14 @@
         box-shadow: 0 9px 20px rgba(46, 35, 94, .07);
     }
 
-    #tbl_reseller th:nth-child(1),
-    #tbl_reseller td:nth-child(1),
-    #tbl_reseller th:nth-child(4),
-    #tbl_reseller td:nth-child(4),
-    #tbl_reseller th:nth-child(5),
-    #tbl_reseller td:nth-child(5),
-    #tbl_reseller th:nth-child(6),
-    #tbl_reseller td:nth-child(6) {
+    #tbl_request th:nth-child(1),
+    #tbl_request td:nth-child(1),
+    #tbl_request th:nth-child(4),
+    #tbl_request td:nth-child(4),
+    #tbl_request th:nth-child(5),
+    #tbl_request td:nth-child(5),
+    #tbl_request th:nth-child(6),
+    #tbl_request td:nth-child(6) {
         text-align: center;
     }
 
@@ -37,11 +37,11 @@
                 <h5 class="table__title"><?= $card_title?></h5>
             </div>
             <div class="card-body mt-4">
-                <table class="table" width="100%" id="tbl_reseller">
+                <table class="table" width="100%" id="tbl_request">
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Reference No</th>
+                            <th>Application No</th>
                             <th>Complete Name</th>
                             <th>Application Date</th>
                             <th>Status</th>
@@ -59,7 +59,7 @@
 
 <script>
     $(document).ready(function() {
-        var tbl_reseller = $('#tbl_reseller').DataTable({
+        var tbl_request = $('#tbl_request').DataTable({
             language: {
                 search: '',
                 searchPlaceholder: "Search Here...",
@@ -69,20 +69,20 @@
                 }
             },
             "ordering": false,
-            // "serverSide": true,
-            // "processing": true,
-            // "deferRender": true,
-            // "ajax": {
-            //     "url": "<?= base_url('admin_portal/reseller_application/get_reseller_application')?>",
-            //     "type": "POST",
-            //     "data": function(d) {
-            //         d[csrf_token_name] = csrf_token_value;
-            //     },
-            //     "complete": function(res) {
-            //         csrf_token_name = res.responseJSON.csrf_token_name;
-            //         csrf_token_value = res.responseJSON.csrf_token_value;
-            //     }
-            // }
+            "serverSide": true,
+            "processing": true,
+            "deferRender": true,
+            "ajax": {
+                "url": "<?= base_url('admin_portal/member_application/get_member_application')?>",
+                "type": "POST",
+                "data": function(d) {
+                    d[csrf_token_name] = csrf_token_value;
+                },
+                "complete": function(res) {
+                    csrf_token_name = res.responseJSON.csrf_token_name;
+                    csrf_token_value = res.responseJSON.csrf_token_value;
+                }
+            }
         });
     });
 </script>

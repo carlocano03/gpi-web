@@ -230,7 +230,7 @@
                                 <li class="menu-item sidebar-menu-item <?= ($member) ? 'active' : '';?>">
                                     <a href="<?= base_url('admin/member-application');?>"
                                         class="<?= ($member) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">GPI Member <span class="badge bg-danger reseller_request"></span></div>
+                                        <div data-i18n="Account">GPI Member <span class="badge bg-danger member_request"></span></div>
                                     </a>
                                 </li>
                             </ul>
@@ -337,7 +337,7 @@
                                 <li class="menu-item sidebar-menu-item <?= ($member) ? 'active' : '';?>">
                                     <a href="<?= base_url('admin/member-application');?>"
                                         class="<?= ($member) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">GPI Member</div>
+                                        <div data-i18n="Account">GPI Member <span class="badge bg-danger member_request"></span></div>
                                     </a>
                                 </li>
                                 <?php endif;?>

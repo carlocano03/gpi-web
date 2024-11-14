@@ -21,7 +21,7 @@
 
         <div class="d-flex align-items-center gap-2">
             <img src="<?php echo base_url('assets/images/dashboard/system.png'); ?>" alt="" style="width:32px" />
-            <h5 class="m-0 ms-2 fw-bold text-nowrap header-title">People's God's Initiative Portal</h5>
+            <h5 class="m-0 ms-2 fw-bold text-nowrap header-title">God's People's Initiative Portal</h5>
         </div>
 
         <div class="container d-flex justify-content-end">
