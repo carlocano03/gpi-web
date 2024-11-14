@@ -43,7 +43,7 @@
                                         alt="Scholars" />
                                 </div>
                                 <div class="flex flex-column">
-                                    <div class="custom-card__title" id="total_scholars">0</div>
+                                    <div class="custom-card__title" id="total_member">0</div>
                                     <div class="custom-card__sub-text">
                                         Total Member
                                     </div>
@@ -61,7 +61,7 @@
                                         alt="Approved" />
                                 </div>
                                 <div class="flex flex-column">
-                                    <div class="custom-card__title" id="total_application">0</div>
+                                    <div class="custom-card__title" id="active_member">0</div>
                                     <div class="custom-card__sub-text">
                                         Total Active Member
                                     </div>
@@ -79,7 +79,7 @@
                                         alt="Scholars" />
                                 </div>
                                 <div class="flex flex-column">
-                                    <div class="custom-card__title" id="total_approval">0</div>
+                                    <div class="custom-card__title" id="pending_application">0</div>
                                     <div class="custom-card__sub-text">
                                         Pending Application
                                     </div>
@@ -97,7 +97,7 @@
                                         alt="Scholars" />
                                 </div>
                                 <div class="flex flex-column">
-                                    <div class="custom-card__title" id="total_denied">0</div>
+                                    <div class="custom-card__title" id="inactive_member">0</div>
                                     <div class="custom-card__sub-text">
                                         Total Inactive Member
                                     </div>
@@ -234,10 +234,58 @@
             <!-- End of second column -->
         </div>
     </div>
-
 </div>
 
 <script>
+    function getDashboardCount() {
+        $.ajax({
+            url: "<?= base_url('admin_portal/main/getDashboardCount')?>",
+            method: "GET",
+            dataType: "json",
+            success: function(data) {
+                const countUpConfigs = [{
+                        elementId: 'total_member',
+                        targetValue: data.total_member,
+                    },
+                    {
+                        elementId: 'active_member',
+                        targetValue: data.active_member,
+                    },
+                    {
+                        elementId: 'pending_application',
+                        targetValue: data.pending_application,
+                    },
+                    {
+                        elementId: 'inactive_member',
+                        targetValue: data.inactive_member,
+                    }
+                ]; 
+
+                countUpConfigs.forEach((config) => {
+                    var countUp = new CountUp(config.elementId, 0, config
+                        .targetValue,
+                        0, 4, {
+                            duration: 3,
+                            useEasing: true,
+                            separator: ',',
+                        });
+
+                    if (!countUp.error) {
+                        countUp.start();
+                    } else {
+                        console.error("CountUp Error:", countUp.error);
+                    }
+                });
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        getDashboardCount();
+
+
+    });
+
     const data = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June'],
         datasets: [{

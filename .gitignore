@@ -32,6 +32,8 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 # htaccess
 .htaccess
+application.zip
+readme.zip
 
 # Config
 application/config/database.php

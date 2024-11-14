@@ -209,21 +209,32 @@ class Main extends MY_Controller
         $this->load->view('admin_portal/partial/_footer', $data);
     }
 
+    public function getDashboardCount() 
+    {
+        $total_member = $this->main_model->get_total_member();
+        $active_member = $this->main_model->get_member_count(0);
+        $inactive_member = $this->main_model->get_member_count(1);
+        $pending_application = $this->main_model->get_pending_application();
+
+        $output = [
+            'total_member' => number_format($total_member),
+            'active_member' => number_format($active_member),
+            'inactive_member' => number_format($inactive_member),
+            'pending_application' => number_format($pending_application),
+        ];
+
+        echo json_encode($output);
+    }
+
     public function get_sidebar_count()
     {
-        $reseller = $this->main_model->get_reseller_application();
-        $voucher = $this->main_model->get_voucher();
-        $pending_order = $this->main_model->get_orders_count();
+        $pending_application = $this->main_model->get_pending_application();
 
-        $application_request = $reseller;
-        $order_online = $pending_order;
+        $application_request = $pending_application;
 
         $output = array(
             'application_request' => $application_request,
-            'reseller_request' => $reseller,
-            'voucher_request' => $voucher,
-            'order_online' => $order_online,
-            'pending_orders' => $pending_order,
+            'member_request' => $pending_application,
         );
 
         echo json_encode($output);
@@ -266,5 +277,10 @@ class Main extends MY_Controller
         $output['message'] = $message;
         echo json_encode($output);
     }
+
+    public function page404()
+	{
+		$this->load->view('error404');
+	}
 
 }

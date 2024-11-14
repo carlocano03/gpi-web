@@ -22,24 +22,24 @@ class Main_model extends MY_Model
         $this->load->database();
     }
 
-    function get_reseller_application()
+    function get_total_member()
+    {
+        $query = $this->db->get('member_info');
+        return $query->num_rows();
+    }
+
+    function get_member_count($status)
+    {
+        $this->db->where('member_status', $status);
+        $this->db->where('status', 0);
+        $query = $this->db->get('member_info');
+        return $query->num_rows();
+    }
+
+    function get_pending_application()
     {
         $this->db->where('request_status', 'For Validation');
-        $query = $this->db->get('reseller_application');
-        return $query->num_rows();
-    }
-
-    function get_voucher()
-    {
-        $this->db->where('request_status', 'For Approval');
-        $query = $this->db->get('voucher');
-        return $query->num_rows();
-    }
-
-    function get_orders_count()
-    {   
-        $this->db->where('order_status', 'Pending');
-        $query = $this->db->get('order_details');
+        $query = $this->db->get('application_request');
         return $query->num_rows();
     }
     

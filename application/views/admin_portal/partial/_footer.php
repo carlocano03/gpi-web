@@ -141,30 +141,11 @@
                     $('.application_request').text('');
                 }
 
-                if (data.application_request > 0) {
-                    $('.reseller_request').text(data.reseller_request);
+                if (data.member_request > 0) {
+                    $('.member_request').text(data.member_request);
                 } else {
-                    $('.reseller_request').text('');
+                    $('.member_request').text('');
                 }
-
-                if (data.voucher_request > 0) {
-                    $('.voucher_request').text(data.voucher_request);
-                } else {
-                    $('.voucher_request').text('');
-                }
-
-                if (data.order_online > 0) {
-                    $('.order_online').text(data.order_online);
-                } else {
-                    $('.order_online').text('');
-                }
-
-                if (data.pending_orders > 0) {
-                    $('.pending_orders').text(data.pending_orders);
-                } else {
-                    $('.pending_orders').text('');
-                }
-                
             }
         });
     }
