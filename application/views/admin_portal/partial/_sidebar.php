@@ -3,10 +3,10 @@
     $settings = FALSE;
     $account_management = FALSE;
     $request = FALSE;
-    $reseller = FALSE;
+    $member = FALSE;
     $active_user = FALSE;
-    $reseller_account = FALSE;
-    $user_account = FALSE;
+    $active_member = FALSE;
+    $inactive_member = FALSE;
     $inventory = FALSE;
     $product_management = FALSE;
     $voucher = FALSE;
@@ -17,15 +17,15 @@
 
     if ($active_page == 'dashboard_page') {
         $dashboard = TRUE;
-    } elseif ($active_page == 'reseller_page') {
+    } elseif ($active_page == 'application_page') {
         $request = TRUE;
-        $reseller = TRUE;
-    } elseif ($active_page == 'reseller_account_page') {
+        $member = TRUE;
+    } elseif ($active_page == 'active_member_page') {
         $active_user = TRUE;
-        $reseller_account = TRUE;
-    } elseif ($active_page == 'user_account_page') {
+        $active_member = TRUE;
+    } elseif ($active_page == 'inactive_member_page') {
         $active_user = TRUE;
-        $user_account = TRUE;
+        $inactive_member = TRUE;
     } elseif ($active_page == 'product_page') {
         $inventory = TRUE;
         $product_management = TRUE;
@@ -55,7 +55,6 @@
     border-bottom: 1px solid #E4E7EB;
     padding: 2.3rem 0;
     border-right: 1px solid #E4E7EB;
-
 }
 
 .menu-link {
@@ -85,7 +84,7 @@
 
 
 .menu {
-    background: #000000 !important;
+    background: #344489 !important;
 }
 
 .sidebar-menu-header {
@@ -185,11 +184,11 @@
             <div class="app-brand demo">
                 <a href="<?= base_url('admin/dashboard');?>" class="app-brand-link">
                     <span class="app-brand-logo demo">
-                        <img src="<?= base_url('assets/images/home/shantal-logo.png');?>">
+                        <img src="<?= base_url('assets/images/logo-w-bg.jpg');?>">
                     </span>
                     <span class="app-brand-text demo menu-text fw-bold ms-2 side-bar-title fs-5">
-                        Shantals Beauty & <br>
-                        Wellness
+                        God's People's <br>
+                        Initiative
                     </span>
                 </a>
 
@@ -213,46 +212,6 @@
                         </a>
                     </li>
 
-                    <li class="menu-item ">
-                        <a href="<?= base_url('admin/voucher');?>"
-                            class="<?= ($voucher) ? 'menu-link-active' : '';?> menu-link">
-                            <i class="menu-icon tf-icons bi bi-ticket-detailed-fill"></i>
-                            <div data-i18n="Analytics">Voucher Request <span class="badge bg-danger voucher_request"></span></div>
-                        </a>
-                    </li>
-
-                    <!-- Online Orders -->
-                    <li class="menu-header  btn btn-toggle" data-bs-toggle="collapse" data-bs-target="#order"
-                        aria-expanded="<?= ($order) ? 'true' : '';?>">
-                        <div class="d-flex justify-content-between align-items-center ">
-                            <div class="d-flex align-items-center">
-                                <i class="menu-icon tf-icons bi bi-basket2-fill" style="color:#ffffff;"></i>
-                                <div class="menu-header-text">Order Online <span class="badge bg-danger order_online"></span></div>
-                            </div>
-                            <div class="icon-chevron"></div>
-                        </div>
-                    </li>
-
-                    <div>
-                        <div class="collapse <?= ($order) ? 'show' : '';?>" id="order" style="">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small sidebar-menu">
-                                <li class="menu-item sidebar-menu-item <?= ($pending) ? 'active' : '';?>">
-                                    <a href="<?= base_url('admin/pending-orders');?>"
-                                        class="<?= ($pending) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">Pending Orders <span class="badge bg-danger pending_orders"></span></div>
-                                    </a>
-                                </li>
-                                <li class="menu-item sidebar-menu-item <?= ($list_order) ? 'active' : '';?>">
-                                    <a href="<?= base_url('admin/list-orders');?>"
-                                        class="<?= ($list_order) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">List of Orders</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- End -->
-
                     <!-- Request -->
                     <li class="menu-header  btn btn-toggle" data-bs-toggle="collapse" data-bs-target="#request"
                         aria-expanded="<?= ($request) ? 'true' : '';?>">
@@ -268,10 +227,10 @@
                     <div>
                         <div class="collapse <?= ($request) ? 'show' : '';?>" id="request" style="">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small sidebar-menu">
-                                <li class="menu-item sidebar-menu-item <?= ($reseller) ? 'active' : '';?>">
-                                    <a href="<?= base_url('admin/reseller-application');?>"
-                                        class="<?= ($reseller) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">Resellers <span class="badge bg-danger reseller_request"></span></div>
+                                <li class="menu-item sidebar-menu-item <?= ($member) ? 'active' : '';?>">
+                                    <a href="<?= base_url('admin/member-application');?>"
+                                        class="<?= ($member) ? 'menu-link-active-2' : '';?> menu-link">
+                                        <div data-i18n="Account">GPI Member <span class="badge bg-danger reseller_request"></span></div>
                                     </a>
                                 </li>
                             </ul>
@@ -285,7 +244,7 @@
                         <div class="d-flex justify-content-between align-items-center ">
                             <div class="d-flex align-items-center">
                                 <i class="menu-icon tf-icons bi bi-people" style="color:#ffffff;"></i>
-                                <div class="menu-header-text">Active Users</div>
+                                <div class="menu-header-text">Active Member</div>
                             </div>
                             <div class="icon-chevron"></div>
                         </div>
@@ -294,43 +253,17 @@
                     <div>
                         <div class="collapse <?= ($active_user) ? 'show' : '';?>" id="user" style="">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small sidebar-menu">
-                                <li class="menu-item sidebar-menu-item <?= ($reseller_account) ? 'active' : '';?>">
-                                    <a href="<?= base_url('admin/reseller-account');?>"
-                                        class="<?= ($reseller_account) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">Resellers Account</div>
+                                <li class="menu-item sidebar-menu-item <?= ($active_member) ? 'active' : '';?>">
+                                    <a href="<?= base_url('admin/active-member');?>"
+                                        class="<?= ($active_member) ? 'menu-link-active-2' : '';?> menu-link">
+                                        <div data-i18n="Account">Active GPI Member</div>
                                     </a>
                                 </li>
 
-                                <li class="menu-item sidebar-menu-item <?= ($user_account) ? 'active' : '';?>">
-                                    <a href="<?= base_url('admin/user-account');?>"
-                                        class="<?= ($user_account) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">User Account</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- End -->
-
-                    <!-- Inventory management -->
-                    <li class="menu-header  btn btn-toggle" data-bs-toggle="collapse" data-bs-target="#inventory"
-                        aria-expanded="<?= ($inventory) ? 'true' : '';?>">
-                        <div class="d-flex justify-content-between align-items-center ">
-                            <div class="d-flex align-items-center">
-                                <i class="menu-icon tf-icons bi bi-box-seam-fill" style="color:#ffffff;"></i>
-                                <div class="menu-header-text">Inventory Management</div>
-                            </div>
-                            <div class="icon-chevron"></div>
-                        </div>
-                    </li>
-
-                    <div>
-                        <div class="collapse <?= ($inventory) ? 'show' : '';?>" id="inventory" style="">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small sidebar-menu">
-                                <li class="menu-item sidebar-menu-item <?= ($product_management) ? 'active' : '';?>">
-                                    <a href="<?= base_url('admin/product-management');?>"
-                                        class="<?= ($product_management) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">Product Management</div>
+                                <li class="menu-item sidebar-menu-item <?= ($inactive_member) ? 'active' : '';?>">
+                                    <a href="<?= base_url('admin/inactive-member');?>"
+                                        class="<?= ($inactive_member) ? 'menu-link-active-2' : '';?> menu-link">
+                                        <div data-i18n="Account">Inactive GPI Member</div>
                                     </a>
                                 </li>
                             </ul>
@@ -384,57 +317,8 @@
                         </a>
                     </li>
 
-                    <?php if (in_array(VOUCHER, $role_permissions)): ?>
-                    <li class="menu-item ">
-                        <a href="<?= base_url('admin/voucher');?>"
-                            class="<?= ($voucher) ? 'menu-link-active' : '';?> menu-link">
-                            <i class="menu-icon tf-icons bi bi-ticket-detailed-fill"></i>
-                            <div data-i18n="Analytics">Voucher Request <span class="badge bg-danger voucher_request"></span></div>
-                        </a>
-                    </li>
-                    <?php endif;?>
-
-                    <!-- Online Orders -->
-                    <?php if (array_intersect([PENDING_ORDER, ORDERS], $role_permissions)): ?>
-                    <li class="menu-header  btn btn-toggle" data-bs-toggle="collapse" data-bs-target="#order"
-                        aria-expanded="<?= ($order) ? 'true' : '';?>">
-                        <div class="d-flex justify-content-between align-items-center ">
-                            <div class="d-flex align-items-center">
-                                <i class="menu-icon tf-icons bi bi-basket2-fill" style="color:#ffffff;"></i>
-                                <div class="menu-header-text">Order Online <span class="badge bg-danger order_online"></span></div>
-                            </div>
-                            <div class="icon-chevron"></div>
-                        </div>
-                    </li>
-
-                    <div>
-                        <div class="collapse <?= ($order) ? 'show' : '';?>" id="order" style="">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small sidebar-menu">
-                                <?php if (in_array(PENDING_ORDER, $role_permissions)): ?>
-                                <li class="menu-item sidebar-menu-item <?= ($pending) ? 'active' : '';?>">
-                                    <a href="<?= base_url('admin/pending-orders');?>"
-                                        class="<?= ($pending) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">Pending Orders <span class="badge bg-danger pending_orders"></span></div>
-                                    </a>
-                                </li>
-                                <?php endif;?>
-
-                                <?php if (in_array(ORDERS, $role_permissions)): ?>
-                                <li class="menu-item sidebar-menu-item <?= ($list_order) ? 'active' : '';?>">
-                                    <a href="<?= base_url('admin/list-orders');?>"
-                                        class="<?= ($list_order) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">List of Orders</div>
-                                    </a>
-                                </li>
-                                <?php endif;?>
-                            </ul>
-                        </div>
-                    </div>
-                    <?php endif;?>
-                    <!-- End -->
-
                     <!-- Request -->
-                    <?php if (array_intersect([RESELLERS], $role_permissions)): ?>
+                    <?php if (array_intersect([APPLICATION_REQUEST], $role_permissions)): ?>
                     <li class="menu-header  btn btn-toggle" data-bs-toggle="collapse" data-bs-target="#request"
                         aria-expanded="<?= ($request) ? 'true' : '';?>">
                         <div class="d-flex justify-content-between align-items-center ">
@@ -449,11 +333,11 @@
                     <div>
                         <div class="collapse <?= ($request) ? 'show' : '';?>" id="request" style="">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small sidebar-menu">
-                                <?php if (in_array(RESELLERS, $role_permissions)): ?>
-                                <li class="menu-item sidebar-menu-item <?= ($reseller) ? 'active' : '';?>">
-                                    <a href="<?= base_url('admin/reseller-application');?>"
-                                        class="<?= ($reseller) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">Resellers <span class="badge bg-danger reseller_request"></span></div>
+                                <?php if (in_array(APPLICATION_REQUEST, $role_permissions)): ?>
+                                <li class="menu-item sidebar-menu-item <?= ($member) ? 'active' : '';?>">
+                                    <a href="<?= base_url('admin/member-application');?>"
+                                        class="<?= ($member) ? 'menu-link-active-2' : '';?> menu-link">
+                                        <div data-i18n="Account">GPI Member</div>
                                     </a>
                                 </li>
                                 <?php endif;?>
@@ -463,7 +347,7 @@
                     <?php endif;?>
                     <!-- End -->
 
-                    <?php if (array_intersect([RESELLER_ACCT, USER_ACCT], $role_permissions)): ?>
+                    <?php if (array_intersect([ACTIVE_MEMBER, INACTIVE_MEMBER], $role_permissions)): ?>
                     <!-- Active Users -->
                     <li class="menu-header  btn btn-toggle" data-bs-toggle="collapse" data-bs-target="#user"
                         aria-expanded="<?= ($active_user) ? 'true' : '';?>">
@@ -479,50 +363,20 @@
                     <div>
                         <div class="collapse <?= ($active_user) ? 'show' : '';?>" id="user" style="">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small sidebar-menu">
-                                <?php if (in_array(RESELLER_ACCT, $role_permissions)): ?>
-                                <li class="menu-item sidebar-menu-item <?= ($reseller_account) ? 'active' : '';?>">
-                                    <a href="<?= base_url('admin/reseller-account');?>"
-                                        class="<?= ($reseller_account) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">Resellers Account</div>
+                                <?php if (in_array(ACTIVE_MEMBER, $role_permissions)): ?>
+                                <li class="menu-item sidebar-menu-item <?= ($active_member) ? 'active' : '';?>">
+                                    <a href="<?= base_url('admin/active-member');?>"
+                                        class="<?= ($active_member) ? 'menu-link-active-2' : '';?> menu-link">
+                                        <div data-i18n="Account">Active GPI Member</div>
                                     </a>
                                 </li>
                                 <?php endif;?>
 
-                                <?php if (in_array(USER_ACCT, $role_permissions)): ?>
-                                <li class="menu-item sidebar-menu-item <?= ($user_account) ? 'active' : '';?>">
+                                <?php if (in_array(INACTIVE_MEMBER, $role_permissions)): ?>
+                                <li class="menu-item sidebar-menu-item <?= ($inactive_member) ? 'active' : '';?>">
                                     <a href="<?= base_url('admin/user-account');?>"
-                                        class="<?= ($user_account) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">User Account</div>
-                                    </a>
-                                </li>
-                                <?php endif;?>
-                            </ul>
-                        </div>
-                    </div>
-                    <?php endif;?>
-                    <!-- End -->
-
-                    <?php if (array_intersect([PRODUCT], $role_permissions)): ?>
-                    <!-- Inventory management -->
-                    <li class="menu-header  btn btn-toggle" data-bs-toggle="collapse" data-bs-target="#inventory"
-                        aria-expanded="<?= ($inventory) ? 'true' : '';?>">
-                        <div class="d-flex justify-content-between align-items-center ">
-                            <div class="d-flex align-items-center">
-                                <i class="menu-icon tf-icons bi bi-box-seam-fill" style="color:#ffffff;"></i>
-                                <div class="menu-header-text">Inventory Management</div>
-                            </div>
-                            <div class="icon-chevron"></div>
-                        </div>
-                    </li>
-
-                    <div>
-                        <div class="collapse <?= ($inventory) ? 'show' : '';?>" id="inventory" style="">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small sidebar-menu">
-                                <?php if (in_array(PRODUCT, $role_permissions)): ?>
-                                <li class="menu-item sidebar-menu-item <?= ($product_management) ? 'active' : '';?>">
-                                    <a href="<?= base_url('admin/product-management');?>"
-                                        class="<?= ($product_management) ? 'menu-link-active-2' : '';?> menu-link">
-                                        <div data-i18n="Account">Product Management</div>
+                                        class="<?= ($inactive_member) ? 'menu-link-active-2' : '';?> menu-link">
+                                        <div data-i18n="Account">Inactive GPI Member</div>
                                     </a>
                                 </li>
                                 <?php endif;?>

@@ -10,7 +10,7 @@
 
 
 
-    <nav class="layout-navbar  navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme "
+    <nav class="layout-navbar navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
         style="position: relative; z-index: 1000;">
         <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
             <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
@@ -21,14 +21,13 @@
 
         <div class="d-flex align-items-center gap-2">
             <img src="<?php echo base_url('assets/images/dashboard/system.png'); ?>" alt="" style="width:32px" />
-            <h5 class="m-0 ms-2 fw-bold text-nowrap header-title">
-                Shantal Beauty and Wellness</h5>
+            <h5 class="m-0 ms-2 fw-bold text-nowrap header-title">People's God's Initiative Portal</h5>
         </div>
 
         <div class="container d-flex justify-content-end">
 
             <a class=" nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                <img src="<?= base_url('assets/images/home/profile.png');?>" alt class="w-px-40 h-auto rounded-circle" />
+                <img src="<?= base_url('assets/images/admin/profile.png');?>" alt class="w-px-40 h-auto rounded-circle" />
             </a>
 
 
@@ -38,7 +37,7 @@
                         <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar avatar-online">
-                                    <img src="<?= base_url('assets/images/home/profile.png');?>" alt
+                                    <img src="<?= base_url('assets/images/admin/profile.png');?>" alt
                                         class="w-px-40 h-auto rounded-circle" />
                                 </div>
                             </div>

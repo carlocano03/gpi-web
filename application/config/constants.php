@@ -3,25 +3,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 define('TIMEZONE', 'Asia/Manila');
 
 //counter
-define("RESELLER_APP", 1);
-define("RESELLER", 2);
+define("MEMBER_APPLICATION", 1);
+define("MEMBER", 2);
 
 //User Type
 define("ADMINISTRATOR", 1);
 define("ADMIN_STAFF", 2);
-define("RESELLER_USER", 3);
-define("CUSTOMER", 4);
+
 
 //Permissions
-define("RESELLERS", 1);
-define("RESELLER_ACCT", 2);
-define("USER_ACCT", 3);
-define("PRODUCT", 4);
-define("ACCOUNT_MANAGEMENT", 5);
-define("VOUCHER", 6);
-define("PENDING_ORDER", 7);
-define("ORDERS", 8);
-define("MANAGE_NEWS", 9);
+define("APPLICATION_REQUEST", 1);
+define("ACTIVE_MEMBER", 2);
+define("INACTIVE_MEMBER", 3);
+define("ACCOUNT_MANAGEMENT", 4);
+define("MANAGE_NEWS", 5);
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace

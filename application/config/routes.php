@@ -54,47 +54,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['admin/dashboard'] = 'admin_portal/main/index';
 $route['admin/login'] = 'admin_portal/login/index';
 
-$route['admin/reseller-application'] = 'admin_portal/main/reseller_application';
-$route['admin/reseller-application/information'] = 'admin_portal/main/reseller_application_info';
-$route['admin/reseller-account'] = 'admin_portal/main/reseller_account';
-$route['admin/reseller-account/information'] = 'admin_portal/main/reseller_account_info';
-$route['admin/user-account'] = 'admin_portal/main/user_account';
-$route['admin/product-management'] = 'admin_portal/main/product_management';
-$route['admin/product-management/stock-in'] = 'admin_portal/main/stock_in';
+$route['admin/member-application'] = 'admin_portal/main/member_application';
+$route['admin/active-member'] = 'admin_portal/main/active_member';
+$route['admin/inactive-member'] = 'admin_portal/main/inactive_member';
 $route['admin/account-management'] = 'admin_portal/main/account_management';
-$route['admin/voucher'] = 'admin_portal/main/voucher';
-$route['admin/pending-orders'] = 'admin_portal/main/pending_orders';
-$route['admin/list-orders'] = 'admin_portal/main/list_orders';
-$route['admin/order-details'] = 'admin_portal/main/order_details';
 $route['admin/manage-news'] = 'admin_portal/main/manage_news';
 $route['admin/manage-news/add-form'] = 'admin_portal/main/news_add_form';
 $route['admin/manage-news/view'] = 'admin_portal/main/view_news';
 
+//Mobile API Call
+//[POST REQUEST]
+$route['api/registration-process'] = 'mobile/api_member_registration/process_registration';
 
-
-$route['reseller'] = 'reseller/main/index';
-$route['reseller/dashboard'] = 'reseller/dashboard/index';
-$route['reseller/inventory'] = 'reseller/dashboard/inventory';
-$route['reseller/inventory/product-information'] = 'reseller/dashboard/product_information';
-$route['reseller/voucher-creation'] = 'reseller/dashboard/voucher_creation';
-$route['reseller/my-commission'] = 'reseller/dashboard/my_commission';
-$route['reseller/my-commission/order-details'] = 'reseller/dashboard/order_details';
-
-
-$route['products'] = 'main/products';
-$route['news'] = 'main/news';
-
-
-$route['shop'] = 'shop/main/index';
-$route['shop/best-sellers'] = 'shop/main/best_sellers';
-$route['shop/sales-offers'] = 'shop/main/sales_offers';
-
-$route['shop/product-details'] = 'shop/main/product_details';
-$route['shop/checkout'] = 'shop/main/checkout';
-$route['shop/profile'] = 'shop/main/profile';
-$route['shop/wishlist'] = 'shop/main/wishlist';
-
-
+//[GET REQUEST]
 
 $route['default_controller'] = 'main';
 $route['404_override'] = 'main/page404';

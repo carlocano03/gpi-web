@@ -14,14 +14,14 @@
         box-shadow: 0 9px 20px rgba(46, 35, 94, .07);
     }
 
-    #tbl_news th:nth-child(1),
-    #tbl_news td:nth-child(1),
-    #tbl_news th:nth-child(3),
-    #tbl_news td:nth-child(3),
-    #tbl_news th:nth-child(4),
-    #tbl_news td:nth-child(4),
-    #tbl_news th:nth-child(5),
-    #tbl_news td:nth-child(5) {
+    #tbl_reseller th:nth-child(1),
+    #tbl_reseller td:nth-child(1),
+    #tbl_reseller th:nth-child(4),
+    #tbl_reseller td:nth-child(4),
+    #tbl_reseller th:nth-child(5),
+    #tbl_reseller td:nth-child(5),
+    #tbl_reseller th:nth-child(6),
+    #tbl_reseller td:nth-child(6) {
         text-align: center;
     }
 
@@ -32,18 +32,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-header mb-3 pb-3 d-flex align-items-center gap-2 ">
-                <img src="<?php echo base_url('assets/images/admin/news.png'); ?>" width="36px"
+                <img src="<?php echo base_url('assets/images/admin/active-user.png'); ?>" width="36px"
                     alt="Calendar" />
                 <h5 class="table__title"><?= $card_title?></h5>
             </div>
             <div class="card-body mt-4">
-                <table class="table" width="100%" id="tbl_news">
+                <table class="table" width="100%" id="tbl_reseller">
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Title</th>
-                            <th>Posted By</th>
-                            <th>Date Posted</th>
+                            <th>Member ID</th>
+                            <th>Complete Name</th>
+                            <th>Date Joined</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -58,7 +59,7 @@
 
 <script>
     $(document).ready(function() {
-        var tbl_news = $('#tbl_news').DataTable({
+        var tbl_reseller = $('#tbl_reseller').DataTable({
             language: {
                 search: '',
                 searchPlaceholder: "Search Here...",
@@ -72,7 +73,7 @@
             // "processing": true,
             // "deferRender": true,
             // "ajax": {
-            //     "url": "<?= base_url('admin_portal/news_management/get_news_list')?>",
+            //     "url": "<?= base_url('admin_portal/reseller_application/get_reseller_application')?>",
             //     "type": "POST",
             //     "data": function(d) {
             //         d[csrf_token_name] = csrf_token_value;
@@ -83,9 +84,5 @@
             //     }
             // }
         });
-
-        // $('#tbl_news_filter').prepend(
-        //     `<a href="<?= base_url('admin/manage-news/add-form')?>" class="btn btn-dark btn-sm"><i class="bi bi-newspaper me-2"></i>Add News</a>`
-        // );
     });
 </script>

@@ -36,7 +36,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-header mb-3 pb-3 d-flex align-items-center gap-2 ">
-                <img src="<?php echo base_url('assets/images/dashboard/administration.png'); ?>" width="36px"
+                <img src="<?php echo base_url('assets/images/admin/administration.png'); ?>" width="36px"
                     alt="Calendar" />
                 <h5 class="table__title"><?= $card_title?></h5>
             </div>

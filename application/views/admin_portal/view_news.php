@@ -22,7 +22,7 @@
         <div class="card">
             <div class="card-header mb-3 pb-3 d-flex align-items-center justify-content-between gap-2 ">
                 <div class="d-flex align-items-center gap-2">
-                    <img src="<?php echo base_url('assets/images/home/news.png'); ?>" width="36px"
+                    <img src="<?php echo base_url('assets/images/admin/news.png'); ?>" width="36px"
                         alt="Calendar" />
                     <h5 class="table__title"><?= $card_title?></h5>
                 </div>

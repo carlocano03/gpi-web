@@ -30,7 +30,7 @@ if (isset($_SERVER['HTTP_HOST'])) {
     $config['base_url'] .= '://' . $_SERVER['HTTP_HOST'];
     $config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 } else {
-    $config['base_url']    = 'http://127.0.0.1/shantal-shop/';
+    $config['base_url']    = 'http://127.0.0.1/gpi-web/';
 }
 
 $config['composer_autoload'] = 'vendor/autoload.php';
@@ -482,13 +482,8 @@ $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = FALSE;
 $config['csrf_exclude_uris'] = array(
-    'api/save_training_request',
-    'api/support_timeline',
-    'api/support_appointment',
-    'api/modules_list',
-    'admin_crm/inventory/purchase_request/search',
-    'api/save_demo_request',
-    'api/available_demo_schedule',
+    'api/registration-process',
+    
 );
 
 /*

@@ -36,24 +36,6 @@ class Main extends MY_Controller
         $this->load->view('website/partial/_footer', $data);
     }
 
-	public function products()
-    {
-        $data['title'] = 'Shantal`s Shop';
-        $this->load->view('website/partial/_header', $data);
-        $this->load->view('website/products', $data);
-        $this->load->view('website/partial/_footer', $data);
-    }
-	public function news()
-    {
-        $data['title'] = 'Shantal`s Shop';
-        $this->load->view('website/partial/_header', $data);
-        $this->load->view('website/news', $data);
-        $this->load->view('website/partial/_footer', $data);
-
-    }
-
-
-
     // Error 404 redirect
 	public function page404()
 	{

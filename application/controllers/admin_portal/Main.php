@@ -54,12 +54,12 @@ class Main extends MY_Controller
         $this->load->view('admin_portal/partial/_footer', $data);
     }
 
-    public function reseller_application()
+    public function member_application()
     {
         $data['role_permissions'] = $this->role_permissions();
         $data['home_url'] = base_url('admin/dashboard');
-        $data['active_page'] = 'reseller_page';
-        $data['card_title'] = 'Resellers Application';
+        $data['active_page'] = 'application_page';
+        $data['card_title'] = 'GPI Member Application';
         $data['icon'] = 'bi bi-speedometer2';
         $data['header_contents'] = array(
             '<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">',
@@ -72,22 +72,16 @@ class Main extends MY_Controller
         );
 	
         $this->load->view('admin_portal/partial/_header', $data);
-        $this->load->view('admin_portal/reseller_application', $data);
+        $this->load->view('admin_portal/member_application', $data);
         $this->load->view('admin_portal/partial/_footer', $data);
     }
 
-    public function reseller_application_info()
+    public function active_member()
     {
         $data['role_permissions'] = $this->role_permissions();
-        $this->load->model('admin_portal/reseller_application_model', 'reseller_application');
-        $application_id = $this->cipher->decrypt($this->input->get('application', true));
-
-        $data['reseller'] = $this->reseller_application->get_row('reseller_application', array('application_id' => $application_id, 'status' => 0));
-        $data['referred_by'] = $this->reseller_application->get_referred_name($data['reseller']['referral_code']);
-
         $data['home_url'] = base_url('admin/dashboard');
-        $data['active_page'] = 'reseller_page';
-        $data['card_title'] = 'Resellers Application';
+        $data['active_page'] = 'active_member_page';
+        $data['card_title'] = 'Active GPI Member';
         $data['icon'] = 'bi bi-speedometer2';
         $data['header_contents'] = array(
             '<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">',
@@ -100,16 +94,16 @@ class Main extends MY_Controller
         );
 	
         $this->load->view('admin_portal/partial/_header', $data);
-        $this->load->view('admin_portal/reseller_application_info', $data);
+        $this->load->view('admin_portal/active_member', $data);
         $this->load->view('admin_portal/partial/_footer', $data);
     }
 
-    public function reseller_account()
+    public function inactive_member()
     {
         $data['role_permissions'] = $this->role_permissions();
         $data['home_url'] = base_url('admin/dashboard');
-        $data['active_page'] = 'reseller_account_page';
-        $data['card_title'] = 'Resellers Account';
+        $data['active_page'] = 'inactive_member_page';
+        $data['card_title'] = 'Inactive GPI Member';
         $data['icon'] = 'bi bi-speedometer2';
         $data['header_contents'] = array(
             '<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">',
@@ -122,106 +116,7 @@ class Main extends MY_Controller
         );
 	
         $this->load->view('admin_portal/partial/_header', $data);
-        $this->load->view('admin_portal/reseller_account', $data);
-        $this->load->view('admin_portal/partial/_footer', $data);
-    }
-
-    public function reseller_account_info()
-    {
-        $data['role_permissions'] = $this->role_permissions();
-        $this->load->model('admin_portal/reseller_application_model', 'reseller_application');
-        $reseller_id = $this->cipher->decrypt($this->input->get('id', true));
-
-        $data['reseller'] = $this->reseller_application->get_row('reseller_information', array('reseller_id' => $reseller_id));
-        $data['referred_by'] = $this->reseller_application->get_referred_name($data['reseller']['referred_by']);
-        
-        $data['home_url'] = base_url('admin/dashboard');
-        $data['active_page'] = 'reseller_account_page';
-        $data['card_title'] = 'Resellers Information';
-        $data['icon'] = 'bi bi-speedometer2';
-        $data['header_contents'] = array(
-            '<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">',
-            '<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>',
-            '<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>',
-            '<script>
-                var csrf_token_name = "'.$this->security->get_csrf_token_name().'";
-                var csrf_token_value = "'.$this->security->get_csrf_hash().'";
-            </script>'
-        );
-	
-        $this->load->view('admin_portal/partial/_header', $data);
-        $this->load->view('admin_portal/reseller_account_info', $data);
-        $this->load->view('admin_portal/partial/_footer', $data);
-    }
-
-    public function user_account()
-    {
-        $data['role_permissions'] = $this->role_permissions();
-        $data['home_url'] = base_url('admin/dashboard');
-        $data['active_page'] = 'user_account_page';
-        $data['card_title'] = 'Users Account';
-        $data['icon'] = 'bi bi-speedometer2';
-        $data['header_contents'] = array(
-            '<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">',
-            '<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>',
-            '<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>',
-            '<script>
-                var csrf_token_name = "'.$this->security->get_csrf_token_name().'";
-                var csrf_token_value = "'.$this->security->get_csrf_hash().'";
-            </script>'
-        );
-	
-        $this->load->view('admin_portal/partial/_header', $data);
-        $this->load->view('admin_portal/user_account', $data);
-        $this->load->view('admin_portal/partial/_footer', $data);
-    }
-
-    public function product_management()
-    {
-        $data['role_permissions'] = $this->role_permissions();
-        $data['home_url'] = base_url('admin/dashboard');
-        $data['active_page'] = 'product_page';
-        $data['card_title'] = 'Product Management';
-        $data['icon'] = 'bi bi-speedometer2';
-        $data['header_contents'] = array(
-            '<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">',
-            '<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>',
-            '<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>',
-            '<script>
-                var csrf_token_name = "'.$this->security->get_csrf_token_name().'";
-                var csrf_token_value = "'.$this->security->get_csrf_hash().'";
-            </script>'
-        );
-	
-        $this->load->view('admin_portal/partial/_header', $data);
-        $this->load->view('admin_portal/product_management', $data);
-        $this->load->view('admin_portal/partial/_footer', $data);
-    }
-
-    public function stock_in()
-    {
-        $data['role_permissions'] = $this->role_permissions();
-        $this->load->model('admin_portal/inventory/product_management_model', 'product_management');
-        $product_id = $this->cipher->decrypt($this->input->get('product', true));
-
-        $data['product'] = $this->product_management->get_row('product', array('product_id' => $product_id, 'status' => 0));
-
-        $data['home_url'] = base_url('admin/dashboard');
-        $data['active_page'] = 'product_page';
-        $data['card_title'] = 'Stock-In Management';
-        $data['icon'] = 'bi bi-speedometer2';
-        $data['header_contents'] = array(
-            '<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">',
-            '<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>',
-            '<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>',
-            '<script>
-                var csrf_token_name = "'.$this->security->get_csrf_token_name().'";
-                var csrf_token_value = "'.$this->security->get_csrf_hash().'";
-            </script>'
-        );
-	
-        $this->load->view('admin_portal/partial/_header', $data);
-        $this->load->view('admin_portal/stock_in', $data);
+        $this->load->view('admin_portal/inactive_member', $data);
         $this->load->view('admin_portal/partial/_footer', $data);
     }
 
@@ -244,106 +139,6 @@ class Main extends MY_Controller
 	
         $this->load->view('admin_portal/partial/_header', $data);
         $this->load->view('admin_portal/admin_account_management', $data);
-        $this->load->view('admin_portal/partial/_footer', $data);
-    }
-
-    public function voucher()
-    {
-        $data['role_permissions'] = $this->role_permissions();
-        $data['home_url'] = base_url('admin/dashboard');
-        $data['active_page'] = 'voucher_page';
-        $data['card_title'] = 'Vouchers';
-        $data['icon'] = 'bi bi-speedometer2';
-        $data['header_contents'] = array(
-            '<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">',
-            '<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>',
-            '<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>',
-            '<script>
-                var csrf_token_name = "'.$this->security->get_csrf_token_name().'";
-                var csrf_token_value = "'.$this->security->get_csrf_hash().'";
-            </script>'
-        );
-	
-        $this->load->view('admin_portal/partial/_header', $data);
-        $this->load->view('admin_portal/voucher', $data);
-        $this->load->view('admin_portal/partial/_footer', $data);
-    }
-
-    public function pending_orders()
-    {
-        $data['role_permissions'] = $this->role_permissions();
-        $data['home_url'] = base_url('admin/dashboard');
-        $data['active_page'] = 'pending_order_page';
-        $data['card_title'] = 'Pending Orders';
-        $data['icon'] = 'bi bi-speedometer2';
-        $data['header_contents'] = array(
-            '<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">',
-            '<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>',
-            '<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>',
-            '<script>
-                var csrf_token_name = "'.$this->security->get_csrf_token_name().'";
-                var csrf_token_value = "'.$this->security->get_csrf_hash().'";
-            </script>'
-        );
-	
-        $this->load->view('admin_portal/partial/_header', $data);
-        $this->load->view('admin_portal/pending_order', $data);
-        $this->load->view('admin_portal/partial/_footer', $data);
-    }
-
-    public function list_orders()
-    {
-        $data['role_permissions'] = $this->role_permissions();
-        $data['home_url'] = base_url('admin/dashboard');
-        $data['active_page'] = 'order_page';
-        $data['card_title'] = 'List of Orders';
-        $data['icon'] = 'bi bi-speedometer2';
-        $data['header_contents'] = array(
-            '<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">',
-            '<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>',
-            '<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>',
-            '<script>
-                var csrf_token_name = "'.$this->security->get_csrf_token_name().'";
-                var csrf_token_value = "'.$this->security->get_csrf_hash().'";
-            </script>'
-        );
-	
-        $this->load->view('admin_portal/partial/_header', $data);
-        $this->load->view('admin_portal/list_orders', $data);
-        $this->load->view('admin_portal/partial/_footer', $data);
-    }
-
-    public function order_details()
-    {
-        $this->load->model('admin_portal/online_order_model');
-        $order_id = $this->cipher->decrypt($this->input->get('order', true));
-        $data['orders'] = $this->online_order_model->get_row('order_details', array('order_id' => $order_id));
-        $data['referred_by'] = $this->online_order_model->get_referral_info($data['orders']['referral_code']);
-        $data['order_details'] = $this->online_order_model->order_details($order_id);
-
-        $data['role_permissions'] = $this->role_permissions();
-        $data['home_url'] = base_url('admin/dashboard');
-
-        if($data['orders']['order_status'] == 'Pending') {
-            $data['active_page'] = 'pending_order_page';
-        } else {
-            $data['active_page'] = 'order_page';
-        }
-
-        $data['card_title'] = 'Order Informations';
-        $data['icon'] = 'bi bi-speedometer2';
-        $data['header_contents'] = array(
-            '<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">',
-            '<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>',
-            '<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>',
-            '<script>
-                var csrf_token_name = "'.$this->security->get_csrf_token_name().'";
-                var csrf_token_value = "'.$this->security->get_csrf_hash().'";
-            </script>'
-        );
-	
-        $this->load->view('admin_portal/partial/_header', $data);
-        $this->load->view('admin_portal/order_details', $data);
         $this->load->view('admin_portal/partial/_footer', $data);
     }
 

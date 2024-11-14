@@ -211,7 +211,7 @@ $config['auth_library_function'] = '';
 | Array of usernames and passwords for login, if ldap is configured this is ignored
 |
 */
-$config['rest_valid_logins'] = ['origami_admin' => '<):3urrh-J_*8W@'];
+$config['rest_valid_logins'] = ['gpi_admin' => '<):3urrh-J_*8W@'];
 
 /*
 |--------------------------------------------------------------------------

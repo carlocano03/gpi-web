@@ -7,7 +7,7 @@
             document.write(new Date().getFullYear());
             </script>
             | 
-            <a href="#" target="_blank" class="footer-link fw-bolder">Shantal Beauty and Wellness</a>
+            <a href="#" target="_blank" class="footer-link fw-bolder">God's People's Initiative</a>
         </div>
     </div>
 </footer>

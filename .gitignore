@@ -18,8 +18,8 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /vendor/
 
 # Assets
-/assets/uploaded_file/uploaded_product/*
-/assets/uploaded_file/reseller_application/*
+/assets/uploaded_file/news/*
+/assets/uploaded_file/member_application/*
 
 # IDE Files
 #-------------------------
@@ -35,7 +35,6 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 # Config
 application/config/database.php
-assets/scan_me_qr/scan_me.png
 
 ## Sublime Text cache files
 *.tmlanguage.cache

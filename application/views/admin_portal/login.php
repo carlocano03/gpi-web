@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>GPI | Admin</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="<?= base_url('assets/images/home/shantal-logo.png');?>" />
+    <link rel="icon" type="image/x-icon" href="<?= base_url('assets/images/logo-no-bg.png');?>" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/admin-login.css'); ?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -42,18 +42,18 @@
 </head>
 
 <body>
-    <div class="loading-screen text-center">
+    <!-- <div class="loading-screen text-center">
         <div class="spinner-border text-dark" role="status">
                 <span class="visually-hidden">Loading...</span>
         </div>
-    </div>
+    </div> -->
 
     <div class="login-form">
         <div class="icon-container">
-            <img class="navbar__logo" src="<?php echo base_url('assets/images/home/shantal-logo.png'); ?>"
-                alt="Shantal Beauty">
+            <img class="navbar__logo" src="<?php echo base_url('assets/images/logo-no-bg.png'); ?>"
+                alt="GPI Logo">
         </div>
-        <h1>Admin Login</h1>
+        <h1 style="color:#344489;">Admin Login</h1>
         <div class="error-message"></div>
         <form id="adminLoginForm" class="needs-validation" novalidate>
             <div class="mb-3">

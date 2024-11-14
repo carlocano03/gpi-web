@@ -9,7 +9,7 @@
 }
 
 .app-brand-logo.demo img {
-  width: 40px;
+  width: 50px;
   border: 3px solid #fff;
   border-radius: 100px;
 }
@@ -339,7 +339,7 @@ input[type=number] {
 }
 
 .header-title {
-  background: linear-gradient(to right, #434875, #b18647);
+  background: linear-gradient(48deg, rgba(216,40,42,1) 0%, rgba(216,40,42,1) 48%, rgba(52,68,137,0.8688725490196079) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -430,11 +430,11 @@ input[type=number] {
 }
 
 .dashboard__img-container--border1 {
-  border: 2px solid #b18647;
+  border: 2px solid #344489;
 }
 
 .dashboard__img-container--border2 {
-  border: 2px solid #4caf50;
+  border: 2px solid #F5CD2C;
 
 }
 
@@ -443,7 +443,7 @@ input[type=number] {
 }
 
 .dashboard__img-container--border4 {
-  border: 2px solid #f44336;
+  border: 2px solid #D8282A;
 
 }
 

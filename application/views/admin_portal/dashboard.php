@@ -1,8 +1,310 @@
+<style>
+.table thead {
+    background: #E2E8F0 !important;
+    color: red !important;
+}
+
+#church_schedule_chart {
+    width: 380px !important;
+    height: 380px !important;
+
+}
+
+@media (max-width: 768px) {
+    #church_schedule_chart {
+        width: 350px !important;
+        height: 350px !important;
+
+    }
+}
+
+@media (max-width: 420px) {
+    #church_schedule_chart {
+        width: 250px !important;
+        height: 250px !important;
+
+    }
+}
+</style>
+
 <!-- Content wrapper -->
 <div class="content-wrapper">
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y" style="max-width:100%; ">
+        <div class="row gy-3">
+            <div class="col-lg-8 col-12 order-lg-1 order-2">
+                <div class="row row-cols-lg-2 row-cols-1 g-3">
+                    <div class="col">
+                        <div class="overview-card">
+                            <div class="d-flex align-items-center gap-4">
+                                <div class="dashboard__img-container dashboard__img-container--border1">
+                                    <img class="dashboard__img"
+                                        src="<?php echo base_url('assets/images/admin/group-member.png'); ?>"
+                                        alt="Scholars" />
+                                </div>
+                                <div class="flex flex-column">
+                                    <div class="custom-card__title" id="total_scholars">0</div>
+                                    <div class="custom-card__sub-text">
+                                        Total Member
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="col">
+                        <div class="overview-card">
+                            <div class="d-flex align-items-center gap-4 ">
+                                <div class="dashboard__img-container dashboard__img-container--border2">
+                                    <img class="dashboard__img"
+                                        src="<?php echo base_url('assets/images/admin/approve.png'); ?>"
+                                        alt="Approved" />
+                                </div>
+                                <div class="flex flex-column">
+                                    <div class="custom-card__title" id="total_application">0</div>
+                                    <div class="custom-card__sub-text">
+                                        Total Active Member
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="overview-card">
+                            <div class="d-flex align-items-center gap-4">
+                                <div class="dashboard__img-container dashboard__img-container--border3">
+                                    <img class="dashboard__img"
+                                        src="<?php echo base_url('assets/images/admin/pending.png'); ?>"
+                                        alt="Scholars" />
+                                </div>
+                                <div class="flex flex-column">
+                                    <div class="custom-card__title" id="total_approval">0</div>
+                                    <div class="custom-card__sub-text">
+                                        Pending Application
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="overview-card">
+                            <div class="d-flex align-items-center gap-4">
+                                <div class="dashboard__img-container dashboard__img-container--border4 ">
+                                    <img class="dashboard__img"
+                                        src="<?php echo base_url('assets/images/admin/inactive.png'); ?>"
+                                        alt="Scholars" />
+                                </div>
+                                <div class="flex flex-column">
+                                    <div class="custom-card__title" id="total_denied">0</div>
+                                    <div class="custom-card__sub-text">
+                                        Total Inactive Member
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        <div class="overview-card">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-2">
+                                    <img class="overview-card__icon"
+                                        src="<?php echo base_url('assets/images/admin/registration.png'); ?>" alt="
+                                        Registration">
+                                    <h1 class="overview-card__title mb-0">Member Registration Metrics</h1>
+                                </div>
+                                <div class="custom-date-input">
+                                    <select name="filter_options" id="filter_options" class="form-select">
+                                        <option value="1">Week</option>
+                                        <option value="2">Monthly</option>
+                                        <option value="3">Yearly</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Column -->
+            <div class="col-lg-4 col-12 order-lg-2 order-1">
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="overview-card">
+                            <div class="d-flex align-items-center gap-2 py-2">
+                                <img class="overview-card__icon"
+                                    src="<?php echo base_url('assets/images/admin/recent.png'); ?>" alt="Recent">
+                                <h1 class="overview-card__title mb-0">Recent News</h1>
+                            </div>
+                            <div>
+                                <!-- <ul class="p-0" id="recent_activities">
+
+                                </ul> -->
+                                
+                                <div class="mb-3">
+                                    <a href="#" style="color:#434875;">
+                                        <p style="font-size:16px; font-weight:600;">Sample News Title</p>
+                                        <p style="font-size:12px; text-align:justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud...
+                                        </p>
+                                        <span style="font-size:11px; color:gray;">Posted By: Carlo Cano | Tue November 12, 2024 11:29 AM</span>
+                                    </a>
+                                </div>
+
+                                <div class="mb-3">
+                                    <a href="#" style="color:#434875;">
+                                        <p style="font-size:16px; font-weight:600;">Sample News Title</p>
+                                        <p style="font-size:12px; text-align:justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud...
+                                        </p>
+                                        <span style="font-size:11px; color:gray;">Posted By: Carlo Cano | Tue November 12, 2024 11:29 AM</span>
+                                    </a>
+                                </div>
+
+                                <div>
+                                    <a href="#" style="color:#434875;">
+                                        <p style="font-size:16px; font-weight:600;">Sample News Title</p>
+                                        <p style="font-size:12px; text-align:justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud...
+                                        </p>
+                                        <span style="font-size:11px; color:gray;">Posted By: Carlo Cano | Tue November 12, 2024 11:29 AM</span>
+                                    </a>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="overview-card">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-2">
+                                    <img class="overview-card__icon"
+                                        src="<?php echo base_url('assets/images/admin/poll.png'); ?>" alt="
+										Registration">
+                                    <h1 class="overview-card__title mb-0">Poll Result</h1>
+                                </div>
+                            </div>
+
+                            <div class="mt-2">
+                                <div id="poll_request">
+                                    <h5 style="font-size:14px;"><i class="bi bi-question-circle me-1"></i>Sample Poll Question</h5>
+                                    <div class="poll_result">
+                                        <div class="mb-3">
+                                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                                <h5 class="mb-0" style="font-size:13px;">Choices 1</h5>
+                                            </div>
+                                            <div class="progress" style="height:16px; cursor:pointer" title="Total Vote: 10">
+                                                <div class="progress-bar bg-info progress-bar-striped progress-bar-animate" role="progressbar" style="width:20%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" title="Total Vote: 10">10</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                                <h5 class="mb-0" style="font-size:13px;">Choices 2</h5>
+                                            </div>
+                                            <div class="progress" style="height:16px; cursor:pointer" title="Total Vote: 5">
+                                                <div class="progress-bar bg-info progress-bar-striped progress-bar-animate" role="progressbar" style="width:5%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" title="Total Vote: 5">5</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                                <h5 class="mb-0" style="font-size:13px;">Choices 3</h5>
+                                            </div>
+                                            <div class="progress" style="height:16px; cursor:pointer" title="Total Vote: 0">
+                                                <div class="progress-bar bg-info progress-bar-striped progress-bar-animate" role="progressbar" style="width:0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" title="Total Vote: 0">0</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of second column -->
+        </div>
     </div>
 
 </div>
+
+<script>
+    const data = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+        datasets: [{
+            label: 'Members',
+            data: [65, 59, 80, 81, 56, 55],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    const configChart = {
+        type: 'bar',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Member Registration Metrics Data',
+                    font: {
+                        size: 16
+                    }
+                },
+                legend: {
+                    position: 'top',
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Members',
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Month',
+                        font: {
+                            size: 14
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    // Create the chart
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, configChart);
+</script>
