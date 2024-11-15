@@ -187,8 +187,7 @@
                         <img src="<?= base_url('assets/images/logo-w-bg.jpg');?>">
                     </span>
                     <span class="app-brand-text demo menu-text fw-bold ms-2 side-bar-title fs-5">
-                        God's People's <br>
-                        Initiative
+                        GPI | Admin Portal
                     </span>
                 </a>
 

@@ -36,4 +36,10 @@ class Role_permission_model extends MY_Model
         return array();
     }
 
+    function get_auto_reply_info()
+    {
+        $query = $this->db->get('autoreply_credentials');
+        return $query->row_array();
+    }
+
 }

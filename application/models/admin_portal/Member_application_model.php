@@ -81,4 +81,81 @@ class Member_application_model extends MY_Model
         }
     }
 
+    function applicationChart($range='')
+    {
+        $today = date('Y-m-d');
+        $prevRange = date('Y-m-d', strtotime('-1 week'));
+
+        if ($range == '1') {
+            $prevRange = date('Y-m-d', strtotime('-1 week'));
+        } elseif ($range == '2') {
+            $prevRange = date('Y-m-d', strtotime('-1 month'));
+        } elseif ($range == '3') {
+            $prevRange = date('Y-m-d', strtotime('-1 year'));
+        }
+
+        $dateRange = [];
+        $currentDate = $today;
+        while ($currentDate >= $prevRange) {
+            $dateRange[] = $currentDate;
+            $currentDate = date('Y-m-d', strtotime('-1 day', strtotime($currentDate)));
+        }
+
+        $dateRange = array_reverse($dateRange);
+
+        $selectColumns = [];
+        foreach ($dateRange as $date) {
+            $selectColumns[] = "IFNULL(COUNT(DISTINCT CASE WHEN DATE(date_created) = '$date' THEN application_id ELSE NULL END), 0) AS '$date'";
+        }
+
+        // Query for total application
+        $this->db->select('\'Total Application\' AS application_status', FALSE);
+        $this->db->select('IFNULL(COUNT(application_id), 0) AS total_count', FALSE);
+        $this->db->select(implode(', ', $selectColumns));
+        $this->db->from('application_request');
+        $this->db->where('status', 0);
+        $this->db->where('date_created >=', $prevRange.' 00:00:00');
+        $this->db->where('date_created <=', $today.' 23:59:59');
+        $application = $this->db->get()->row_array();
+
+        // Query for total approved
+        $this->db->select('\'Approved\' AS application_status', FALSE);
+        $this->db->select('IFNULL(COUNT(application_id), 0) AS total_count', FALSE);
+        $this->db->select(implode(', ', $selectColumns));
+        $this->db->from('application_request');
+        $this->db->where('request_status', 'Approved');
+        $this->db->where('date_created >=', $prevRange.' 00:00:00');
+        $this->db->where('date_created <=', $today.' 23:59:59');
+        $approved = $this->db->get()->row_array();
+
+        // Query for total declined
+        $this->db->select('\'Declined\' AS application_status', FALSE);
+        $this->db->select('IFNULL(COUNT(application_id), 0) AS total_count', FALSE);
+        $this->db->select(implode(', ', $selectColumns));
+        $this->db->from('application_request');
+        $this->db->where('request_status', 'Declined');
+        $this->db->where('date_created >=', $prevRange.' 00:00:00');
+        $this->db->where('date_created <=', $today.' 23:59:59');
+        $declined = $this->db->get()->row_array();
+
+        // Ensure all date columns are set to 0 if not present
+        foreach ($dateRange as $date) {
+            if (!isset($application[$date])) {
+                $application[$date] = '0';
+            }
+            if (!isset($approved[$date])) {
+                $approved[$date] = '0';
+            }
+            if (!isset($declined[$date])) {
+                $declined[$date] = '0';
+            }
+        }
+        
+        return array(
+            $application,
+            $approved,
+            $declined
+        );
+    }
+
 }

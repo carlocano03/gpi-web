@@ -278,9 +278,43 @@ class Main extends MY_Controller
         echo json_encode($output);
     }
 
-    public function page404()
-	{
-		$this->load->view('error404');
-	}
+    public function pdf_file()
+    {
+        require_once 'vendor/autoload.php';
+
+        $mpdf = new \Mpdf\Mpdf( [ 
+            'format' => 'A4-P',
+            'margin_right' => 0,
+            'margin_left' => 0,
+            'margin_top' => 0,
+            'margin_bottom' => 0
+        ]);
+
+        $mpdf->showImageErrors = true;
+        $html = $this->load->view( 'admin_portal/pdf/copy_registration_pdf', [], true );
+        $mpdf->WriteHTML( $html );
+        $mpdf->Output();
+    }
+
+    // public function send_mail()
+    // {
+    //     //Send email
+	// 	$mail_data = [
+	// 		'name_to' => 'Carlo Cano',
+	// 	];
+
+    //     $pdf_data = [
+    //         'sample' => 'Test',
+    //     ];
+
+	// 	$this->send_email_attachment([
+	// 		'mail_to'       => 'carlocano03@gmail.com',
+	// 		'cc'            => [],
+	// 		'subject'       => 'Member Application [For Approval]',
+	// 		'template_path' => 'admin_portal/email/success_registration',
+	// 		'mail_data'     => $mail_data,
+    //         'pdf_data'      => $pdf_data,
+	// 	]);
+    // }
 
 }

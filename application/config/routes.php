@@ -62,6 +62,8 @@ $route['admin/manage-news'] = 'admin_portal/main/manage_news';
 $route['admin/manage-news/add-form'] = 'admin_portal/main/news_add_form';
 $route['admin/manage-news/view'] = 'admin_portal/main/view_news';
 
+$route['admin/pdf'] = 'admin_portal/main/pdf_file';
+
 //Mobile API Call
 //[POST REQUEST]
 $route['api/registration-process'] = 'mobile/api_member_registration/process_registration';
