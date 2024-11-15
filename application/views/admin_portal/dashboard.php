@@ -125,7 +125,7 @@
                                 </div>
                             </div>
                             <div class="mt-3">
-                                <canvas id="myChart"></canvas>
+                                <canvas id="registration-metrics"></canvas>
                             </div>
                         </div>
                     </div>
@@ -237,6 +237,8 @@
 </div>
 
 <script>
+    var applicationChartInstance;
+
     function getDashboardCount() {
         $.ajax({
             url: "<?= base_url('admin_portal/main/getDashboardCount')?>",
@@ -280,79 +282,105 @@
         });
     }
 
+    function getApplicationChart() {
+        var range = $('#filter_options').val();
+        var applicationData;
+        const registration = document.getElementById('registration-metrics');
+
+        if (applicationChartInstance) {
+            applicationChartInstance.destroy();
+        }
+
+        $.ajax({
+            url: "<?= base_url('admin_portal/member_application/applicationChart')?>",
+            method: "GET",
+            data: {
+                range: range
+            },
+            success: function(data) {
+                var labels = Object.keys(data[0]).filter(key => key !== 'application_status' && key !== 'total_count');
+
+                var formattedLabels = labels.map(date => {
+                    var options = {
+                        month: 'short',
+                        day: '2-digit',
+                        year: 'numeric'
+                    };
+                    var dateObj = new Date(date);
+                    return dateObj.toLocaleDateString('en-US', options);
+                });
+
+                var datasets = [];
+                var aggregatedData = {};
+
+                // Process response to aggregate data
+                data.forEach(function(user) {
+                    if (!aggregatedData[user.application_status]) {
+                        aggregatedData[user.application_status] = new Array(labels.length).fill(0);
+                    }
+                });
+
+                // Aggregate data
+                data.forEach(function(user) {
+                    labels.forEach(function(date, index) {
+                        aggregatedData[user.application_status][index] += parseInt(user[date]);
+                    });
+                });
+
+                // Convert aggregated data into datasets array format
+                Object.keys(aggregatedData).forEach(function(userType) {
+                    datasets.push({
+                        label: userType,
+                        data: aggregatedData[userType],
+                        fill: false,
+                        borderColor: userType === 'Total Application' ? '#32C7ED' : userType ===
+                            'Approved' ? '#7BDF4A' :
+                            '#ff3838', // Assign different colors based on user_type
+                        tension: 0.1
+                    });
+                });
+
+                // Construct applicationData
+                var applicationData = {
+                    labels: formattedLabels,
+                    datasets: datasets
+                };
+
+                // Create the chart
+                applicationChartInstance = new Chart(registration, {
+                    type: 'line',
+                    data: applicationData,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    min: 0
+                                }
+                            }
+                        }
+                    }
+                });
+            },
+            error: function(error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    }
+
     $(document).ready(function() {
         getDashboardCount();
+        getApplicationChart();
 
+        $(document).on('change', '#filter_options', function() {
+            getApplicationChart();
+        });
 
     });
-
-    const data = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-        datasets: [{
-            label: 'Members',
-            data: [65, 59, 80, 81, 56, 55],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)',
-                'rgba(75, 192, 192, 0.5)',
-                'rgba(153, 102, 255, 0.5)',
-                'rgba(255, 159, 64, 0.5)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    };
-
-    const configChart = {
-        type: 'bar',
-        data: data,
-        options: {
-            responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Member Registration Metrics Data',
-                    font: {
-                        size: 16
-                    }
-                },
-                legend: {
-                    position: 'top',
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Members',
-                        font: {
-                            size: 14
-                        }
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Month',
-                        font: {
-                            size: 14
-                        }
-                    }
-                }
-            }
-        }
-    };
-
-    // Create the chart
-    const ctx = document.getElementById('myChart').getContext('2d');
-    new Chart(ctx, configChart);
 </script>

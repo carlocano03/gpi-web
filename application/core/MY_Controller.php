@@ -89,27 +89,29 @@ class MY_Controller extends CI_Controller {
 
     function send_email_html($data) 
     {
-        $this->load->model('main_model');
-        $emailCredentials = $this->main_model->get_auto_reply_info();
+        $this->load->model('role_permission_model');
+        $emailCredentials = $this->role_permission_model->get_auto_reply_info();
 		$this->load->library('email');
+        $this->email->clear(TRUE);
         $config = [
             'protocol'  => $emailCredentials['protocol'],
             'smtp_host' => $emailCredentials['smtp_host'],
             'smtp_port' => $emailCredentials['smtp_port'],
             'smtp_user' => $emailCredentials['smtp_user'],
             'smtp_pass' => $emailCredentials['smtp_pass'],
-            'smtp_crypto' => 'tls', // Use 'ssl' for port 465
+            'smtp_crypto' => $emailCredentials['smtp_crypto'],
             'mailtype'  => $emailCredentials['mailtype'],
             'charset'   => $emailCredentials['charset'],
             'wordwrap'  => $emailCredentials['wordwrap'],
         ];
-        $this->load->library('email', $config);
+        $this->email->initialize($config);
 
         $mail_data = $data['mail_data'];
         $email_to = $data['mail_to'];
         $subject = $data['subject'];
         $template = $data['template_path'];
-        $sender_name = 'CLCC School Unity Portal';
+        
+        $sender_name = 'GPI Portal';
 
         $body = $this->load->view($template, $mail_data, TRUE);
         
@@ -120,6 +122,67 @@ class MY_Controller extends CI_Controller {
 		$this->email->subject($subject);
 		$this->email->message($body);
         if($this->email->send()) {
+			return TRUE;
+		} else {
+			log_message('error', $this->email->print_debugger());
+			return FALSE;
+		}
+    }
+
+    function send_email_attachment($data) 
+    {
+        require_once 'vendor/autoload.php';
+        $this->load->model('role_permission_model');
+        $emailCredentials = $this->role_permission_model->get_auto_reply_info();
+
+        $mpdf = new \Mpdf\Mpdf( [ 
+            'format' => 'A4-P',
+            'margin_right' => 0,
+            'margin_left' => 0,
+            'margin_top' => 0,
+            'margin_bottom' => 0
+        ]);
+        $mpdf->showImageErrors = true;
+        $html = $this->load->view( 'admin_portal/pdf/copy_registration_pdf', $data['pdf_data'], true );
+
+        $file = 'Membership Application-' .$data['application_no'];
+        $pdfFilePath = FCPATH . "assets/uploaded_file/" . $file . ".pdf";
+        $mpdf->WriteHTML($html);
+        $mpdf->Output($pdfFilePath, "F");
+
+		$this->load->library('email');
+        $this->email->clear(TRUE);
+        $config = [
+            'protocol'  => $emailCredentials['protocol'],
+            'smtp_host' => $emailCredentials['smtp_host'],
+            'smtp_port' => $emailCredentials['smtp_port'],
+            'smtp_user' => $emailCredentials['smtp_user'],
+            'smtp_pass' => $emailCredentials['smtp_pass'],
+            'smtp_crypto' => $emailCredentials['smtp_crypto'],
+            'mailtype'  => $emailCredentials['mailtype'],
+            'charset'   => $emailCredentials['charset'],
+            'wordwrap'  => $emailCredentials['wordwrap'],
+        ];
+        $this->email->initialize($config);
+
+        $mail_data = $data['mail_data'];
+        $email_to = $data['mail_to'];
+        $subject = $data['subject'];
+        $template = $data['template_path'];
+        
+        $sender_name = 'GPI Portal';
+
+        $body = $this->load->view($template, $mail_data, TRUE);
+        
+        $this->email->set_newline("\r\n");
+        $this->email->set_mailtype("html");
+		$this->email->from($emailCredentials['smtp_user'], $sender_name);
+		$this->email->to($email_to);
+		$this->email->subject($subject);
+		$this->email->message($body);
+        $this->email->attach($pdfFilePath);
+        if($this->email->send()) {
+            unlink($pdfFilePath);
 			return TRUE;
 		} else {
 			log_message('error', $this->email->print_debugger());

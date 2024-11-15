@@ -80,4 +80,14 @@ class Member_application extends MY_Controller
         echo json_encode($output);
     }
 
+    public function applicationChart()
+    {
+        $range = $this->input->get('range');
+        $data = $this->member_application->applicationChart($range);
+
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($data));
+    }
+
 }
