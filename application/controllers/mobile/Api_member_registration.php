@@ -19,6 +19,67 @@ class Api_member_registration extends RestController
         $this->load->model('System_counter_generator_model', 'system_counter');
     }
 
+    private function send_email_attachment($data) 
+    {
+        require_once 'vendor/autoload.php';
+        $this->load->model('role_permission_model');
+        $emailCredentials = $this->role_permission_model->get_auto_reply_info();
+
+        $mpdf = new \Mpdf\Mpdf( [ 
+            'format' => 'A4-P',
+            'margin_right' => 0,
+            'margin_left' => 0,
+            'margin_top' => 0,
+            'margin_bottom' => 0
+        ]);
+        $mpdf->showImageErrors = true;
+        $html = $this->load->view( 'admin_portal/pdf/copy_registration_pdf', $data['pdf_data'], true );
+
+        $file = 'Membership Application-' .$data['application_no'];
+        $pdfFilePath = FCPATH . "assets/uploaded_file/" . $file . ".pdf";
+        $mpdf->WriteHTML($html);
+        $mpdf->Output($pdfFilePath, "F");
+
+		$this->load->library('email');
+        $this->email->clear(TRUE);
+        $config = [
+            'protocol'  => $emailCredentials['protocol'],
+            'smtp_host' => $emailCredentials['smtp_host'],
+            'smtp_port' => $emailCredentials['smtp_port'],
+            'smtp_user' => $emailCredentials['smtp_user'],
+            'smtp_pass' => $emailCredentials['smtp_pass'],
+            'smtp_crypto' => $emailCredentials['smtp_crypto'],
+            'mailtype'  => $emailCredentials['mailtype'],
+            'charset'   => $emailCredentials['charset'],
+            'wordwrap'  => $emailCredentials['wordwrap'],
+        ];
+        $this->email->initialize($config);
+
+        $mail_data = $data['mail_data'];
+        $email_to = $data['mail_to'];
+        $subject = $data['subject'];
+        $template = $data['template_path'];
+        
+        $sender_name = 'GPI Portal';
+
+        $body = $this->load->view($template, $mail_data, TRUE);
+        
+        $this->email->set_newline("\r\n");
+        $this->email->set_mailtype("html");
+		$this->email->from($emailCredentials['smtp_user'], $sender_name);
+		$this->email->to($email_to);
+		$this->email->subject($subject);
+		$this->email->message($body);
+        $this->email->attach($pdfFilePath);
+        if($this->email->send()) {
+            unlink($pdfFilePath);
+			return TRUE;
+		} else {
+			log_message('error', $this->email->print_debugger());
+			return FALSE;
+		}
+    }
+
     public function process_registration_post()
     {
         $error = '';
@@ -31,7 +92,7 @@ class Api_member_registration extends RestController
         $base64DataPassport = $decodedData['passport_attachment'];
         $binaryDataPassport = base64_decode($base64DataPassport);
         $filenamePassport = $decodedData['first_name'].'_passport'.rand(10000, 99999) . '_' . $dt . '.jpg';
-        $uploadPathPassport  = 'assets/uploaded_file/passport/';
+        $uploadPathPassport  = 'assets/uploaded_file/member_application/passport/';
         file_put_contents($uploadPathPassport . $filenamePassport, $binaryDataPassport);
         //End of Passport
 
@@ -39,7 +100,7 @@ class Api_member_registration extends RestController
         $base64DataSelfie = $decodedData['selfie_img'];
         $binaryDataSelfie = base64_decode($base64DataSelfie);
         $filenameSelfie = $decodedData['first_name'].'_passport'.rand(10000, 99999) . '_' . $dt . '.jpg';
-        $uploadPathSelfie  = 'assets/uploaded_file/selfie_img/';
+        $uploadPathSelfie  = 'assets/uploaded_file/member_application/selfie_img/';
         file_put_contents($uploadPathSelfie . $filenameSelfie, $binaryDataSelfie);
         //End of Selfie
 
@@ -47,7 +108,7 @@ class Api_member_registration extends RestController
         $base64DataSignature = $decodedData['signature'];
         $binaryDataSignature = base64_decode($base64DataSignature);
         $filename = $decodedData['first_name'].'_sign'.rand(10000, 99999) . '_' . $dt . '.png';
-        $uploadPath  = 'assets/uploaded_file/signature/';
+        $uploadPath  = 'assets/uploaded_file/member_application/signature/';
         file_put_contents($uploadPath . $filename, $binaryDataSignature);
         //End of Signature
 
