@@ -314,6 +314,7 @@ class Main extends MY_Controller
 	// 		'template_path' => 'admin_portal/email/success_registration',
 	// 		'mail_data'     => $mail_data,
     //         'pdf_data'      => $pdf_data,
+    //         'application_no' => '1235456',
 	// 	]);
     // }
 

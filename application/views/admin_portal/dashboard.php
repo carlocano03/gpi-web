@@ -47,6 +47,7 @@
                                     <div class="custom-card__sub-text">
                                         Total Member
                                     </div>
+                                    <!-- <a href="<?= base_url('admin_portal/main/send_mail')?>">Send</a> -->
                                 </div>
                             </div>
                         </div>
