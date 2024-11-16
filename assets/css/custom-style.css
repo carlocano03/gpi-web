@@ -352,8 +352,13 @@ input[type=number] {
 }
 
 .offcanvas-header {
-  background: linear-gradient(to right, #434875, #b18647);
-  border-bottom: 2px solid #434875 !important;
+  background: linear-gradient(48deg, rgba(216,40,42,1) 0%, rgba(216,40,42,1) 48%, rgba(52,68,137,0.8688725490196079) 100%);
+  padding-bottom: 20px;
+  color: #fff;
+}
+
+.offcanvas {
+  height: auto !important;
 }
 
 .card-header h5 {

@@ -158,4 +158,56 @@ class Member_application_model extends MY_Model
         );
     }
 
+    function get_member_info($application_id)
+    {
+        $this->db->select('*');
+        $this->db->select("CONCAT(last_name, ', ', first_name, ' ', middle_name) as member_name");
+        $this->db->from('application_request');
+        $this->db->where('application_id', $application_id);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    function process_approval($update_request, $application_id)
+    {
+        $this->db->where('application_id', $application_id);
+        $update = $this->db->update('application_request', $update_request);
+        return $update?TRUE:FALSE;
+    }
+
+    function check_existing_member($first_name, $last_name, $birthday)
+    {
+        $this->db->where('first_name', $first_name);
+        $this->db->where('last_name', $last_name);
+        $this->db->where('birthday', $birthday);
+        $query = $this->db->get('member_info');
+        return $query;
+    }
+
+    function insert_member_details($insert_member)
+    {
+        $insert = $this->db->insert('member_info', $insert_member);
+        if ($insert) {
+            return $this->db->insert_id();
+        } else {
+            return '';
+        }
+    }
+
+    function insert_user_acct($member_account)
+    {
+        $insert = $this->db->insert('user_acct', $member_account);
+        if ($insert) {
+            return $this->db->insert_id();
+        } else {
+            return '';
+        } 
+    }
+
+    function update_member_details($user_id, $member_id)
+    {
+        $this->db->where('member_id', $member_id);
+        return $this->db->update('member_info', array('user_id' => $user_id));
+    }
+
 }

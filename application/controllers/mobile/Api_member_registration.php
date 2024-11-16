@@ -113,7 +113,7 @@ class Api_member_registration extends RestController
                 $this->send_email_attachment([
                     'mail_to'       => $decodedData['email_address'],
                     'cc'            => [],
-                    'subject'       => 'Member Application [For Approval]',
+                    'subject'       => 'Membership Application [For Approval]',
                     'template_path' => 'admin_portal/email/success_registration',
                     'application_no' => $application_no,
                     'mail_data'     => $mail_data,

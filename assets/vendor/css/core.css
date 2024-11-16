@@ -5445,7 +5445,6 @@ textarea.form-control-lg {
 .offcanvas-body {
   flex-grow: 1;
   padding: 1.5rem 1.5rem;
-  overflow-y: auto;
 }
 
 .offcanvas-start {
