@@ -108,7 +108,7 @@ class Api_member_registration extends RestController
 
         //Signature
         $base64DataSignature = $decodedData['signature'];
-        $base64DataSignature = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataSelfie);
+        $base64DataSignature = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataSignature);
         $binaryDataSignature = base64_decode($base64DataSignature);
         $filename = $decodedData['first_name'].'_sign'.rand(10000, 99999) . '_' . $dt . '.png';
         $uploadPath  = 'assets/uploaded_file/member_application/signature/';
