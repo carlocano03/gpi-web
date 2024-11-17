@@ -102,7 +102,7 @@ class Api_member_registration extends RestController
             default => 'jpg'
         };
 
-        $filenamePassport = $decodedData['first_name'].'_passport'.rand(10000, 99999) . '_' . $dt . $extension;
+        $filenamePassport = $decodedData['first_name'].'_passport'.rand(10000, 99999) . '_' . $dt . '.' . $extension;
         $uploadPathPassport  = 'assets/uploaded_file/member_application/passport/';
         file_put_contents($uploadPathPassport . $filenamePassport, $binaryDataPassport);
         //End of Passport
@@ -120,7 +120,7 @@ class Api_member_registration extends RestController
             default => 'jpg'
         };
 
-        $filenameSelfie = $decodedData['first_name'].'_profile'.rand(10000, 99999) . '_' . $dt . $extensionSelfie;
+        $filenameSelfie = $decodedData['first_name'].'_profile'.rand(10000, 99999) . '_' . $dt . '.' . $extensionSelfie;
         $uploadPathSelfie  = 'assets/uploaded_file/member_application/selfie_img/';
         file_put_contents($uploadPathSelfie . $filenameSelfie, $binaryDataSelfie);
         //End of Selfie
@@ -138,7 +138,7 @@ class Api_member_registration extends RestController
             default => 'jpg'
         };
 
-        $filename = $decodedData['first_name'].'_sign'.rand(10000, 99999) . '_' . $dt . $extensionSign;
+        $filename = $decodedData['first_name'].'_sign'.rand(10000, 99999) . '_' . $dt . '.' . $extensionSign;
         $uploadPath  = 'assets/uploaded_file/member_application/signature/';
         file_put_contents($uploadPath . $filename, $binaryDataSignature);
         //End of Signature

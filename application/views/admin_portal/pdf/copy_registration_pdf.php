@@ -77,11 +77,14 @@
                 <td><?= isset($pdf_data['birthday']) ? date('F j, Y', strtotime($pdf_data['birthday'])) : '';?></td>
                 <td class="fw-bold" style="width:90px; background:#dfe6e9;">Gender</td>
                 <td>
-                    <input type="radio"> Male
-                    <input type="radio"> Female
+                    <?php
+                        $gender = isset($pdf_data['gender']) ? $pdf_data['gender'] : '';
+                    ?>
+                    <?= $gender === 'male' ? '▣' : '▢' ?> Male
+                    <?= $gender === 'female' ? '▣' : '▢' ?> Female
                 </td>
                 <td class="fw-bold" style="width:85px; background:#dfe6e9;">Passport No.</td>
-                <td>12345678</td>
+                <td><?= isset($pdf_data['passport_no']) ? $pdf_data['passport_no'] : '';?></td>
             </tr>
 
             <tr>
