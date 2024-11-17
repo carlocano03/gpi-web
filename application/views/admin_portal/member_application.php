@@ -152,16 +152,22 @@
                     if (data.passport_attachment == '') {
                         $('.download_passport').hide();
                         $('.no_passport').text('No attachment found');
+                    } else {
+                        $('.no_passport').hide();
                     }
 
                     if (data.selfie_attachment == '') {
                         $('.download_selfie').hide();
                         $('.no_selfie').text('No attachment found');
+                    } else {
+                        $('.no_selfie').hide();
                     }
 
                     if (data.signature_attachment == '') {
                         $('.download_signature').hide();
                         $('.no_sign').text('No attachment found');
+                    } else {
+                        $('.no_sign').hide();
                     }
 
                     $('#offcanvasBottom').offcanvas('show');
@@ -190,6 +196,7 @@
                             action: 'Approved',
                             '_token': csrf_token_value,
                         },
+                        dataType: "json",
                         beforeSend: function() {
                             $('.loading-screen').show();
                         },
@@ -247,6 +254,7 @@
                             action: 'Declined',
                             '_token': csrf_token_value,
                         },
+                        dataType: "json",
                         beforeSend: function() {
                             $('.loading-screen').show();
                         },
