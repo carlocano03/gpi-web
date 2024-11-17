@@ -289,7 +289,7 @@
 
                 </td>
                 <td style="width:30px"></td>
-                <td style="vertical-align:middle;">
+                <td style="vertical-align:middle; text-align:center;">
                     <p style="font-size:11px;">Signature over Printed Name:</p>
                     <br><br>
                     <?php 
@@ -297,12 +297,20 @@
                         if ($pdf_data['signature'] != '') {
                             if(!empty($pdf_data['signature']) && file_exists('./assets/uploaded_file/member_application/signature/'.$pdf_data['signature'])){
                                 // $img = base_url()."assets/uploaded_attachment/personal_photo/".$student->personal_photo;
-                                $img = '<img style="widht:100px;" src="'.base_url()."/assets/uploaded_file/member_application/signature/".$pdf_data['signature'].'">';
+                                $img = '<img  style="width:80px;" src="'.base_url()."/assets/uploaded_file/member_application/signature/".$pdf_data['signature'].'">';
                             }
                         }
                     ?>
                     <div><?= $img; ?></div>
-                    <span class="fw-bold">CARLO PAGDANGANAN CANO</span>
+                    <span class="fw-bold">
+                        <?php
+                            $first_name = isset($pdf_data['first_name']) ? $pdf_data['first_name'] : '';
+                            $last_name = isset($pdf_data['last_name']) ? $pdf_data['last_name'] : '';
+
+                            $printed_name = strtoupper($first_name).' '.strtoupper($last_name)
+                        ?>
+                        <?= $printed_name;?>
+                    </span>
                     <br><br>
                     Date: <?= isset($pdf_data['date_sign']) ? date('F j, Y', strtotime($pdf_data['date_sign'])) : '';?>
                 </td>

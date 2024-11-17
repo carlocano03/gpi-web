@@ -67,6 +67,7 @@ class Member_information extends MY_Controller
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item text-primary view_details" data-id="'.$list->member_id.'"><i class="bi bi-view-list me-2"></i>View Details</a></li>
+                            <li><a class="dropdown-item text-info download_form" data-id="'.$member_id.'"><i class="bi bi-cloud-arrow-down me-2"></i>Download Form</a></li>
                             <li><a class="dropdown-item '.$textColor.' user_activation" 
                                 data-id="'.$list->member_id.'"
                                 data-email="'.$list->email_address.'"
@@ -167,5 +168,73 @@ class Member_information extends MY_Controller
             'success' => $success,
         );
         echo json_encode($output);
+    }
+
+    public function print_form()
+    {
+        require_once 'vendor/autoload.php';
+        $member_id = $this->cipher->decrypt($this->input->get('member'));
+        $data['pdf_data'] = $this->member_information->get_member_information($member_id);
+
+        $mpdf = new \Mpdf\Mpdf( [ 
+            'format' => 'A4-P',
+            'margin_right' => 0,
+            'margin_left' => 0,
+            'margin_top' => 0,
+            'margin_bottom' => 0
+        ]);
+
+        $mpdf->showImageErrors = true;
+        $html = $this->load->view( 'admin_portal/pdf/copy_registration_pdf', $data, true );
+        $mpdf->WriteHTML( $html );
+        $mpdf->Output();
+    }
+
+    public function get_member_info()
+    {
+        $member_id = $this->input->post('member_id', true);
+        $info = $this->member_information->get_member_info($member_id);
+
+        $data = [
+            'complete_name'             => ucwords($info->member_name) ?? '',
+            'birthday'                  => isset($info->birthday) ? date('F j, Y', strtotime($info->birthday)) : '',
+            'gender'                    => ucfirst($info->gender) ?? '',
+            'passport_no'               => $info->passport_no ?? '',
+            'civil_status'              => ucfirst($info->civil_status) ?? '',
+            'spouse_name'               => ucwords($info->spouse_name) ?? '',
+            'occupation'                => ucwords($info->occupation) ?? '',
+            'retiree'                   => strtoupper($info->retiree) ?? '',
+            'phone_no'                  => $info->phone_number ?? '',
+            'mobile_no'                 => $info->mobile_number ?? '',
+            'email_address'             => $info->email_address ?? '',
+
+            'business_address'          => ucwords($info->business_address) ?? '',
+            'business_phone'            => $info->business_phone_no ?? '',
+            'business_mobile'           => $info->business_mobile_no ?? '',
+
+            'em_contact_name'           => ucwords($info->em_contact_name) ?? '',
+            'em_relationship'           => ucwords($info->em_relationship) ?? '',
+            'em_phone'                  => $info->em_phone_np ?? '',
+            'em_mobile'                 => $info->em_mobile_no ?? '',
+            'em_address'                => ucwords($info->em_address) ?? '',
+
+            'ref_name'                  => ucwords($info->first_ref_name) ?? '',
+            'ref_relationship'          => ucwords($info->first_ref_relationship) ?? '',
+            'ref_phone'                 => $info->first_ref_phone_no ?? '',
+            'ref_mobile'                => $info->first_ref_mobile_no ?? '',
+            'ref_address'               => ucwords($info->first_ref_address) ?? '',
+
+            'add_ref_name'              => ucwords($info->sec_ref_name) ?? '',
+            'add_ref_relationship'      => ucwords($info->sec_ref_relationship) ?? '',
+            'add_ref_phone'             => $info->sec_ref_phone_no ?? '',
+            'add_ref_mobile'            => $info->sec_ref_mobile_no ?? '',
+            'add_ref_address'           => ucwords($info->sec_ref_address) ?? '',
+
+            'passport_attachment'       => $info->passport_attachment ?? '',
+            'selfie_attachment'         => $info->selfie_img ?? '',
+            'signature_attachment'      => $info->signature ?? '',
+        ];
+
+        echo json_encode($data);
     }
 }

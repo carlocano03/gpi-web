@@ -62,6 +62,7 @@ $route['admin/manage-news'] = 'admin_portal/main/manage_news';
 $route['admin/manage-news/add-form'] = 'admin_portal/main/news_add_form';
 $route['admin/manage-news/view'] = 'admin_portal/main/view_news';
 
+$route['admin/member-information/print_form'] = 'admin_portal/member_information/print_form';
 $route['admin/pdf'] = 'admin_portal/main/pdf_file';
 
 //Mobile API Call
