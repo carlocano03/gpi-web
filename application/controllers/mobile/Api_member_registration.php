@@ -87,12 +87,22 @@ class Api_member_registration extends RestController
         $encodedData = file_get_contents('php://input');
         $decodedData = json_decode($encodedData, true);
         $dt = Date('His');
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
 
         //Passport
         $base64DataPassport = $decodedData['passport_attachment'];
         $base64DataPassport = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataPassport);
         $binaryDataPassport = base64_decode($base64DataPassport);
-        $filenamePassport = $decodedData['first_name'].'_passport'.rand(10000, 99999) . '_' . $dt . '.jpg';
+
+        $mimeType = $finfo->buffer($binaryDataPassport);
+        $extension = match($mimeType) {
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/gif' => 'gif',
+            default => 'jpg'
+        };
+
+        $filenamePassport = $decodedData['first_name'].'_passport'.rand(10000, 99999) . '_' . $dt . $extension;
         $uploadPathPassport  = 'assets/uploaded_file/member_application/passport/';
         file_put_contents($uploadPathPassport . $filenamePassport, $binaryDataPassport);
         //End of Passport
@@ -101,7 +111,16 @@ class Api_member_registration extends RestController
         $base64DataSelfie = $decodedData['selfie_img'];
         $base64DataSelfie = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataSelfie);
         $binaryDataSelfie = base64_decode($base64DataSelfie);
-        $filenameSelfie = $decodedData['first_name'].'_profile'.rand(10000, 99999) . '_' . $dt . '.jpg';
+
+        $mimeTypeSelfie = $finfo->buffer($binaryDataSelfie);
+        $extensionSelfie = match($mimeTypeSelfie) {
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/gif' => 'gif',
+            default => 'jpg'
+        };
+
+        $filenameSelfie = $decodedData['first_name'].'_profile'.rand(10000, 99999) . '_' . $dt . $extensionSelfie;
         $uploadPathSelfie  = 'assets/uploaded_file/member_application/selfie_img/';
         file_put_contents($uploadPathSelfie . $filenameSelfie, $binaryDataSelfie);
         //End of Selfie
@@ -110,7 +129,16 @@ class Api_member_registration extends RestController
         $base64DataSignature = $decodedData['signature'];
         $base64DataSignature = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataSignature);
         $binaryDataSignature = base64_decode($base64DataSignature);
-        $filename = $decodedData['first_name'].'_sign'.rand(10000, 99999) . '_' . $dt . '.png';
+
+        $mimeTypeSign = $finfo->buffer($binaryDataSignature);
+        $extensionSign = match($mimeTypeSign) {
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/gif' => 'gif',
+            default => 'jpg'
+        };
+
+        $filename = $decodedData['first_name'].'_sign'.rand(10000, 99999) . '_' . $dt . $extensionSign;
         $uploadPath  = 'assets/uploaded_file/member_application/signature/';
         file_put_contents($uploadPath . $filename, $binaryDataSignature);
         //End of Signature
