@@ -65,16 +65,16 @@
         <table class="tbl-info">
             <tr>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">First Name</td>
-                <td>Carlo</td>
+                <td><?= isset($pdf_data['first_name']) ? $pdf_data['first_name'] : '';?></td>
                 <td class="fw-bold" style="width:90px; background:#dfe6e9;">Middle Name</td>
-                <td>Pagdanganan</td>
+                <td><?= isset($pdf_data['middle_name']) ? $pdf_data['middle_name'] : '';?></td>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">Last Name</td>
-                <td>Cano</td>
+                <td><?= isset($pdf_data['last_name']) ? $pdf_data['last_name'] : '';?></td>
             </tr>
 
             <tr>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">Birthday</td>
-                <td>January 03, 1994</td>
+                <td><?= isset($pdf_data['birthday']) ? date('F j, Y', strtotime($pdf_data['birthday'])) : '';?></td>
                 <td class="fw-bold" style="width:90px; background:#dfe6e9;">Gender</td>
                 <td>
                     <input type="radio"> Male
