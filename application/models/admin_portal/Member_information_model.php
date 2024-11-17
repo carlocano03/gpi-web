@@ -96,4 +96,20 @@ class Member_information_model extends MY_Model
         $this->db->update('user_acct', $update_acct);
     }
 
+    function get_member_information($member_id)
+    {
+        $this->db->where('member_id', $member_id);
+        $query = $this->db->get('member_info');
+        return $query->row_array();
+    }
+
+    function get_member_info($member_id)
+    {
+        $this->db->select('*');
+        $this->db->select("CONCAT(last_name, ', ', first_name, ' ', middle_name) as member_name");
+        $this->db->from('member_info');
+        $this->db->where('member_id', $member_id);
+        $query = $this->db->get();
+        return $query->row();
+    }
 }

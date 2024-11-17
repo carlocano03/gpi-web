@@ -154,5 +154,104 @@
                 }
             });
         });
+
+        $(document).on('click', '.download_form', function() {
+            var member_id = $(this).data('id');
+
+            var url = "<?= base_url('admin/member-information/print_form?member=')?>" + member_id;
+            window.open(url, 'targetWindow','resizable=yes,width=1000,height=1000');
+        });
+
+        $(document).on('click', '.view_details', function() {
+            var member_id = $(this).data('id');
+
+            $.ajax({
+                url: "<?= base_url('admin_portal/member_information/get_member_info')?>",
+                method: "POST",
+                data: {
+                    member_id: member_id,
+                    '_token': csrf_token_value,
+                },
+                dataType: "json",
+                success: function(data) {
+                    $('.complete_name').text(data.complete_name);
+                    $('.birthday').text(data.birthday);
+                    $('.gender').text(data.gender);
+                    $('.passport_no').text(data.passport_no);
+                    $('.civil_status').text(data.civil_status);
+                    $('.spouse_name').text(data.spouse_name);
+                    $('.occupation').text(data.occupation);
+                    $('.retiree').text(data.retiree);
+                    $('.phone_no').text(data.phone_no);
+                    $('.mobile_no').text(data.mobile_no);
+                    $('.email_address').text(data.email_address);
+                    $('.business_address').text(data.business_address);
+                    $('.business_phone').text(data.business_phone);
+                    $('.business_mobile').text(data.business_mobile);
+                    $('.em_contact_name').text(data.em_contact_name);
+                    $('.em_relationship').text(data.em_relationship);
+                    $('.em_phone').text(data.em_phone);
+                    $('.em_mobile').text(data.em_mobile);
+                    $('.em_address').text(data.em_address);
+                    $('.ref_name').text(data.ref_name);
+                    $('.ref_relationship').text(data.ref_relationship);
+                    $('.ref_phone').text(data.ref_phone);
+                    $('.ref_mobile').text(data.ref_mobile);
+                    $('.ref_address').text(data.ref_address);
+                    $('.add_ref_name').text(data.add_ref_name);
+                    $('.add_ref_relationship').text(data.add_ref_relationship);
+                    $('.add_ref_phone').text(data.add_ref_phone);
+                    $('.add_ref_mobile').text(data.add_ref_mobile);
+                    $('.add_ref_address').text(data.add_ref_address);
+                    $('.passport_attachment').val(data.passport_attachment);
+                    $('.selfie_attachment').val(data.selfie_attachment);
+                    $('.signature_attachment').val(data.signature_attachment);
+
+                    if (data.passport_attachment == '') {
+                        $('.download_passport').hide();
+                        $('.no_passport').text('No attachment found');
+                    } else {
+                        $('.no_passport').hide();
+                    }
+
+                    if (data.selfie_attachment == '') {
+                        $('.download_selfie').hide();
+                        $('.no_selfie').text('No attachment found');
+                    } else {
+                        $('.no_selfie').hide();
+                    }
+
+                    if (data.signature_attachment == '') {
+                        $('.download_signature').hide();
+                        $('.no_sign').text('No attachment found');
+                    } else {
+                        $('.no_sign').hide();
+                    }
+
+                    $('#offcanvasBottom').offcanvas('show');
+                }
+            });
+        });
+
+        $(document).on('click', '.download_passport', function() {
+            var filename = $('.passport_attachment').val();
+
+            var url = "<?= base_url('admin_portal/member_application/download_passport?file=')?>" + filename;
+            window.location.href = url;
+        });
+
+        $(document).on('click', '.download_selfie', function() {
+            var filename = $('.selfie_attachment').val();
+
+            var url = "<?= base_url('admin_portal/member_application/download_selfie?file=')?>" + filename;
+            window.location.href = url;
+        });
+
+        $(document).on('click', '.download_signature', function() {
+            var filename = $('.signature_attachment').val();
+
+            var url = "<?= base_url('admin_portal/member_application/download_signature?file=')?>" + filename;
+            window.location.href = url;
+        });
     });
 </script>
