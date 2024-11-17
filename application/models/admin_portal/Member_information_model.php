@@ -83,4 +83,17 @@ class Member_information_model extends MY_Model
         }
     }
 
+    function user_activation($update_member, $member_id)
+    {
+        $this->db->where('member_id', $member_id);
+        $update = $this->db->update('member_info', $update_member);
+        return $update?TRUE:FALSE;
+    }
+
+    function update_user_account($update_acct, $user_id)
+    {
+        $this->db->where('user_id', $user_id);
+        $this->db->update('user_acct', $update_acct);
+    }
+
 }

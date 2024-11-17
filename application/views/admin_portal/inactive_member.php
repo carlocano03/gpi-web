@@ -44,7 +44,7 @@
                             <th>Member ID</th>
                             <th>Complete Name</th>
                             <th>Email Address</th>
-                            <th>Date Joined</th>
+                            <th>Date Inactive</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -54,6 +54,12 @@
                 </table>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="loading-screen text-center" style="display: none;">
+    <div class="spinner-border text-dark" role="status">
+
     </div>
 </div>
 
@@ -84,6 +90,69 @@
                     csrf_token_value = res.responseJSON.csrf_token_value;
                 }
             }
+        });
+
+        $(document).on('click', '.user_activation', function() {
+            var member_id = $(this).data('id');
+            var email_address = $(this).data('email');
+            var name = $(this).data('name');
+            var user_id = $(this).data('user_id');
+
+            Swal.fire({
+                title: 'Are you sure..',
+                text: "You want to activate this member?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, continue',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "<?= base_url('admin_portal/member_information/user_activation');?>",
+                        method: "POST",
+                        data: {
+                            member_id: member_id,
+                            email_address: email_address,
+                            name: name,
+                            user_id: user_id,
+                            action: 'Activate',
+                            '_token': csrf_token_value,
+                        },
+                        dataType: "json",
+                        beforeSend: function() {
+                            $('.loading-screen').show();
+                        },
+                        success: function(data) {
+                            if (data.error != '') {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Ooops...',
+                                    text: data.error,
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thank You!',
+                                    text: data.success,
+                                });
+                                tbl_member.draw();
+                            }
+                        },
+                        complete: function() {
+                            $('.loading-screen').hide();
+                        },
+                        error: function() {
+                            $('.loading-screen').hide();
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ooops...',
+                                text: 'An error occurred while processing the request.',
+                            });
+                        }
+                    });
+                }
+            });
         });
     });
 </script>
