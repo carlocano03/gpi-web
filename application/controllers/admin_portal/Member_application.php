@@ -227,7 +227,7 @@ class Member_application extends MY_Controller
                     ];
 
                     $this->send_email_html([
-                    	'mail_to'       => $data['email_address'],
+                    	'mail_to'       => $request['email_address'],
                     	'cc'            => [],
                     	'subject'       => 'Congratulations [Membership Application Approved]',
                     	'template_path' => 'admin_portal/email/approved_request',

@@ -207,7 +207,7 @@ class Member_application_model extends MY_Model
     function update_member_details($user_id, $member_id)
     {
         $this->db->where('member_id', $member_id);
-        return $this->db->update('member_info', array('user_id' => $user_id));
+        return $this->db->update('member_info', array('member_user_id' => $user_id));
     }
 
 }
