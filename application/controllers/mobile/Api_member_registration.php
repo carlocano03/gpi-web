@@ -33,7 +33,9 @@ class Api_member_registration extends RestController
             'margin_bottom' => 0
         ]);
         $mpdf->showImageErrors = true;
-        $html = $this->load->view( 'admin_portal/pdf/copy_registration_pdf', $data['pdf_data'], true );
+        
+        $data['pdf_data'] = $this->api_member_registration_model->get_member_application($data['application_no']);
+        $html = $this->load->view( 'admin_portal/pdf/copy_registration_pdf', $data, true );
 
         $file = 'Membership Application-' .$data['application_no'];
         $pdfFilePath = FCPATH . "assets/uploaded_file/" . $file . ".pdf";
@@ -88,32 +90,60 @@ class Api_member_registration extends RestController
         $decodedData = json_decode($encodedData, true);
         $dt = Date('His');
 
-        //Passport
-        $base64DataPassport = $decodedData['passport_attachment'];
-        $base64DataPassport = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataPassport);
-        $binaryDataPassport = base64_decode($base64DataPassport);
-        $filenamePassport = $decodedData['first_name'].'_passport'.rand(10000, 99999) . '_' . $dt . '.jpg';
-        $uploadPathPassport  = 'assets/uploaded_file/member_application/passport/';
-        file_put_contents($uploadPathPassport . $filenamePassport, $binaryDataPassport);
-        //End of Passport
+        // Passport
+        if (!empty($decodedData['passport_attachment'])) {
+            $base64DataPassport = $decodedData['passport_attachment'];
+            $base64DataPassport = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataPassport);
+            $binaryDataPassport = base64_decode($base64DataPassport);
 
-        //Selfie
-        $base64DataSelfie = $decodedData['selfie_img'];
-        $base64DataSelfie = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataSelfie);
-        $binaryDataSelfie = base64_decode($base64DataSelfie);
-        $filenameSelfie = $decodedData['first_name'].'_profile'.rand(10000, 99999) . '_' . $dt . '.jpg';
-        $uploadPathSelfie  = 'assets/uploaded_file/member_application/selfie_img/';
-        file_put_contents($uploadPathSelfie . $filenameSelfie, $binaryDataSelfie);
-        //End of Selfie
+            if ($binaryDataPassport !== false) {
+                $filenamePassport = $decodedData['first_name'] . '_passport' . rand(10000, 99999) . '_' . $dt . '.jpg';
+                $uploadPathPassport = 'assets/uploaded_file/member_application/passport/';
+                file_put_contents($uploadPathPassport . $filenamePassport, $binaryDataPassport);
+            } else {
+                $filenamePassport = '';
+            }
+        } else {
+            $filenamePassport = '';
+        }
+        // End of Passport
 
-        //Signature
-        $base64DataSignature = $decodedData['signature'];
-        $base64DataSignature = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataSignature);
-        $binaryDataSignature = base64_decode($base64DataSignature);
-        $filename = $decodedData['first_name'].'_sign'.rand(10000, 99999) . '_' . $dt . '.png';
-        $uploadPath  = 'assets/uploaded_file/member_application/signature/';
-        file_put_contents($uploadPath . $filename, $binaryDataSignature);
-        //End of Signature
+        // Selfie
+        if (!empty($decodedData['selfie_img'])) {
+            $base64DataSelfie = $decodedData['selfie_img'];
+            $base64DataSelfie = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataSelfie);
+            $binaryDataSelfie = base64_decode($base64DataSelfie);
+
+            if ($binaryDataSelfie !== false) {
+                $filenameSelfie = $decodedData['first_name'] . 'profile' . rand(10000, 99999) . $dt . '.jpg';
+                $uploadPathSelfie = 'assets/uploaded_file/member_application/selfie_img/';
+                file_put_contents($uploadPathSelfie . $filenameSelfie, $binaryDataSelfie);
+            } else {
+                $filenameSelfie = '';
+            }
+        } else {
+            $filenameSelfie = '';
+        }
+        // End of Selfie
+
+        // Signature
+        if (!empty($decodedData['signature'])) {
+            $base64DataSignature = $decodedData['signature'];
+            $base64DataSignature = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataSignature);
+            $binaryDataSignature = base64_decode($base64DataSignature);
+
+            if ($binaryDataSignature !== false) {
+                $filename = $decodedData['first_name'] . '_sign' . rand(10000, 99999) . '_' . $dt . '.png';
+                $uploadPath = 'assets/uploaded_file/member_application/signature/';
+                file_put_contents($uploadPath . $filename, $binaryDataSignature);
+            } else {
+                $filename = '';
+            }
+        } else {
+            $filename = '';
+        }
+        // End of Signature
+
 
         $application_no = $this->system_counter->get_ctrl_num_cv($this->counter_member_application);
         $first_name = $decodedData['first_name'];
@@ -181,7 +211,6 @@ class Api_member_registration extends RestController
                     'template_path' => 'admin_portal/email/success_registration',
                     'application_no' => $application_no,
                     'mail_data'     => $mail_data,
-                    'pdf_data'      => $this->api_member_registration_model->get_member_application($application_no),
                 ]);
     
                 //Increment counter

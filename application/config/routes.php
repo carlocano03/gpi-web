@@ -67,7 +67,10 @@ $route['admin/pdf'] = 'admin_portal/main/pdf_file';
 //Mobile API Call
 //[POST REQUEST]
 $route['api/registration-process'] = 'mobile/api_member_registration/process_registration';
-
+$route['api/login-process'] = 'mobile/api_auth_login/login_process';
+$route['api/change-password'] = 'mobile/api_auth_login/change_password';
+$route['api/save-mpin'] = 'mobile/api_auth_login/save_mpin';
+$route['api/login-mpin'] = 'mobile/api_auth_login/login_mpin';
 //[GET REQUEST]
 
 $route['default_controller'] = 'main';

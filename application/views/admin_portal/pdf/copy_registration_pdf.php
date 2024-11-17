@@ -89,50 +89,56 @@
 
             <tr>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">Phone No.</td>
-                <td>00000</td>
+                <td><?= isset($pdf_data['phone_number']) ? $pdf_data['phone_number'] : '';?></td>
                 <td class="fw-bold" style="width:90px; background:#dfe6e9;">Mobile No.</td>
-                <td>09061798559</td>
+                <td><?= isset($pdf_data['mobile_number']) ? $pdf_data['mobile_number'] : '';?></td>
                 <td class="fw-bold" style="width:100px; background:#dfe6e9;">Email Address</td>
-                <td>carlocano03@gmail.com</td>
+                <td><?= isset($pdf_data['email_address']) ? $pdf_data['email_address'] : '';?></td>
             </tr>
             
             <tr>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">Civil Status</td>
                 <td>
-                    <input type="radio"> Single
-                    <input type="radio"> Married
+                    <?php
+                        $civil_status = isset($pdf_data['civil_status']) ? $pdf_data['civil_status'] : '';
+                    ?>
+                    <?= $civil_status === 'single' ? '▣' : '▢' ?> Single
+                    <?= $civil_status === 'married' ? '▣' : '▢' ?> Married
                 </td>
                 <td class="fw-bold" style="width:100px; background:#dfe6e9;">Spouse Name</td>
-                <td colspan="3">carlocano03@gmail.com</td>
+                <td colspan="3"><?= isset($pdf_data['spouse_name']) ? $pdf_data['spouse_name'] : '';?></td>
             </tr>
 
             <tr>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">Occupation</td>
                 <td colspan="2">
-                    Web Developer
+                    <?= isset($pdf_data['occupation']) ? $pdf_data['occupation'] : '';?>
                 </td>
                 <td colspan="2" class="fw-bold" style="width:100px; background:#dfe6e9;">Are you a retiree?</td>
                 <td>
-                    <input type="radio"> YES
-                    <input type="radio"> NO
+                    <?php
+                        $retiree = isset($pdf_data['retiree']) ? $pdf_data['retiree'] : '';
+                    ?>
+                    <?= $retiree === 'yes' ? '▣' : '▢' ?> YES
+                    <?= $retiree === 'no' ? '▣' : '▢' ?> NO
                 </td>
             </tr>
 
             <tr>
                 <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Business Address</td>
                 <td colspan="4">
-                    Sample Address
+                    <?= isset($pdf_data['business_address']) ? $pdf_data['business_address'] : '';?>
                 </td>
             </tr>
 
             <tr>
                 <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Business Phone No.</td>
                 <td>
-                    0000
+                    <?= isset($pdf_data['business_phone_no']) ? $pdf_data['business_phone_no'] : '';?>
                 </td>
                 <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Business Mobile No.</td>
                 <td>
-                    09061798559
+                    <?= isset($pdf_data['business_mobile_no']) ? $pdf_data['business_mobile_no'] : '';?>
                 </td>
             </tr>
         </table>
@@ -141,29 +147,29 @@
             <tr>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">Name</td>
                 <td colspan="2">
-                    Ana Marie Cano
+                    <?= isset($pdf_data['em_contact_name']) ? $pdf_data['em_contact_name'] : '';?>
                 </td>
                 <td colspan="2" class="fw-bold" style="width:100px; background:#dfe6e9;">Relationship</td>
                 <td>
-                    Spouse
+                    <?= isset($pdf_data['em_relationship']) ? $pdf_data['em_relationship'] : '';?>
                 </td>
             </tr>
 
             <tr>
                 <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Phone No.</td>
                 <td>
-                    0000
+                    <?= isset($pdf_data['em_phone_no']) ? $pdf_data['em_phone_no'] : '';?>
                 </td>
                 <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Mobile No.</td>
                 <td>
-                    09061798559
+                    <?= isset($pdf_data['em_mobile_no']) ? $pdf_data['em_mobile_no'] : '';?>
                 </td>
             </tr>
 
             <tr>
                 <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Address</td>
                 <td colspan="4">
-                    Sample Address
+                    <?= isset($pdf_data['em_address']) ? $pdf_data['em_address'] : '';?>
                 </td>
             </tr>
         </table>
@@ -173,29 +179,29 @@
                 <tr>
                     <td class="fw-bold" style="width:75px; background:#dfe6e9;">Name</td>
                     <td colspan="2">
-                        Ana Marie Cano
+                        <?= isset($pdf_data['first_ref_name']) ? $pdf_data['first_ref_name'] : '';?>
                     </td>
                     <td colspan="2" class="fw-bold" style="width:100px; background:#dfe6e9;">Relationship</td>
                     <td>
-                        Spouse
+                        <?= isset($pdf_data['first_ref_relationship']) ? $pdf_data['first_ref_relationship'] : '';?>
                     </td>
                 </tr>
 
                 <tr>
                     <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Phone No.</td>
                     <td>
-                        0000
+                        <?= isset($pdf_data['first_ref_phone_no']) ? $pdf_data['first_ref_phone_no'] : '';?>
                     </td>
                     <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Mobile No.</td>
                     <td>
-                        09061798559
+                        <?= isset($pdf_data['first_ref_mobile_no']) ? $pdf_data['first_ref_mobile_no'] : '';?>
                     </td>
                 </tr>
 
                 <tr>
                     <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Address</td>
                     <td colspan="4">
-                        Sample Address
+                        <?= isset($pdf_data['first_ref_address']) ? $pdf_data['first_ref_address'] : '';?>
                     </td>
                 </tr>
             </table>
@@ -205,29 +211,29 @@
                 <tr>
                     <td class="fw-bold" style="width:75px; background:#dfe6e9;">Name</td>
                     <td colspan="2">
-                        Ana Marie Cano
+                        <?= isset($pdf_data['sec_ref_name']) ? $pdf_data['sec_ref_name'] : '';?>
                     </td>
                     <td colspan="2" class="fw-bold" style="width:100px; background:#dfe6e9;">Relationship</td>
                     <td>
-                        Spouse
+                        <?= isset($pdf_data['sec_ref_relationship']) ? $pdf_data['sec_ref_relationship'] : '';?>
                     </td>
                 </tr>
 
                 <tr>
                     <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Phone No.</td>
                     <td>
-                        0000
+                        <?= isset($pdf_data['sec_ref_phone_no']) ? $pdf_data['sec_ref_phone_no'] : '';?>
                     </td>
                     <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Mobile No.</td>
                     <td>
-                        09061798559
+                        <?= isset($pdf_data['sec_ref_mobile_no']) ? $pdf_data['sec_ref_mobile_no'] : '';?>
                     </td>
                 </tr>
 
                 <tr>
                     <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Address</td>
                     <td colspan="4">
-                        Sample Address
+                        <?= isset($pdf_data['sec_ref_address']) ? $pdf_data['sec_ref_address'] : '';?>
                     </td>
                 </tr>
             </table>
@@ -239,7 +245,7 @@
                 <td style="width:60%; text-align:justify;">
                     <p>Terms and Conditions of GOD’S People’s Initiative</p>
                     <br>
-                    <p>Effective Date: November 15, 2024</p>
+                    <p>Effective Date: <?= isset($pdf_data['date_created']) ? date('F j, Y', strtotime($pdf_data['date_created'])) : '';?></p>
                     <br>
                     <p>By using our website and services, you agree to the following terms and conditions. If you do not agree, please refrain from using our services.</p>
                     <br>
@@ -260,7 +266,7 @@
                     </p>
                     <br>
                     <p>
-                        4. Intellectual Property
+                        3. Intellectual Property
                         <p>
                             All content provided by GPI’, including text, images, logos, and software, is protected by copyright and intellectual property laws. You may not use or distribute this content 
                             without permission.
@@ -268,14 +274,14 @@
                     </p>
                     <br>
                     <p>
-                        5. Limitation of Liability
+                        4. Limitation of Liability
                         <p>
                             To the fullest extent permitted by law, GPI is not liable for any indirect, incidental, or consequential damages arising from your use of our services.
                         </p>
                     </p>
                     <br>
                     <p>
-                        6. Privacy
+                        5. Privacy
                         <p>
                             By using our services, you consent to our collection and use of your personal data as described in our Privacy Policy.
                         </p>
@@ -286,9 +292,19 @@
                 <td style="vertical-align:middle;">
                     <p style="font-size:11px;">Signature over Printed Name:</p>
                     <br><br>
+                    <?php 
+                        $img = '';
+                        if ($pdf_data['signature'] != '') {
+                            if(!empty($pdf_data['signature']) && file_exists('./assets/uploaded_file/member_application/signature/'.$pdf_data['signature'])){
+                                // $img = base_url()."assets/uploaded_attachment/personal_photo/".$student->personal_photo;
+                                $img = '<img style="widht:100px;" src="'.base_url()."/assets/uploaded_file/member_application/signature/".$pdf_data['signature'].'">';
+                            }
+                        }
+                    ?>
+                    <div><?= $img; ?></div>
                     <span class="fw-bold">CARLO PAGDANGANAN CANO</span>
                     <br><br>
-                    Date: November 15, 2024
+                    Date: <?= isset($pdf_data['date_sign']) ? date('F j, Y', strtotime($pdf_data['date_sign'])) : '';?>
                 </td>
             </tr>
         </table>
