@@ -290,5 +290,26 @@
                 }
             });
         });
+
+        $(document).on('click', '.download_passport', function() {
+            var filename = $('.passport_attachment').val();
+
+            var url = "<?= base_url('admin_portal/member_application/download_passport?file=')?>" + filename;
+            window.location.href = url;
+        });
+
+        $(document).on('click', '.download_selfie', function() {
+            var filename = $('.selfie_attachment').val();
+
+            var url = "<?= base_url('admin_portal/member_application/download_selfie?file=')?>" + filename;
+            window.location.href = url;
+        });
+
+        $(document).on('click', '.download_signature', function() {
+            var filename = $('.signature_attachment').val();
+
+            var url = "<?= base_url('admin_portal/member_application/download_signature?file=')?>" + filename;
+            window.location.href = url;
+        });
     });
 </script>

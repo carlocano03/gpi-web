@@ -483,7 +483,10 @@ $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = FALSE;
 $config['csrf_exclude_uris'] = array(
     'api/registration-process',
-    
+    'api/login-process',
+    'api/change-password',
+    'api/save-mpin',
+    'api/login-mpin',
 );
 
 /*

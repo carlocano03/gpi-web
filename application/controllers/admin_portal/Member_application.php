@@ -97,39 +97,39 @@ class Member_application extends MY_Controller
         $info = $this->member_application->get_member_info($application_id);
 
         $data = [
-            'complete_name'             => $info->member_name ?? '',
+            'complete_name'             => ucwords($info->member_name) ?? '',
             'birthday'                  => isset($info->birthday) ? date('F j, Y', strtotime($info->birthday)) : '',
-            'gender'                    => $info->gender ?? '',
+            'gender'                    => ucfirst($info->gender) ?? '',
             'passport_no'               => $info->passport_no ?? '',
-            'civil_status'              => $info->civil_status ?? '',
-            'spouse_name'               => $info->spouse_name ?? '',
-            'occupation'                => $info->occupation ?? '',
-            'retiree'                   => $info->retiree ?? '',
+            'civil_status'              => ucfirst($info->civil_status) ?? '',
+            'spouse_name'               => ucwords($info->spouse_name) ?? '',
+            'occupation'                => ucwords($info->occupation) ?? '',
+            'retiree'                   => strtoupper($info->retiree) ?? '',
             'phone_no'                  => $info->phone_number ?? '',
             'mobile_no'                 => $info->mobile_number ?? '',
             'email_address'             => $info->email_address ?? '',
 
-            'business_address'          => $info->business_address ?? '',
+            'business_address'          => ucwords($info->business_address) ?? '',
             'business_phone'            => $info->business_phone_no ?? '',
             'business_mobile'           => $info->business_mobile_no ?? '',
 
-            'em_contact_name'           => $info->em_contact_name ?? '',
-            'em_relationship'           => $info->em_relationship ?? '',
+            'em_contact_name'           => ucwords($info->em_contact_name) ?? '',
+            'em_relationship'           => ucwords($info->em_relationship) ?? '',
             'em_phone'                  => $info->em_phone_np ?? '',
             'em_mobile'                 => $info->em_mobile_no ?? '',
-            'em_address'                => $info->em_address ?? '',
+            'em_address'                => ucwords($info->em_address) ?? '',
 
-            'ref_name'                  => $info->first_ref_name ?? '',
-            'ref_relationship'          => $info->first_ref_relationship ?? '',
+            'ref_name'                  => ucwords($info->first_ref_name) ?? '',
+            'ref_relationship'          => ucwords($info->first_ref_relationship) ?? '',
             'ref_phone'                 => $info->first_ref_phone_no ?? '',
             'ref_mobile'                => $info->first_ref_mobile_no ?? '',
-            'ref_address'               => $info->first_ref_address ?? '',
+            'ref_address'               => ucwords($info->first_ref_address) ?? '',
 
-            'add_ref_name'              => $info->sec_ref_name ?? '',
-            'add_ref_relationship'      => $info->sec_ref_relationship ?? '',
+            'add_ref_name'              => ucwords($info->sec_ref_name) ?? '',
+            'add_ref_relationship'      => ucwords($info->sec_ref_relationship) ?? '',
             'add_ref_phone'             => $info->sec_ref_phone_no ?? '',
             'add_ref_mobile'            => $info->sec_ref_mobile_no ?? '',
-            'add_ref_address'           => $info->sec_ref_address ?? '',
+            'add_ref_address'           => ucwords($info->sec_ref_address) ?? '',
 
             'passport_attachment'       => $info->passport_attachment ?? '',
             'selfie_attachment'         => $info->selfie_img ?? '',
@@ -137,6 +137,30 @@ class Member_application extends MY_Controller
         ];
 
         echo json_encode($data);
+    }
+
+    public function download_passport()
+    {
+        $this->load->helper('download');
+        $filename = $this->input->get('file');
+        $file_path = 'assets/uploaded_file/member_application/passport/' . $filename;
+        force_download($file_path, NULL);
+    }
+
+    public function download_selfie()
+    {
+        $this->load->helper('download');
+        $filename = $this->input->get('file');
+        $file_path = 'assets/uploaded_file/member_application/selfie_img/' . $filename;
+        force_download($file_path, NULL);
+    }
+
+    public function download_signature()
+    {
+        $this->load->helper('download');
+        $filename = $this->input->get('file');
+        $file_path = 'assets/uploaded_file/member_application/signature/' . $filename;
+        force_download($file_path, NULL);
     }
 
     public function request_approval()
