@@ -51,6 +51,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 //ADMINISTRATOR PORTAL
+$route['/'] = 'main/index';
+
 $route['admin/dashboard'] = 'admin_portal/main/index';
 $route['admin/login'] = 'admin_portal/login/index';
 
@@ -63,6 +65,8 @@ $route['admin/manage-news/add-form'] = 'admin_portal/main/news_add_form';
 $route['admin/manage-news/view'] = 'admin_portal/main/view_news';
 
 $route['admin/pdf'] = 'admin_portal/main/pdf_file';
+
+
 
 //Mobile API Call
 //[POST REQUEST]
