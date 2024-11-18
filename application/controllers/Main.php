@@ -30,10 +30,8 @@ class Main extends MY_Controller
 
     public function index()
     {
-        $data['title'] = 'Shantal`s Shop';
-        $this->load->view('website/partial/_header', $data);
+        $data['title'] = 'GPI';
         $this->load->view('website/home', $data);
-        $this->load->view('website/partial/_footer', $data);
     }
 
     // Error 404 redirect
