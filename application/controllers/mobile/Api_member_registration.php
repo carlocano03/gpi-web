@@ -227,4 +227,22 @@ class Api_member_registration extends RestController
         $this->response($output, RestController::HTTP_OK);
     }
 
+    public function religion_get()
+    {
+        $religion = $this->api_member_registration_model->get_religion_list();
+        $religionArray = array();
+
+        foreach($religion as $list) {
+            $religionArray[] = array(
+                'religion_name' => $list->religion_name,
+            );
+        }
+
+        $output = array(
+            'religion' => $religionArray,
+        );
+
+        $this->response($output, RestController::HTTP_OK);
+    }
+
 }

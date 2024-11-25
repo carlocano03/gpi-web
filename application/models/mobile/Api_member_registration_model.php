@@ -39,4 +39,11 @@ class Api_member_registration_model extends MY_Model
         $query = $this->db->get('application_request');
         return $query->num_rows();
     }
+
+    function get_religion_list()
+    {
+        $this->db->where('status', 0);
+        $query = $this->db->get('religion');
+        return $query->result();
+    }
 }
