@@ -50,36 +50,52 @@
                     <div>
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Complete Name:</div>
-                            <div class="complete_name">Carlo Pagdanganan Cano</div>
+                            <div class="complete_name"></div>
                         </div>   
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Birth Date:</div>
-                            <div class="birthday">January 03, 1994</div>
+                            <div class="birthday"></div>
                         </div>      
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Gender:</div>
-                            <div class="gender">Male</div>
+                            <div class="gender"></div>
                         </div>   
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Passport No.:</div>
-                            <div class="passport_no">123456789</div>
+                            <div class="passport_no"></div>
                         </div>  
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Civil Status:</div>
-                            <div class="civil_status">Married</div>
+                            <div class="civil_status"></div>
                         </div> 
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Spouse Name:</div>
-                            <div class="spouse_name">Ana Marie Cano</div>
+                            <div class="spouse_name"></div>
                         </div> 
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Occupation:</div>
-                            <div class="occupation">Web Developer</div>
+                            <div class="occupation"></div>
                         </div>   
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Are you a retiree?</div>
-                            <div class="retiree">No</div>
-                        </div>     
+                            <div class="retiree"></div>
+                        </div>   
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="fw-bold">Religion:</div>
+                            <div class="religion"></div>
+                        </div>    
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="fw-bold">TIN/SSS:</div>
+                            <div class="tin_sss"></div>
+                        </div>  
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="fw-bold">Mother's Name:</div>
+                            <div class="mother_name"></div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="fw-bold">Father's Name:</div>
+                            <div class="father_name"></div>
+                        </div>  
 
                         <div class="divider">Contact Details</div> 
 
@@ -94,21 +110,6 @@
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Email Address:</div>
                             <div class="email_address"></div>
-                        </div> 
-
-                        <div class="divider">Business Information</div> 
-
-                        <div class="mb-2">
-                            <div class="fw-bold">Business Address:</div>
-                            <div class="business_address"></div>
-                        </div> 
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="fw-bold">Business Phone No.:</div>
-                            <div class="business_phone"></div>
-                        </div> 
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div class="fw-bold">Business Mobile No.:</div>
-                            <div class="business_mobile"></div>
                         </div> 
                     </div>
                 </div>
@@ -180,29 +181,6 @@
                             <div class="fw-bold">Address:</div>
                             <div class="ref_address"></div>
                         </div> 
-
-                        <div class="divider">Additional Reference</div> 
-
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="fw-bold">Name:</div>
-                            <div class="add_ref_name"></div>
-                        </div> 
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="fw-bold">Relationship:</div>
-                            <div class="add_ref_relationship"></div>
-                        </div> 
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="fw-bold">Phone No.:</div>
-                            <div class="add_ref_phone"></div>
-                        </div> 
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="fw-bold">Mobile No.:</div>
-                            <div class="add_ref_mobile"></div>
-                        </div> 
-                        <div>
-                            <div class="fw-bold">Address:</div>
-                            <div class="add_ref_address"></div>
-                        </div> 
                     </div>
                 </div>
             </div>
@@ -235,6 +213,12 @@
                             <button class="btn btn-outline-primary btn-sm download_signature"><i class="bi bi-download"></i></button>
                             <span class="no_sign"></span>
                             <input type="hidden" class="signature_attachment">
+                        </div> 
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="fw-bold">Government ID:</div>
+                            <button class="btn btn-outline-primary btn-sm download_id"><i class="bi bi-download"></i></button>
+                            <span class="no_id"></span>
+                            <input type="hidden" class="id_attachment">
                         </div> 
                     </div>
                 </div>

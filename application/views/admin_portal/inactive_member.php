@@ -185,9 +185,10 @@
                     $('.phone_no').text(data.phone_no);
                     $('.mobile_no').text(data.mobile_no);
                     $('.email_address').text(data.email_address);
-                    $('.business_address').text(data.business_address);
-                    $('.business_phone').text(data.business_phone);
-                    $('.business_mobile').text(data.business_mobile);
+                    $('.religion').text(data.religion);
+                    $('.tin_sss').text(data.tin_sss_no);
+                    $('.mother_name').text(data.mother_name);
+                    $('.father_name').text(data.father_name);
                     $('.em_contact_name').text(data.em_contact_name);
                     $('.em_relationship').text(data.em_relationship);
                     $('.em_phone').text(data.em_phone);
@@ -206,6 +207,7 @@
                     $('.passport_attachment').val(data.passport_attachment);
                     $('.selfie_attachment').val(data.selfie_attachment);
                     $('.signature_attachment').val(data.signature_attachment);
+                    $('.id_attachment').val(data.government_id);
 
                     if (data.passport_attachment == '') {
                         $('.download_passport').hide();
@@ -226,6 +228,13 @@
                         $('.no_sign').text('No attachment found');
                     } else {
                         $('.no_sign').hide();
+                    }
+
+                    if (data.government_id == '') {
+                        $('.download_id').hide();
+                        $('.no_id').text('No attachment found');
+                    } else {
+                        $('.no_id').hide();
                     }
 
                     $('#offcanvasBottom').offcanvas('show');
@@ -251,6 +260,13 @@
             var filename = $('.signature_attachment').val();
 
             var url = "<?= base_url('admin_portal/member_application/download_signature?file=')?>" + filename;
+            window.location.href = url;
+        });
+
+        $(document).on('click', '.download_id', function() {
+            var filename = $('.id_attachment').val();
+
+            var url = "<?= base_url('admin_portal/member_application/government_id?file=')?>" + filename;
             window.location.href = url;
         });
     });
