@@ -98,15 +98,18 @@
             
             <tr>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">Civil Status</td>
-                <td>
+                <td colspan="3">
                     <?php
                         $civil_status = isset($pdf_data['civil_status']) ? $pdf_data['civil_status'] : '';
                     ?>
                     <?= $civil_status === 'single' ? '▣' : '▢' ?> Single
                     <?= $civil_status === 'married' ? '▣' : '▢' ?> Married
+                    <?= $civil_status === 'annulled' ? '▣' : '▢' ?> Annulled
+                    <?= $civil_status === 'separated' ? '▣' : '▢' ?> Separated
+                    <?= $civil_status === 'widowed' ? '▣' : '▢' ?> Widowed
                 </td>
                 <td class="fw-bold" style="width:100px; background:#dfe6e9;">Spouse Name</td>
-                <td colspan="3"><?= isset($pdf_data['spouse_name']) ? $pdf_data['spouse_name'] : '';?></td>
+                <td><?= isset($pdf_data['spouse_name']) ? $pdf_data['spouse_name'] : '';?></td>
             </tr>
 
             <tr>
@@ -123,24 +126,27 @@
                     <?= $retiree === 'no' ? '▣' : '▢' ?> NO
                 </td>
             </tr>
-
             <tr>
-                <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Business Address</td>
-                <td colspan="4">
-                    <?= isset($pdf_data['business_address']) ? $pdf_data['business_address'] : '';?>
+                <td class="fw-bold" style="width:75px; background:#dfe6e9;">Religion</td>
+                <td>
+                    <?= isset($pdf_data['religion']) ? $pdf_data['religion'] : '';?>
+                </td>
+                <td class="fw-bold" style="width:75px; background:#dfe6e9;">Mother's Name</td>
+                <td>
+                    <?= isset($pdf_data['mother_name']) ? $pdf_data['mother_name'] : '';?>
+                </td>
+                <td class="fw-bold" style="width:75px; background:#dfe6e9;">Father's Name</td>
+                <td>
+                    <?= isset($pdf_data['father_name']) ? $pdf_data['father_name'] : '';?>
+                </td>
+            </tr>
+            <tr>
+                <td class="fw-bold" style="width:75px; background:#dfe6e9;">TIN/SSS</td>
+                <td colspan="5">
+                    <?= isset($pdf_data['tin_sss_no']) ? $pdf_data['tin_sss_no'] : '';?>
                 </td>
             </tr>
 
-            <tr>
-                <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Business Phone No.</td>
-                <td>
-                    <?= isset($pdf_data['business_phone_no']) ? $pdf_data['business_phone_no'] : '';?>
-                </td>
-                <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Business Mobile No.</td>
-                <td>
-                    <?= isset($pdf_data['business_mobile_no']) ? $pdf_data['business_mobile_no'] : '';?>
-                </td>
-            </tr>
         </table>
         <div class="title">EMERGENCY CONTACT INFORMATION</div>
         <table class="tbl-info">
@@ -202,38 +208,6 @@
                     <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Address</td>
                     <td colspan="4">
                         <?= isset($pdf_data['first_ref_address']) ? $pdf_data['first_ref_address'] : '';?>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="reference">
-            <table class="tbl-info">
-                <tr>
-                    <td class="fw-bold" style="width:75px; background:#dfe6e9;">Name</td>
-                    <td colspan="2">
-                        <?= isset($pdf_data['sec_ref_name']) ? $pdf_data['sec_ref_name'] : '';?>
-                    </td>
-                    <td colspan="2" class="fw-bold" style="width:100px; background:#dfe6e9;">Relationship</td>
-                    <td>
-                        <?= isset($pdf_data['sec_ref_relationship']) ? $pdf_data['sec_ref_relationship'] : '';?>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Phone No.</td>
-                    <td>
-                        <?= isset($pdf_data['sec_ref_phone_no']) ? $pdf_data['sec_ref_phone_no'] : '';?>
-                    </td>
-                    <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Mobile No.</td>
-                    <td>
-                        <?= isset($pdf_data['sec_ref_mobile_no']) ? $pdf_data['sec_ref_mobile_no'] : '';?>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Address</td>
-                    <td colspan="4">
-                        <?= isset($pdf_data['sec_ref_address']) ? $pdf_data['sec_ref_address'] : '';?>
                     </td>
                 </tr>
             </table>

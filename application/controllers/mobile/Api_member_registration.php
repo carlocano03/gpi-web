@@ -144,6 +144,24 @@ class Api_member_registration extends RestController
         }
         // End of Signature
 
+        //Government ID
+        if (!empty($decodedData['government_id'])) {
+            $base64DataID = $decodedData['government_id'];
+            $base64DataID = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataID);
+            $binaryDataID = base64_decode($base64DataID);
+
+            if ($binaryDataID !== false) {
+                $filenameID = $decodedData['first_name'] . '_government' . rand(10000, 99999) . '_' . $dt . '.jpg';
+                $uploadPathID = 'assets/uploaded_file/member_application/government_id/';
+                file_put_contents($uploadPathID . $filenameID, $binaryDataID);
+            } else {
+                $filenameID = '';
+            }
+        } else {
+            $filenameID = '';
+        }
+        // End of ID
+
 
         $application_no = $this->system_counter->get_ctrl_num_cv($this->counter_member_application);
         $first_name = $decodedData['first_name'];
@@ -170,9 +188,11 @@ class Api_member_registration extends RestController
                 'spouse_name'               => $decodedData['spouse_name'],
                 'occupation'                => $decodedData['occupation'],
                 'retiree'                   => $decodedData['retiree'],
-                'business_address'          => $decodedData['business_address'],
-                'business_phone_no'         => $decodedData['business_phone_no'],
-                'business_mobile_no'        => $decodedData['business_mobile_no'],
+                'religion'                  => $decodedData['religion'],
+                'mother_name'               => $decodedData['mother_name'],
+                'father_name'               => $decodedData['father_name'],
+                'tin_sss_no'                => $decodedData['tin_sss_no'],
+                'government_id'             => $filenameID,
                 'em_contact_name'           => $decodedData['em_contact_name'],
                 'em_relationship'           => $decodedData['em_relationship'],
                 'em_phone_no'               => $decodedData['em_phone_no'],
@@ -183,11 +203,6 @@ class Api_member_registration extends RestController
                 'first_ref_phone_no'        => $decodedData['first_ref_phone_no'],
                 'first_ref_mobile_no'       => $decodedData['first_ref_mobile_no'],
                 'first_ref_address'         => $decodedData['first_ref_address'],
-                'sec_ref_name'              => $decodedData['sec_ref_name'],
-                'sec_ref_relationship'      => $decodedData['sec_ref_relationship'],
-                'sec_ref_phone_no'          => $decodedData['sec_ref_phone_no'],
-                'sec_ref_mobile_no'         => $decodedData['sec_ref_mobile_no'],
-                'sec_ref_address'           => $decodedData['sec_ref_address'],
                 'agree_terms_condition'     => $decodedData['agree_terms_condition'],
                 'date_created'              => date('Y-m-d H:i:s'),
                 'request_status'            => 'For Validation',

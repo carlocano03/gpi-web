@@ -108,10 +108,10 @@ class Member_application extends MY_Controller
             'phone_no'                  => $info->phone_number ?? '',
             'mobile_no'                 => $info->mobile_number ?? '',
             'email_address'             => $info->email_address ?? '',
-
-            'business_address'          => ucwords($info->business_address) ?? '',
-            'business_phone'            => $info->business_phone_no ?? '',
-            'business_mobile'           => $info->business_mobile_no ?? '',
+            'religion'                  => $info->religion ?? '',
+            'mother_name'               => ucwords($info->mother_name) ?? '',
+            'father_name'               => ucwords($info->father_name) ?? '',
+            'tin_sss_no'                => $info->tin_sss_no ?? '',
 
             'em_contact_name'           => ucwords($info->em_contact_name) ?? '',
             'em_relationship'           => ucwords($info->em_relationship) ?? '',
@@ -125,15 +125,10 @@ class Member_application extends MY_Controller
             'ref_mobile'                => $info->first_ref_mobile_no ?? '',
             'ref_address'               => ucwords($info->first_ref_address) ?? '',
 
-            'add_ref_name'              => ucwords($info->sec_ref_name) ?? '',
-            'add_ref_relationship'      => ucwords($info->sec_ref_relationship) ?? '',
-            'add_ref_phone'             => $info->sec_ref_phone_no ?? '',
-            'add_ref_mobile'            => $info->sec_ref_mobile_no ?? '',
-            'add_ref_address'           => ucwords($info->sec_ref_address) ?? '',
-
             'passport_attachment'       => $info->passport_attachment ?? '',
             'selfie_attachment'         => $info->selfie_img ?? '',
             'signature_attachment'      => $info->signature ?? '',
+            'government_id'             => $info->government_id ?? '',
         ];
 
         echo json_encode($data);
@@ -160,6 +155,14 @@ class Member_application extends MY_Controller
         $this->load->helper('download');
         $filename = $this->input->get('file');
         $file_path = 'assets/uploaded_file/member_application/signature/' . $filename;
+        force_download($file_path, NULL);
+    }
+
+    public function government_id()
+    {
+        $this->load->helper('download');
+        $filename = $this->input->get('file');
+        $file_path = 'assets/uploaded_file/member_application/government_id/' . $filename;
         force_download($file_path, NULL);
     }
 
@@ -197,9 +200,11 @@ class Member_application extends MY_Controller
                     'spouse_name'               => $request['spouse_name'],
                     'occupation'                => $request['occupation'],
                     'retiree'                   => $request['retiree'],
-                    'business_address'          => $request['business_address'],
-                    'business_phone_no'         => $request['business_phone_no'],
-                    'business_mobile_no'        => $request['business_mobile_no'],
+                    'religion'                  => $request['religion'],
+                    'mother_name'               => $request['mother_name'],
+                    'father_name'               => $request['father_name'],
+                    'tin_sss_no'                => $request['tin_sss_no'],
+                    'government_id'             => $request['government_id'],
                     'em_contact_name'           => $request['em_contact_name'],
                     'em_relationship'           => $request['em_relationship'],
                     'em_phone_no'               => $request['em_phone_no'],
@@ -210,11 +215,6 @@ class Member_application extends MY_Controller
                     'first_ref_phone_no'        => $request['first_ref_phone_no'],
                     'first_ref_mobile_no'       => $request['first_ref_mobile_no'],
                     'first_ref_address'         => $request['first_ref_address'],
-                    'sec_ref_name'              => $request['sec_ref_name'],
-                    'sec_ref_relationship'      => $request['sec_ref_relationship'],
-                    'sec_ref_phone_no'          => $request['sec_ref_phone_no'],
-                    'sec_ref_mobile_no'         => $request['sec_ref_mobile_no'],
-                    'sec_ref_address'           => $request['sec_ref_address'],
                     'agree_terms_condition'     => $request['agree_terms_condition'],
                     'date_created'              => date('Y-m-d H:i:s'),
                     'signature'                 => $request['signature'],
