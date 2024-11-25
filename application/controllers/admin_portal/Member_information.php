@@ -207,10 +207,10 @@ class Member_information extends MY_Controller
             'phone_no'                  => $info->phone_number ?? '',
             'mobile_no'                 => $info->mobile_number ?? '',
             'email_address'             => $info->email_address ?? '',
-
-            'business_address'          => ucwords($info->business_address) ?? '',
-            'business_phone'            => $info->business_phone_no ?? '',
-            'business_mobile'           => $info->business_mobile_no ?? '',
+            'religion'                  => $info->religion ?? '',
+            'mother_name'               => ucwords($info->mother_name) ?? '',
+            'father_name'               => ucwords($info->father_name) ?? '',
+            'tin_sss_no'                => $info->tin_sss_no ?? '',
 
             'em_contact_name'           => ucwords($info->em_contact_name) ?? '',
             'em_relationship'           => ucwords($info->em_relationship) ?? '',
@@ -224,15 +224,11 @@ class Member_information extends MY_Controller
             'ref_mobile'                => $info->first_ref_mobile_no ?? '',
             'ref_address'               => ucwords($info->first_ref_address) ?? '',
 
-            'add_ref_name'              => ucwords($info->sec_ref_name) ?? '',
-            'add_ref_relationship'      => ucwords($info->sec_ref_relationship) ?? '',
-            'add_ref_phone'             => $info->sec_ref_phone_no ?? '',
-            'add_ref_mobile'            => $info->sec_ref_mobile_no ?? '',
-            'add_ref_address'           => ucwords($info->sec_ref_address) ?? '',
 
             'passport_attachment'       => $info->passport_attachment ?? '',
             'selfie_attachment'         => $info->selfie_img ?? '',
             'signature_attachment'      => $info->signature ?? '',
+            'government_id'             => $info->government_id ?? '',
         ];
 
         echo json_encode($data);
