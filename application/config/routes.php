@@ -77,6 +77,7 @@ $route['api/change-password'] = 'mobile/api_auth_login/change_password';
 $route['api/save-mpin'] = 'mobile/api_auth_login/save_mpin';
 $route['api/login-mpin'] = 'mobile/api_auth_login/login_mpin';
 //[GET REQUEST]
+$route['api/religion'] = 'mobile/api_member_registration/religion';
 
 $route['default_controller'] = 'main';
 $route['404_override'] = 'main/page404';
