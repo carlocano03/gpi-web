@@ -76,6 +76,12 @@ $route['api/login-process'] = 'mobile/api_auth_login/login_process';
 $route['api/change-password'] = 'mobile/api_auth_login/change_password';
 $route['api/save-mpin'] = 'mobile/api_auth_login/save_mpin';
 $route['api/login-mpin'] = 'mobile/api_auth_login/login_mpin';
+
+//News Update
+$route['api/post-news'] = 'mobile/api_news_update/add_news';
+$route['api/comment'] = 'mobile/api_news_update/add_comment';
+$route['api/posted-news'] = 'mobile/api_news_update/posted_news';
+
 //[GET REQUEST]
 $route['api/religion'] = 'mobile/api_member_registration/religion';
 
