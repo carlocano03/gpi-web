@@ -54,7 +54,8 @@ class Main_model extends MY_Model
         $this->db->where('username', $username);
         $this->db->group_start();
             $this->db->where('user_type_id', ADMINISTRATOR);
-            $this->db->or_where('user_type_id', ADMIN_STAFF);
+            $this->db->or_where('user_type_id', BOARD_MEMBER);
+            $this->db->or_where('user_type_id', BARANGAY_LEADER);
         $this->db->group_end();
         $res = $this->db->get('user_acct')->row_array();
         if (!$res) {
@@ -74,7 +75,8 @@ class Main_model extends MY_Model
         $this->db->where('username', $username);
         $this->db->group_start();
             $this->db->where('user_type_id', ADMINISTRATOR);
-            $this->db->or_where('user_type_id', ADMIN_STAFF);
+            $this->db->or_where('user_type_id', BOARD_MEMBER);
+            $this->db->or_where('user_type_id', BARANGAY_LEADER);
         $this->db->group_end();
         $query = $this->db->get('user_acct');
         return $query->num_rows();
