@@ -110,4 +110,10 @@ class Main_model extends MY_Model
         return $update?TRUE:FALSE;
     }
 
+    function get_user_type()
+    {
+        $query = $this->db->get('user_type');
+        return $query->result();
+    }
+
 }

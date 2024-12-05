@@ -178,40 +178,38 @@
                 success: function(data) {
                     $('.complete_name').text(data.complete_name);
                     $('.birthday').text(data.birthday);
+                    $('.birth_place').text(data.birth_place);
                     $('.gender').text(data.gender);
-                    $('.passport_no').text(data.passport_no);
+                    $('.precinct_no').text(data.precinct_no);
                     $('.civil_status').text(data.civil_status);
                     $('.spouse_name').text(data.spouse_name);
                     $('.occupation').text(data.occupation);
+                    $('.other_occupation').text(data.others_occupation);
                     $('.retiree').text(data.retiree);
+
+                    $('.religion').text(data.religion);
+                    $('.citizenship').text(data.citizenship);
+                    $('.mother_name').text(data.mother_name);
+                    $('.father_name').text(data.father_name);
+
                     $('.phone_no').text(data.phone_no);
                     $('.mobile_no').text(data.mobile_no);
                     $('.email_address').text(data.email_address);
-                    $('.religion').text(data.religion);
-                    $('.tin_sss').text(data.tin_sss_no);
-                    $('.mother_name').text(data.mother_name);
-                    $('.father_name').text(data.father_name);
                     $('.em_contact_name').text(data.em_contact_name);
                     $('.em_relationship').text(data.em_relationship);
                     $('.em_phone').text(data.em_phone);
                     $('.em_mobile').text(data.em_mobile);
                     $('.em_address').text(data.em_address);
-                    $('.ref_name').text(data.ref_name);
-                    $('.ref_relationship').text(data.ref_relationship);
-                    $('.ref_phone').text(data.ref_phone);
-                    $('.ref_mobile').text(data.ref_mobile);
-                    $('.ref_address').text(data.ref_address);
-                    $('.passport_attachment').val(data.passport_attachment);
                     $('.selfie_attachment').val(data.selfie_attachment);
                     $('.signature_attachment').val(data.signature_attachment);
                     $('.id_attachment').val(data.government_id);
 
-                    if (data.passport_attachment == '') {
-                        $('.download_passport').hide();
-                        $('.no_passport').text('No attachment found');
-                    } else {
-                        $('.no_passport').hide();
-                    }
+                    $('.province').text(data.province);
+                    $('.municipality').text(data.municipality);
+                    $('.barangay').text(data.barangay);
+                    $('.residence_address').text(data.residence_address);
+                    $('.date_residency').text(data.residence_when);
+                    
 
                     if (data.selfie_attachment == '') {
                         $('.download_selfie').hide();
@@ -239,12 +237,6 @@
             });
         });
 
-        $(document).on('click', '.download_passport', function() {
-            var filename = $('.passport_attachment').val();
-
-            var url = "<?= base_url('admin_portal/member_application/download_passport?file=')?>" + filename;
-            window.location.href = url;
-        });
 
         $(document).on('click', '.download_selfie', function() {
             var filename = $('.selfie_attachment').val();

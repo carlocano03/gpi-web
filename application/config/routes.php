@@ -84,6 +84,7 @@ $route['api/posted-news'] = 'mobile/api_news_update/posted_news';
 
 //[GET REQUEST]
 $route['api/religion'] = 'mobile/api_member_registration/religion';
+$route['api/occupation'] = 'mobile/api_member_registration/occupation';
 
 $route['default_controller'] = 'main';
 $route['404_override'] = 'main/page404';

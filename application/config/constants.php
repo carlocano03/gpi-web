@@ -8,8 +8,9 @@ define("MEMBER", 2);
 
 //User Type
 define("ADMINISTRATOR", 1);
-define("ADMIN_STAFF", 2);
+define("BOARD_MEMBER", 2);
 define("MEMBER_TYPE", 3);
+define("BARANGAY_LEADER", 4);
 
 //Permissions
 define("APPLICATION_REQUEST", 1);

@@ -56,6 +56,7 @@ class Main extends MY_Controller
 
     public function member_application()
     {
+        $data['member_type'] = $this->main_model->get_user_type();
         $data['role_permissions'] = $this->role_permissions();
         $data['home_url'] = base_url('admin/dashboard');
         $data['active_page'] = 'application_page';
