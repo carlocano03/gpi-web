@@ -51,7 +51,7 @@ class Account_management_model extends MY_Model
     public function count_all()
     {
         $this->db->from($this->user);
-        $this->db->where('user_type_id', ADMIN_STAFF);
+        $this->db->where('user_type_id', BOARD_MEMBER);
         return $this->db->count_all_results();
     }
 
@@ -60,7 +60,7 @@ class Account_management_model extends MY_Model
         $this->db->select('UA.*, AD.first_name, AD.middle_name, AD.last_name, AD.active_email');
         $this->db->from($this->user.' UA');
         $this->db->join('admin_user_details AD', 'UA.user_id = AD.user_id', 'left');
-        $this->db->where('user_type_id', ADMIN_STAFF);
+        $this->db->where('user_type_id', BOARD_MEMBER);
         $i = 0;
         foreach ($this->user_search as $item) // loop column 
         {

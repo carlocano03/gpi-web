@@ -65,11 +65,11 @@
         <table class="tbl-info">
             <tr>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">First Name</td>
-                <td><?= isset($pdf_data['first_name']) ? $pdf_data['first_name'] : '';?></td>
+                <td><?= isset($pdf_data['first_name']) ? ucwords($pdf_data['first_name']) : '';?></td>
                 <td class="fw-bold" style="width:90px; background:#dfe6e9;">Middle Name</td>
-                <td><?= isset($pdf_data['middle_name']) ? $pdf_data['middle_name'] : '';?></td>
+                <td><?= isset($pdf_data['middle_name']) ? ucwords($pdf_data['middle_name']) : '';?></td>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">Last Name</td>
-                <td><?= isset($pdf_data['last_name']) ? $pdf_data['last_name'] : '';?></td>
+                <td><?= isset($pdf_data['last_name']) ? ucwords($pdf_data['last_name']) : '';?></td>
             </tr>
 
             <tr>
@@ -83,8 +83,8 @@
                     <?= $gender === 'male' ? '▣' : '▢' ?> Male
                     <?= $gender === 'female' ? '▣' : '▢' ?> Female
                 </td>
-                <td class="fw-bold" style="width:85px; background:#dfe6e9;">Passport No.</td>
-                <td><?= isset($pdf_data['passport_no']) ? $pdf_data['passport_no'] : '';?></td>
+                <td class="fw-bold" style="width:85px; background:#dfe6e9;">Precinct No.</td>
+                <td><?= isset($pdf_data['precinct_no']) ? $pdf_data['precinct_no'] : '';?></td>
             </tr>
 
             <tr>
@@ -109,15 +109,19 @@
                     <?= $civil_status === 'widowed' ? '▣' : '▢' ?> Widowed
                 </td>
                 <td class="fw-bold" style="width:100px; background:#dfe6e9;">Spouse Name</td>
-                <td><?= isset($pdf_data['spouse_name']) ? $pdf_data['spouse_name'] : '';?></td>
+                <td><?= isset($pdf_data['spouse_name']) ? ucwords($pdf_data['spouse_name']) : '';?></td>
             </tr>
 
             <tr>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">Occupation</td>
-                <td colspan="2">
-                    <?= isset($pdf_data['occupation']) ? $pdf_data['occupation'] : '';?>
+                <td>
+                    <?= isset($pdf_data['occupation']) ? ucwords($pdf_data['occupation']) : '';?>
                 </td>
-                <td colspan="2" class="fw-bold" style="width:100px; background:#dfe6e9;">Are you a retiree?</td>
+                <td class="fw-bold" style="width:75px; background:#dfe6e9;">Other Occupation</td>
+                <td>
+                    <?= isset($pdf_data['others_occupation']) ? ucwords($pdf_data['others_occupation']) : '';?>
+                </td>
+                <td class="fw-bold" style="width:100px; background:#dfe6e9;">Are you a retiree?</td>
                 <td>
                     <?php
                         $retiree = isset($pdf_data['retiree']) ? $pdf_data['retiree'] : '';
@@ -129,35 +133,62 @@
             <tr>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">Religion</td>
                 <td>
-                    <?= isset($pdf_data['religion']) ? $pdf_data['religion'] : '';?>
+                    <?= isset($pdf_data['religion']) ? ucwords($pdf_data['religion']) : '';?>
                 </td>
-                <td class="fw-bold" style="width:75px; background:#dfe6e9;">Mother's Name</td>
+                <td class="fw-bold" style="width:75px; background:#dfe6e9;">Mother's Maiden</td>
                 <td>
-                    <?= isset($pdf_data['mother_name']) ? $pdf_data['mother_name'] : '';?>
+                    <?= isset($pdf_data['mother_name']) ? ucwords($pdf_data['mother_name']) : '';?>
                 </td>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">Father's Name</td>
                 <td>
-                    <?= isset($pdf_data['father_name']) ? $pdf_data['father_name'] : '';?>
+                    <?= isset($pdf_data['father_name']) ? ucwords($pdf_data['father_name']) : '';?>
                 </td>
             </tr>
             <tr>
-                <td class="fw-bold" style="width:75px; background:#dfe6e9;">TIN/SSS</td>
-                <td colspan="5">
-                    <?= isset($pdf_data['tin_sss_no']) ? $pdf_data['tin_sss_no'] : '';?>
+                <td class="fw-bold" style="width:75px; background:#dfe6e9;">Citizenship</td>
+                <td>
+                    <?= isset($pdf_data['citizenship']) ? ucwords($pdf_data['citizenship']) : '';?>
+                </td>
+                <td class="fw-bold" style="width:75px; background:#dfe6e9;">Birth Place</td>
+                <td>
+                    <?= isset($pdf_data['birth_place']) ? ucwords($pdf_data['birth_place']) : '';?>
+                </td>
+                <td class="fw-bold" style="width:75px; background:#dfe6e9;">Date Residency</td>
+                <td>
+                    <?= isset($pdf_data['residence_when']) ? $pdf_data['residence_when'] : '';?>
                 </td>
             </tr>
-
+            <tr>
+                <td class="fw-bold" style="width:75px; background:#dfe6e9;">Province</td>
+                <td>
+                    <?= isset($pdf_data['province']) ? ucwords($pdf_data['province']) : '';?>
+                </td>
+                <td class="fw-bold" style="width:75px; background:#dfe6e9;">Municipality</td>
+                <td>
+                    <?= isset($pdf_data['municipality']) ? ucwords($pdf_data['municipality']) : '';?>
+                </td>
+                <td class="fw-bold" style="width:75px; background:#dfe6e9;">Barangay</td>
+                <td>
+                    <?= isset($pdf_data['barangay']) ? ucwords($pdf_data['barangay']) : '';?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Residence Address</td>
+                <td colspan="4">
+                    <?= isset($pdf_data['residence_address']) ? ucwords($pdf_data['residence_address']) : '';?>
+                </td>
+            </tr>
         </table>
         <div class="title">EMERGENCY CONTACT INFORMATION</div>
         <table class="tbl-info">
             <tr>
                 <td class="fw-bold" style="width:75px; background:#dfe6e9;">Name</td>
                 <td colspan="2">
-                    <?= isset($pdf_data['em_contact_name']) ? $pdf_data['em_contact_name'] : '';?>
+                    <?= isset($pdf_data['em_contact_name']) ? ucwords($pdf_data['em_contact_name']) : '';?>
                 </td>
                 <td colspan="2" class="fw-bold" style="width:100px; background:#dfe6e9;">Relationship</td>
                 <td>
-                    <?= isset($pdf_data['em_relationship']) ? $pdf_data['em_relationship'] : '';?>
+                    <?= isset($pdf_data['em_relationship']) ? ucwords($pdf_data['em_relationship']) : '';?>
                 </td>
             </tr>
 
@@ -175,44 +206,12 @@
             <tr>
                 <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Address</td>
                 <td colspan="4">
-                    <?= isset($pdf_data['em_address']) ? $pdf_data['em_address'] : '';?>
+                    <?= isset($pdf_data['em_address']) ? ucwords($pdf_data['em_address']) : '';?>
                 </td>
             </tr>
         </table>
-        <div class="title">REFERENCES</div>
-        <div class="reference">
-            <table class="tbl-info">
-                <tr>
-                    <td class="fw-bold" style="width:75px; background:#dfe6e9;">Name</td>
-                    <td colspan="2">
-                        <?= isset($pdf_data['first_ref_name']) ? $pdf_data['first_ref_name'] : '';?>
-                    </td>
-                    <td colspan="2" class="fw-bold" style="width:100px; background:#dfe6e9;">Relationship</td>
-                    <td>
-                        <?= isset($pdf_data['first_ref_relationship']) ? $pdf_data['first_ref_relationship'] : '';?>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Phone No.</td>
-                    <td>
-                        <?= isset($pdf_data['first_ref_phone_no']) ? $pdf_data['first_ref_phone_no'] : '';?>
-                    </td>
-                    <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Mobile No.</td>
-                    <td>
-                        <?= isset($pdf_data['first_ref_mobile_no']) ? $pdf_data['first_ref_mobile_no'] : '';?>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="2" class="fw-bold" style="width:75px; background:#dfe6e9;">Address</td>
-                    <td colspan="4">
-                        <?= isset($pdf_data['first_ref_address']) ? $pdf_data['first_ref_address'] : '';?>
-                    </td>
-                </tr>
-            </table>
-        </div>
     </div>
+    <br>
     <div class="footer">
         <table style="width:100%; font-size:9px;">
             <tr>

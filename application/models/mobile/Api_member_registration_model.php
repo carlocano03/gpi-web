@@ -46,4 +46,11 @@ class Api_member_registration_model extends MY_Model
         $query = $this->db->get('religion');
         return $query->result();
     }
+
+    function get_occupation_list()
+    {
+        $this->db->where('status', 0);
+        $query = $this->db->get('occupation');
+        return $query->result();
+    }
 }

@@ -36,7 +36,7 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body small">
-        <div class="row">
+    <div class="row">
             <div class="col-12 mb-3">
                 <div class="overview-card">
                     <div class="d-flex align-items-center justify-content-between mb-3">
@@ -55,14 +55,18 @@
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Birth Date:</div>
                             <div class="birthday"></div>
-                        </div>      
+                        </div>  
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="fw-bold">Place of Birth:</div>
+                            <div class="birth_place"></div>
+                        </div>       
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Gender:</div>
                             <div class="gender"></div>
                         </div>   
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="fw-bold">Passport No.:</div>
-                            <div class="passport_no"></div>
+                            <div class="fw-bold">Precinct No.:</div>
+                            <div class="precinct_no"></div>
                         </div>  
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Civil Status:</div>
@@ -76,26 +80,54 @@
                             <div class="fw-bold">Occupation:</div>
                             <div class="occupation"></div>
                         </div>   
+                        <div class="d-flex align-items-center justify-content-between mb-2" id="other_occupation">
+                            <div class="fw-bold">Other Occupation:</div>
+                            <div class="other"></div>
+                        </div>   
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Are you a retiree?</div>
                             <div class="retiree"></div>
-                        </div> 
+                        </div>   
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Religion:</div>
                             <div class="religion"></div>
                         </div>    
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="fw-bold">TIN/SSS:</div>
-                            <div class="tin_sss"></div>
+                            <div class="fw-bold">Citizenship:</div>
+                            <div class="citizenship"></div>
                         </div>  
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="fw-bold">Mother's Name:</div>
+                            <div class="fw-bold">Mother's Maiden Name:</div>
                             <div class="mother_name"></div>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Father's Name:</div>
                             <div class="father_name"></div>
-                        </div>      
+                        </div>  
+
+                        <div class="divider">Address Information</div> 
+
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="fw-bold">Province:</div>
+                            <div class="province"></div>
+                        </div>  
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="fw-bold">Municipality:</div>
+                            <div class="municipality"></div>
+                        </div>  
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="fw-bold">Barangay:</div>
+                            <div class="barangay"></div>
+                        </div>  
+                        <hr>
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="fw-bold">Date of Residency:</div>
+                            <div class="date_residency"></div>
+                        </div> 
+                        <div>
+                            <div class="fw-bold">Residence Address:</div>
+                            <div class="residence_address"></div>
+                        </div> 
 
                         <div class="divider">Contact Details</div> 
 
@@ -114,7 +146,7 @@
                     </div>
                 </div>
             </div>
-
+    
             <div class="col-12 mb-3">
                 <div class="overview-card">
                     <div class="d-flex align-items-center justify-content-between mb-3">
@@ -150,41 +182,6 @@
                 </div>
             </div>
 
-            <div class="col-12 mb-3">
-                <div class="overview-card">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                        <div class="d-flex align-items-center gap-2">
-                            <img class="overview-card__icon"
-                                src="<?php echo base_url('assets/images/admin/contact-reference.png'); ?>" alt="
-								Registration">
-                            <h1 class="overview-card__title mb-0">Contact References</h1>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="fw-bold">Name:</div>
-                            <div class="ref_name"></div>
-                        </div> 
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="fw-bold">Relationship:</div>
-                            <div class="ref_relationship"></div>
-                        </div> 
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="fw-bold">Phone No.:</div>
-                            <div class="ref_phone"></div>
-                        </div> 
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="fw-bold">Mobile No.:</div>
-                            <div class="ref_mobile"></div>
-                        </div> 
-                        <div>
-                            <div class="fw-bold">Address:</div>
-                            <div class="ref_address"></div>
-                        </div> 
-                    </div>
-                </div>
-            </div>
-
             <div class="col-12">
                 <div class="overview-card">
                     <div class="d-flex align-items-center justify-content-between mb-3">
@@ -196,12 +193,6 @@
                         </div>
                     </div>
                     <div>
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="fw-bold">Passport:</div>
-                            <button class="btn btn-outline-primary btn-sm download_passport"><i class="bi bi-download"></i></button>
-                            <span class="no_passport"></span>
-                            <input type="hidden" class="passport_attachment">
-                        </div> 
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="fw-bold">Personal Picture:</div>
                             <button class="btn btn-outline-primary btn-sm download_selfie"><i class="bi bi-download"></i></button>

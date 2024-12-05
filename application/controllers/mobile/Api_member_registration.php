@@ -90,24 +90,6 @@ class Api_member_registration extends RestController
         $decodedData = json_decode($encodedData, true);
         $dt = Date('His');
 
-        // Passport
-        if (!empty($decodedData['passport_attachment'])) {
-            $base64DataPassport = $decodedData['passport_attachment'];
-            $base64DataPassport = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataPassport);
-            $binaryDataPassport = base64_decode($base64DataPassport);
-
-            if ($binaryDataPassport !== false) {
-                $filenamePassport = $decodedData['first_name'] . '_passport' . rand(10000, 99999) . '_' . $dt . '.jpg';
-                $uploadPathPassport = 'assets/uploaded_file/member_application/passport/';
-                file_put_contents($uploadPathPassport . $filenamePassport, $binaryDataPassport);
-            } else {
-                $filenamePassport = '';
-            }
-        } else {
-            $filenamePassport = '';
-        }
-        // End of Passport
-
         // Selfie
         if (!empty($decodedData['selfie_img'])) {
             $base64DataSelfie = $decodedData['selfie_img'];
@@ -178,31 +160,32 @@ class Api_member_registration extends RestController
                 'middle_name'               => $decodedData['middle_name'],
                 'last_name'                 => $decodedData['last_name'],
                 'birthday'                  => $decodedData['birthday'],
+                'birth_place'               => $decodedData['birth_place'],
                 'gender'                    => $decodedData['gender'],
-                'passport_no'               => $decodedData['passport_no'],
-                'passport_attachment'       => $filenamePassport,
+                'precinct_no'               => $decodedData['precinct_no'],
                 'phone_number'              => $decodedData['phone_number'],
                 'mobile_number'             => $decodedData['mobile_number'],
                 'email_address'             => $decodedData['email_address'],
                 'civil_status'              => $decodedData['civil_status'],
                 'spouse_name'               => $decodedData['spouse_name'],
-                'occupation'                => $decodedData['occupation'],
+                'occupation'                => str_replace('_', ' ', $decodedData['occupation']),
+                'others_occupation'         => $decodedData['occupation_others'],
                 'retiree'                   => $decodedData['retiree'],
                 'religion'                  => $decodedData['religion'],
+                'citizenship'               => $decodedData['citizenship'],
+                'province'                  => $decodedData['province'],
+                'municipality'              => $decodedData['municipality'],
+                'barangay'                  => $decodedData['barangay'],
+                'residence_address'         => $decodedData['residence_address'],
+                'residence_when'            => $decodedData['resident_since'],
                 'mother_name'               => $decodedData['mother_name'],
                 'father_name'               => $decodedData['father_name'],
-                'tin_sss_no'                => $decodedData['tin_sss_no'],
                 'government_id'             => $filenameID,
                 'em_contact_name'           => $decodedData['em_contact_name'],
                 'em_relationship'           => $decodedData['em_relationship'],
                 'em_phone_no'               => $decodedData['em_phone_no'],
                 'em_mobile_no'              => $decodedData['em_mobile_no'],
                 'em_address'                => $decodedData['em_address'],
-                'first_ref_name'            => $decodedData['first_ref_name'],
-                'first_ref_relationship'    => $decodedData['first_ref_relationship'],
-                'first_ref_phone_no'        => $decodedData['first_ref_phone_no'],
-                'first_ref_mobile_no'       => $decodedData['first_ref_mobile_no'],
-                'first_ref_address'         => $decodedData['first_ref_address'],
                 'agree_terms_condition'     => $decodedData['agree_terms_condition'],
                 'date_created'              => date('Y-m-d H:i:s'),
                 'request_status'            => 'For Validation',
@@ -255,6 +238,24 @@ class Api_member_registration extends RestController
 
         $output = array(
             'religion' => $religionArray,
+        );
+
+        $this->response($output, RestController::HTTP_OK);
+    }
+
+    public function occupation_get()
+    {
+        $occupation = $this->api_member_registration_model->get_occupation_list();
+        $occupationArray = array();
+
+        foreach($occupation as $list) {
+            $occupationArray[] = array(
+                'name' => $list->name,
+            );
+        }
+
+        $output = array(
+            'occupation' => $occupationArray,
         );
 
         $this->response($output, RestController::HTTP_OK);
