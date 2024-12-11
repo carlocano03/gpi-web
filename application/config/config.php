@@ -487,6 +487,8 @@ $config['csrf_exclude_uris'] = array(
     'api/change-password',
     'api/save-mpin',
     'api/login-mpin',
+    'api/post-news',
+    'api/comment',
 );
 
 /*
