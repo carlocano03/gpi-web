@@ -261,4 +261,64 @@ class Api_member_registration extends RestController
         $this->response($output, RestController::HTTP_OK);
     }
 
+    //PSGC
+    public function province_get()
+    {
+        $province = $this->api_member_registration_model->get_province_list();
+        $provinceArray = array();
+
+        foreach($province as $list) {
+            $provinceArray[] = array(
+                'code'          => $list->code,
+                'name'          => ucwords($list->name),
+            );
+        }
+
+        $this->response($provinceArray, RestController::HTTP_OK);
+    }
+
+    public function municipality_post()
+    {
+        $encodedData = file_get_contents('php://input');
+        $decodedData = json_decode($encodedData, true);
+
+        $code = $decodedData['code'];
+
+        // $code = $this->input->post('code');
+        $res = $this->db->like('code',substr($code,0,4),'after')->order_by('name', 'ASC')->get('psgc_municipal')->result();
+        $municipalArray = array();
+
+        foreach($res as $list) {
+            $municipalArray[] = array(
+                'code'          => $list->code,
+                'name'          => ucwords($list->name),
+            );
+        }
+
+        $this->response($municipalArray, RestController::HTTP_OK);
+    }
+
+    public function barangay_post()
+    {
+        $encodedData = file_get_contents('php://input');
+        $decodedData = json_decode($encodedData, true);
+
+        $code = $decodedData['code'];
+
+        // $code = $this->input->post('code');
+        $brgy = $this->db->like('code',substr($code,0,6),'after')->order_by('name', 'ASC')->get('psgc_brgy')->result();
+        $barangayArray = array();
+
+        foreach($brgy as $list) {
+            $barangayArray[] = array(
+                'code'          => $list->code,
+                'name'          => ucwords($list->name),
+            );
+        }
+
+        $this->response($barangayArray, RestController::HTTP_OK);
+    }
+
+
+
 }

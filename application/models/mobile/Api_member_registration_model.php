@@ -53,4 +53,12 @@ class Api_member_registration_model extends MY_Model
         $query = $this->db->get('occupation');
         return $query->result();
     }
+
+    //PSGC
+    function get_province_list()
+    {
+        $this->db->order_by('name', 'ASC');
+        $query = $this->db->get('psgc_province');
+        return $query->result();
+    }
 }

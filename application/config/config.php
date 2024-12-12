@@ -489,6 +489,8 @@ $config['csrf_exclude_uris'] = array(
     'api/login-mpin',
     'api/post-news',
     'api/comment',
+    'api/municipality',
+    'api/barangay'
 );
 
 /*
