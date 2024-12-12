@@ -81,10 +81,13 @@ $route['api/login-mpin'] = 'mobile/api_auth_login/login_mpin';
 $route['api/post-news'] = 'mobile/api_news_update/add_news';
 $route['api/comment'] = 'mobile/api_news_update/add_comment';
 $route['api/posted-news'] = 'mobile/api_news_update/posted_news';
+$route['api/municipality'] = 'mobile/api_member_registration/municipality';
+$route['api/barangay'] = 'mobile/api_member_registration/barangay';
 
 //[GET REQUEST]
 $route['api/religion'] = 'mobile/api_member_registration/religion';
 $route['api/occupation'] = 'mobile/api_member_registration/occupation';
+$route['api/province'] = 'mobile/api_member_registration/province';
 
 $route['default_controller'] = 'main';
 $route['404_override'] = 'main/page404';
