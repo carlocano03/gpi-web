@@ -248,6 +248,20 @@ class Member_application extends MY_Controller
                     $user_id = $this->member_application->insert_user_acct($member_account);
                     $this->member_application->update_member_details($user_id, $member_id);
 
+                    //Insert Admin Info (BOARD or BARANGAY LEADER)
+                    $member_type = $this->input->post('member_type', true);
+                    if ($member_type != MEMBER) {
+                        $user_details = array(
+                            'user_id'       => $user_id,
+                            'first_name'    => $request['first_name'],
+                            'middle_name'   => $request['middle_name'],
+                            'last_name'     => $request['last_name'],
+                            'active_email'  => $request['email_address'],
+                            'date_created'  => date('Y-m-d H:i:s'),
+                        );
+                        $this->member_application->insert_user_details($user_details);
+                    }
+
                     //Send email
                     $mail_data = [
                     	'name_to'   => $request['first_name'],

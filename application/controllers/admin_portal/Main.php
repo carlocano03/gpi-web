@@ -99,6 +99,36 @@ class Main extends MY_Controller
         $this->load->view('admin_portal/partial/_footer', $data);
     }
 
+    public function update_member_form()
+    {
+        $member_id = $this->cipher->decrypt($this->input->get('member', true));
+        $data['role_permissions'] = $this->role_permissions();
+        $data['occupation'] = $this->main_model->get_result('occupation', array('status' => 0));
+        $data['religion'] = $this->main_model->get_result('religion', array('status' => 0));
+        $data['citizenship'] = $this->main_model->get_result('country', array('status' => 0));
+        $data['province'] = $this->main_model->get_result('psgc_province', [], ['name' => 'ASC']);
+
+        $data['info'] = $this->main_model->get_row('member_info', array('member_id' => $member_id));
+
+        $data['home_url'] = base_url('admin/dashboard');
+        $data['active_page'] = 'active_member_page';
+        $data['card_title'] = 'Update GPI Member Information';
+        $data['icon'] = 'bi bi-speedometer2';
+        $data['header_contents'] = array(
+            '<link href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">',
+            '<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>',
+            '<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap4.min.js"></script>',
+            '<script>
+                var csrf_token_name = "'.$this->security->get_csrf_token_name().'";
+                var csrf_token_value = "'.$this->security->get_csrf_hash().'";
+            </script>'
+        );
+	
+        $this->load->view('admin_portal/partial/_header', $data);
+        $this->load->view('admin_portal/update_member_form', $data);
+        $this->load->view('admin_portal/partial/_footer', $data);
+    }
+
     public function inactive_member()
     {
         $data['role_permissions'] = $this->role_permissions();

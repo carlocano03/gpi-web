@@ -58,6 +58,7 @@ $route['admin/login'] = 'admin_portal/login/index';
 
 $route['admin/member-application'] = 'admin_portal/main/member_application';
 $route['admin/active-member'] = 'admin_portal/main/active_member';
+$route['admin/active-member/update-information'] = 'admin_portal/main/update_member_form';
 $route['admin/inactive-member'] = 'admin_portal/main/inactive_member';
 $route['admin/account-management'] = 'admin_portal/main/account_management';
 $route['admin/manage-news'] = 'admin_portal/main/manage_news';

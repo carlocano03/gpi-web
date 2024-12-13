@@ -114,6 +114,7 @@ class Main_model extends MY_Model
 
     function get_user_type()
     {
+        $this->db->where('user_type_id !=', 1);
         $query = $this->db->get('user_type');
         return $query->result();
     }

@@ -50,17 +50,23 @@ class Account_management_model extends MY_Model
 
     public function count_all()
     {
-        $this->db->from($this->user);
-        $this->db->where('user_type_id', BOARD_MEMBER);
+        $this->db->select('UA.*, AD.first_name, AD.middle_name, AD.last_name, AD.active_email, UT.name_type');
+        $this->db->from($this->user.' UA');
+        $this->db->join('admin_user_details AD', 'UA.user_id = AD.user_id', 'left');
+        $this->db->join('user_type UT', 'UA.user_type_id = UT.user_type_id', 'left');
+        $this->db->where('UA.user_type_id', BOARD_MEMBER);
+        $this->db->or_where('UA.user_type_id', BARANGAY_LEADER);
         return $this->db->count_all_results();
     }
 
     private function _get_account_list_query()
     {
-        $this->db->select('UA.*, AD.first_name, AD.middle_name, AD.last_name, AD.active_email');
+        $this->db->select('UA.*, AD.first_name, AD.middle_name, AD.last_name, AD.active_email, UT.name_type');
         $this->db->from($this->user.' UA');
         $this->db->join('admin_user_details AD', 'UA.user_id = AD.user_id', 'left');
-        $this->db->where('user_type_id', BOARD_MEMBER);
+        $this->db->join('user_type UT', 'UA.user_type_id = UT.user_type_id', 'left');
+        $this->db->where('UA.user_type_id', BOARD_MEMBER);
+        $this->db->or_where('UA.user_type_id', BARANGAY_LEADER);
         $i = 0;
         foreach ($this->user_search as $item) // loop column 
         {
