@@ -46,7 +46,8 @@ class Member_information extends MY_Controller
             $member_id = $this->cipher->encrypt($list->member_id);
 
             $row[] = $no;
-            $row[] = $list->member_no;
+            $row[] = '<div>'.$list->member_no.'</div>
+                      <span style="color: red; font-size:10px; font-weight:600;">Designation: '.$list->name_type.'</span>';
             $row[] = ucwords($fullname);
             $row[] = $list->email_address;
 
@@ -60,8 +61,25 @@ class Member_information extends MY_Controller
                 $textColor = 'text-success';
             }
 
-            
-            $row[] = '<div class="btn-group">
+            if ($list->member_status == 0) {
+                $row[] = '<div class="btn-group">
+                            <button type="button" class="btn btn-dark btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Action
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item text-primary view_details" data-id="'.$list->member_id.'"><i class="bi bi-view-list me-2"></i>View Details</a></li>
+                                <li><a href="'.base_url('admin/active-member/update-information?member='.$member_id).'" class="dropdown-item text-warning"><i class="bi bi-pencil-square me-2"></i>Update Info</a></li>
+                                <li><a class="dropdown-item text-info download_form" data-id="'.$member_id.'"><i class="bi bi-cloud-arrow-down me-2"></i>Download Form</a></li>
+                                <li><a class="dropdown-item '.$textColor.' user_activation" 
+                                    data-id="'.$list->member_id.'"
+                                    data-email="'.$list->email_address.'"
+                                    data-name="'.$fullname.'"
+                                    data-user_id="'.$list->member_user_id.'"
+                                ><i class="bi bi-person me-2"></i>'.$action.'</a></li>
+                            </ul>
+                        </div>';
+            } else {
+                $row[] = '<div class="btn-group">
                         <button type="button" class="btn btn-dark btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             Action
                         </button>
@@ -77,6 +95,9 @@ class Member_information extends MY_Controller
                         </ul>
                     </div>';
 
+            }
+            
+            
             $data[] = $row;
         }
         $output = array(
@@ -231,5 +252,91 @@ class Member_information extends MY_Controller
         ];
 
         echo json_encode($data);
+    }
+
+    public function psgc_munc()
+    {
+        $codes = $this->input->post('codes');
+
+        if ($codes == 1339) {
+            $this->db->like('code', '1339', 'after')->or_like('code', '1374', 'after')->or_like('code', '1375', 'after')->or_like('code', '1376', 'after');
+        } else {
+            $this->db->like('code', $codes, 'after');
+        }
+        $results = $this->db->select('*')->from('psgc_municipal')->order_by('name', 'ASC')->get()->result();
+        return $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(['data' => $results]));
+    }
+
+    public function psgc_brgy()
+    {
+        $codes = $this->input->post('codes');
+        $results = $this->db->select('*')
+            ->from('psgc_brgy')
+            ->where("code LIKE '$codes%'")
+            ->order_by('name')
+            ->get()
+            ->result();
+        return $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(['data' => $results]));
+    }
+
+    public function update_member_info()
+    {
+        $success = '';
+        $error = '';
+
+        $member_id = $this->input->post('member_id', true);
+
+        $update_member = [
+            'first_name'            => $this->input->post('firstname', true),
+            'middle_name'           => $this->input->post('middlename', true),
+            'last_name'             => $this->input->post('lastname', true),
+            'birthday'              => $this->input->post('birthday', true),
+            'birth_place'           => $this->input->post('place_birth', true),
+            'gender'                => $this->input->post('gender', true),
+            'precinct_no'           => $this->input->post('precinct_no', true),
+            'phone_number'          => $this->input->post('phone_no', true),
+            'mobile_number'         => $this->input->post('mobile_no', true),
+            'email_address'         => $this->input->post('email_address', true),
+            'civil_status'          => $this->input->post('civil_status', true),
+            'spouse_name'           => $this->input->post('spouse_name', true),
+            'occupation'            => $this->input->post('occupation', true),
+            'others_occupation'     => $this->input->post('other_occupation', true),
+            'retiree'               => $this->input->post('retiree', true),
+            'religion'              => $this->input->post('religion', true),
+            'citizenship'           => strtolower($this->input->post('citizenship', true)),
+            'province'              => $this->input->post('province_name', true),
+            'province_code'         => $this->input->post('province', true),
+            'municipality'          => $this->input->post('municipality_name', true),
+            'municipality_code'     => $this->input->post('municipality', true),
+            'barangay'              => $this->input->post('barangay_name', true),
+            'brgy_code'             => $this->input->post('barangay', true),
+            'residence_address'     => $this->input->post('residence_address', true),
+            'residence_when'        => $this->input->post('date_residency', true),
+            'mother_name'           => $this->input->post('mother_name', true),
+            'father_name'           => $this->input->post('father_name', true),
+            'em_contact_name'       => $this->input->post('contact_name', true),
+            'em_relationship'       => $this->input->post('relationship', true),
+            'em_phone_no'           => $this->input->post('contact_phone', true),
+            'em_mobile_no'          => $this->input->post('contact_mobile', true),
+            'em_address'            => $this->input->post('contact_address', true),
+        ];
+
+        $result = $this->member_information->update_member_info($update_member, $member_id);
+        if ($result == TRUE) {
+            $success = 'Member information successfully updated.';
+        } else {
+            $error = 'Failed to update the member information.';
+        }
+
+        $output = array(
+            'success' => $success,
+            'error' => $error,
+        );
+
+        echo json_encode($output);
     }
 }

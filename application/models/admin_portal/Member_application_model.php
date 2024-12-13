@@ -210,4 +210,8 @@ class Member_application_model extends MY_Model
         return $this->db->update('member_info', array('member_user_id' => $user_id));
     }
 
+    function insert_user_details($user_details)
+    {
+        $this->db->insert('admin_user_details', $user_details);
+    }
 }

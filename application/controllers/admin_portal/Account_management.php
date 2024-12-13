@@ -44,7 +44,8 @@ class Account_management extends MY_Controller
             $fullname = $list->last_name.', '.$list->first_name.' '.$list->middle_name;
 
             $row[] = $no;
-            $row[] = ucwords($fullname);
+            $row[] = '<div>'.ucwords($fullname).'</div>
+                      <span style="color: red; font-size:10px; font-weight:600;">Designation: '.$list->name_type.'</span>';
             $row[] = $list->username;
             $row[] = $list->active_email;
 
@@ -132,21 +133,21 @@ class Account_management extends MY_Controller
                 $this->account_management->insert_user_details($user_details);
 
                 //Send Email
-                // $mail_data = [
-                // 	'name_to'   => $first_name,
-                //     'username'  => $username,
-                //     'password'  => $password,
-                //     'login_url' => base_url('admin/login'),
-                //     'user_level' => 'Admin Staff',
-                // ];
+                $mail_data = [
+                	'name_to'   => $first_name,
+                    'username'  => $username,
+                    'password'  => $password,
+                    'login_url' => base_url('admin/login'),
+                    'user_level' => 'Admin Staff',
+                ];
 
-                // $this->send_email_html([
-                // 	'mail_to'       => $email_add,
-                // 	'cc'            => [],
-                // 	'subject'       => 'Account Credentials',
-                // 	'template_path' => 'email_template/admin_side_credentials',
-                // 	'mail_data'     => $mail_data,
-                // ]);
+                $this->send_email_html([
+                	'mail_to'       => $email_add,
+                	'cc'            => [],
+                	'subject'       => 'Account Credentials [Admin Staff]',
+                	'template_path' => 'admin_portal/email/admin_credentials',
+                	'mail_data'     => $mail_data,
+                ]);
 
                 $success = 'Admin Staff account created successfully.';
             } else {

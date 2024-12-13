@@ -11,9 +11,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Member_information_model extends MY_Model
 {
     var $member = 'member_info';
-    var $member_order = array('member_no', 'first_name', 'last_name', 'date_created', 'status');
-    var $member_search = array('member_no', 'first_name', 'last_name', 'date_created', 'status'); //set column field database for datatable searchable just article , description , serial_num, property_num, department are searchable
-    var $order_member = array('member_id' => 'ASC'); // default order
+    var $member_order = array('MI.member_no', 'MI.first_name', 'MI.last_name', 'MI.date_created', 'MI.status');
+    var $member_search = array('MI.member_no', 'MI.first_name', 'MI.last_name', 'MI.date_created', 'MI.status'); //set column field database for datatable searchable just article , description , serial_num, property_num, department are searchable
+    var $order_member = array('MI.member_id' => 'ASC'); // default order
 
     /**
      * __construct function.
@@ -46,16 +46,20 @@ class Member_information_model extends MY_Model
     public function count_all_member()
     {
         $status = $this->input->post('member_status', true);
-        $this->db->from($this->member);
-        $this->db->where('member_status', $status);
+        $this->db->select('MI.*, UT.name_type');
+        $this->db->from($this->member.' MI');
+        $this->db->join('user_type UT', 'MI.member_designation = UT.user_type_id', 'left');
+        $this->db->where('MI.member_status', $status);
         return $this->db->count_all_results();
     }
 
     private function _get_member_list_query()
     {
         $status = $this->input->post('member_status', true);
-        $this->db->from($this->member);
-        $this->db->where('member_status', $status);
+        $this->db->select('MI.*, UT.name_type');
+        $this->db->from($this->member.' MI');
+        $this->db->join('user_type UT', 'MI.member_designation = UT.user_type_id', 'left');
+        $this->db->where('MI.member_status', $status);
         $i = 0;
         foreach ($this->member_search as $item) // loop column 
         {
@@ -111,5 +115,12 @@ class Member_information_model extends MY_Model
         $this->db->where('member_id', $member_id);
         $query = $this->db->get();
         return $query->row();
+    }
+
+    function update_member_info($update_member, $member_id)
+    {
+        $this->db->where('member_id', $member_id);
+        $update = $this->db->update('member_info', $update_member);
+        return $update?TRUE:FALSE;
     }
 }
