@@ -144,4 +144,27 @@ class Api_news_update extends RestController
         $this->response($output, RestController::HTTP_OK);
     }
 
+    public function list_comment_get()
+    {
+        //http://127.0.0.1/gpi-web/api/comment-list?news_id=0
+        $news_id = $this->input->get('news_id', true);
+
+        $comment = $this->api_news_update_model->get_comment_list($news_id);
+        $commentArray = array();
+
+        foreach($comment as $list) {
+            $commentArray[] = array(
+                'comment_id'    => $list->comment_id,
+                'posted_by'     => ucwords($list->member_name),
+                'comment'       => $list->comment,
+                'date_comment'  => date('D M j, Y h:i A', strtotime($list->date_created)),
+            );
+        }
+
+        $output = array(
+            'commentData' => $commentArray,
+        );
+        $this->response($output, RestController::HTTP_OK);
+    }
+
 }
