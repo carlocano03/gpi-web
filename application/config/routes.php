@@ -82,6 +82,7 @@ $route['api/login-mpin'] = 'mobile/api_auth_login/login_mpin';
 $route['api/post-news'] = 'mobile/api_news_update/add_news';
 $route['api/comment'] = 'mobile/api_news_update/add_comment';
 $route['api/posted-news'] = 'mobile/api_news_update/posted_news';
+$route['api/comment-list'] = 'mobile/api_news_update/list_comment';
 $route['api/municipality'] = 'mobile/api_member_registration/municipality';
 $route['api/barangay'] = 'mobile/api_member_registration/barangay';
 

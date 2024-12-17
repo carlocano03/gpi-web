@@ -11,7 +11,7 @@ define("ADMINISTRATOR", 1);
 define("BOARD_MEMBER", 2);
 define("MEMBER_TYPE", 3);
 define("BARANGAY_LEADER", 4);
-define("ADMIN_STAFF", 4);
+define("ADMIN_STAFF", 5);
 
 //Permissions
 define("APPLICATION_REQUEST", 1);

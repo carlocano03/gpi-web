@@ -41,4 +41,16 @@ class Api_news_update_model extends MY_Model
         return $query->result();
     }
 
+    function get_comment_list($news_id)
+    {
+        $this->db->select('NC.*');
+        $this->db->select("CONCAT(MI.first_name,' ',MI.last_name) as member_name");
+        $this->db->from('news_comment NC');
+        $this->db->join('member_info MI', 'NC.user_id = MI.member_user_id', 'left');
+        $this->db->where('NC.news_id', $news_id);
+        $this->db->where('NC.is_deleted IS NULL');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 }
