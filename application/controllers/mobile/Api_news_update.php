@@ -87,6 +87,7 @@ class Api_news_update extends RestController
         $insert_comment = [
             'news_id'       => $decodedData['news_id'],
             'user_id'       => $decodedData['user_id'],
+            'posted_by'     => $decodedData['posted_by'],
             'comment'       => $decodedData['comment'],
             'date_created'  => date('Y-m-d H:i:s'),
         ];
