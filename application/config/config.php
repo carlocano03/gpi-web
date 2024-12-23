@@ -490,7 +490,9 @@ $config['csrf_exclude_uris'] = array(
     'api/post-news',
     'api/comment',
     'api/municipality',
-    'api/barangay'
+    'api/barangay',
+    'api/delete-news',
+    'api/delete-comment',
 );
 
 /*

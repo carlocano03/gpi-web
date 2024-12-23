@@ -30,7 +30,7 @@ class Api_news_update extends RestController
             $base64Data = $decodedData['attachment'];
             
             // Detect the file type from the base64 string
-            if (strpos($base64Data, 'data:video/') !== false) {
+            if ($decodedData['attachment_type'] == 'video') {
                 // Handle video file
                 $base64Data = preg_replace('/^data:video\/(mp4|webm|ogg);base64,/', '', $base64Data);
                 $binaryData = base64_decode($base64Data);
@@ -45,6 +45,7 @@ class Api_news_update extends RestController
             }
     
             if ($binaryData !== false) {
+                $dt = time();
                 $filename = 'news_' . rand(10000, 99999) . '_' . $dt . $extension;
                 file_put_contents($uploadPath . $filename, $binaryData);
             } else {
@@ -59,6 +60,7 @@ class Api_news_update extends RestController
             'user_id'       => $decodedData['user_id'],
             'caption'       => $decodedData['content'],
             'attachment'    => $filename,
+            'attachment_type' => $decodedData['attachment_type'],
             'date_created'  => date('Y-m-d H:i:s'),
         ];
 
@@ -165,6 +167,64 @@ class Api_news_update extends RestController
         $output = array(
             'commentData' => $commentArray,
         );
+        $this->response($output, RestController::HTTP_OK);
+    }
+
+    public function delete_news_post()
+    {
+        $error = '';
+        $success = '';
+
+        $encodedData = file_get_contents('php://input');
+        $decodedData = json_decode($encodedData, true);
+
+        $news_id = $decodedData['news_id'];
+
+        $delete_news = [
+            'is_deleted' => 'YES',
+            'date_deleted' => date('Y-m-d H:i:s'),
+        ];
+
+        $result = $this->api_news_update_model->delete_news($delete_news, $news_id);
+        if ($result == TRUE) {
+            $success = 'News successfully deleted.';
+        } else {
+            $error = 'Failed to delete the news.';
+        }
+
+        $output = [
+            'success' => $success,
+            'error' => $error,
+        ];
+        $this->response($output, RestController::HTTP_OK);
+    }
+
+    public function delete_comment_post()
+    {
+        $error = '';
+        $success = '';
+
+        $encodedData = file_get_contents('php://input');
+        $decodedData = json_decode($encodedData, true);
+
+        $comment_id = $decodedData['comment_id'];
+
+        $delete_comment = [
+            'is_deleted' => 'YES',
+            'date_deleted' => date('Y-m-d H:i:s'),
+        ];
+
+        $result = $this->api_news_update_model->delete_news_comment($delete_comment, $comment_id);
+        if ($result == TRUE) {
+            $success = 'Comment successfully deleted.';
+        } else {
+            $error = 'Failed to delete the comment.';
+        }
+
+        $output = [
+            'success' => $success,
+            'error' => $error,
+        ];
         $this->response($output, RestController::HTTP_OK);
     }
 
