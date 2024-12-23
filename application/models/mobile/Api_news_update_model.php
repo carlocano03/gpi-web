@@ -53,4 +53,18 @@ class Api_news_update_model extends MY_Model
         return $query->result();
     }
 
+    function delete_news($delete_news, $news_id)
+    {
+        $this->db->where('news_id', $news_id);
+        $delete = $this->db->update('news_update', $delete_news);
+        return $delete?TRUE:FALSE;
+    }
+
+    function delete_news_comment($delete_comment, $comment_id)
+    {
+        $this->db->where('comment_id', $comment_id);
+        $delete = $this->db->update('news_comment', $delete_comment);
+        return $delete?TRUE:FALSE;
+    }
+
 }

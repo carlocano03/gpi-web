@@ -38,7 +38,7 @@ class Api_auth_login extends RestController
             if ($result) {
                 if ($result['is_active'] == 1) {
                     $error = 'Account is deactivated';
-                } elseif ($result['user_type_id'] != MEMBER_TYPE) {
+                } elseif (!in_array($result['user_type_id'], [MEMBER_TYPE, BOARD_MEMBER, BARANGAY_LEADER])) {
                     $error = 'Ooops for members use only.';
                 } else {
                     $user = $this->auth_login_model->get_user_info($result['user_id']);
@@ -77,6 +77,10 @@ class Api_auth_login extends RestController
                         'middle_name'   => $user['middle_name'],
                         'last_name'     => $user['last_name'],
                         'full_name'     => $user['first_name'].' '.$user['last_name'],
+                        'province'      => $user['province'],
+                        'municipality'  => $user['municipality'],
+                        'barangay'      => $user['barangay'],
+                        'designation'   => $user['member_designation'],
                         'date_approved' => date('D M j, Y H:i A', strtotime($user['date_created'])),
                         'with_mpin'     => $with_mpin,
                         'temp_password' => $temp_password,
@@ -190,7 +194,7 @@ class Api_auth_login extends RestController
             if ($result_mpin) {
                 if ($result['is_active'] == 1) {
                     $error = 'Account is deactivated';
-                } elseif ($result['user_type_id'] != MEMBER_TYPE) {
+                } elseif (!in_array($result['user_type_id'], [MEMBER_TYPE, BOARD_MEMBER, BARANGAY_LEADER])) {
                     $error = 'Ooops for members use only.';
                 } else {
                     $user = $this->auth_login_model->get_user_info($result['user_id']);
@@ -229,6 +233,10 @@ class Api_auth_login extends RestController
                         'middle_name'   => $user['middle_name'],
                         'last_name'     => $user['last_name'],
                         'full_name'     => $user['first_name'].' '.$user['last_name'],
+                        'province'      => $user['province'],
+                        'municipality'  => $user['municipality'],
+                        'barangay'      => $user['barangay'],
+                        'designation'   => $user['member_designation'],
                         'date_approved' => date('D M j, Y H:i A', strtotime($user['date_created'])),
                         'with_mpin'     => $with_mpin,
                         'temp_password' => $temp_password,
