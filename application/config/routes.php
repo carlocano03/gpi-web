@@ -88,6 +88,7 @@ $route['api/delete-comment'] = 'mobile/api_news_update/delete_comment';
 
 $route['api/create-petition'] = 'mobile/api_petition/create_petition';
 $route['api/petition-list'] = 'mobile/api_petition/petition_list';
+$route['api/view-petition'] = 'mobile/api_petition/view_petition';
 
 
 $route['api/municipality'] = 'mobile/api_member_registration/municipality';

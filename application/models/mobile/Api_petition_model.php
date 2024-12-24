@@ -41,4 +41,13 @@ class Api_petition_model extends MY_Model
         $query = $this->db->get('community_petition');
         return $query->row();
     }
+
+    function get_petition_info($petition_id)
+    {
+        $this->db->where('petition_id', $petition_id);
+        $this->db->where('is_deleted IS NULL');
+        $this->db->where('status', 0);
+        $query = $this->db->get('petition_request');
+        return $query->row();
+    }
 }
