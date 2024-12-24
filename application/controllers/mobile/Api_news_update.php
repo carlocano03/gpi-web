@@ -45,7 +45,7 @@ class Api_news_update extends RestController
             }
     
             if ($binaryData !== false) {
-                $dt = time();
+                $dt = date('His');
                 $filename = 'news_' . rand(10000, 99999) . '_' . $dt . $extension;
                 file_put_contents($uploadPath . $filename, $binaryData);
             } else {
@@ -158,6 +158,7 @@ class Api_news_update extends RestController
         foreach($comment as $list) {
             $commentArray[] = array(
                 'comment_id'    => $list->comment_id,
+                'user_id'       => $list->user_id,
                 'posted_by'     => ucwords($list->member_name),
                 'comment'       => $list->comment,
                 'date_comment'  => date('D M j, Y h:i A', strtotime($list->date_created)),
