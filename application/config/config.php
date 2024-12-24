@@ -493,6 +493,7 @@ $config['csrf_exclude_uris'] = array(
     'api/barangay',
     'api/delete-news',
     'api/delete-comment',
+    'api/create-petition',
 );
 
 /*
