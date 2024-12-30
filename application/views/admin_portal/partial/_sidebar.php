@@ -184,7 +184,7 @@
             <div class="app-brand demo">
                 <a href="<?= base_url('admin/dashboard');?>" class="app-brand-link">
                     <span class="app-brand-logo demo">
-                        <img src="<?= base_url('assets/images/logo-w-bg.jpg');?>">
+                        <img src="<?= base_url('assets/images/new-logo.png');?>">
                     </span>
                     <span class="app-brand-text demo menu-text fw-bold ms-2 side-bar-title fs-5">
                         GPI | Admin Portal
