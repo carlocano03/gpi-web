@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="<?= base_url('assets/images/logo-no-bg.png');?>" />
+    <link rel="icon" type="image/x-icon" href="<?= base_url('assets/images/new-logo.png');?>" />
     <title>GPI - God's People's Initiative</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -341,7 +341,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand text-white fw-bold" href="#">
-                <img src="<?php echo base_url('assets/images/logo-w-bg.jpg'); ?>" alt="Logo"
+                <img src="<?php echo base_url('assets/images/new-logo.png'); ?>" alt="Logo"
                     style="width:54px;height:52px; border-radius:100%;">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -506,7 +506,7 @@
             <div class="row">
                 <div class="col-lg-4 footer-column" data-aos="fade-up">
                     <div class="mb-4">
-                        <img src="<?php echo base_url('assets/images/logo-w-bg.jpg'); ?>" alt="Logo"
+                        <img src="<?php echo base_url('assets/images/new-logo.png'); ?>" alt="Logo"
                             style="width:54px;height:52px; border-radius:100%;margin-right:10px;">
                         <h3 class="h5 footer-title">About GPI</h3>
                         <p class="text-white-50">God's People's Initiative - Making a positive impact through community

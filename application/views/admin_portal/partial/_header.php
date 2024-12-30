@@ -13,7 +13,7 @@
 
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="<?= base_url('assets/images/logo-no-bg.png');?>" />
+    <link rel="icon" type="image/x-icon" href="<?= base_url('assets/images/new-logo.png');?>" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
