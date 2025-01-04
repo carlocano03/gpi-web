@@ -88,8 +88,13 @@ $route['api/delete-comment'] = 'mobile/api_news_update/delete_comment';
 
 $route['api/create-petition'] = 'mobile/api_petition/create_petition';
 $route['api/petition-list'] = 'mobile/api_petition/petition_list';
+$route['api/delete-petition'] = 'mobile/api_petition/delete_petition';
 $route['api/view-petition'] = 'mobile/api_petition/view_petition';
 
+//Board Member
+$route['api/petition-approval-list'] = 'mobile/api_petition/petition_list_approval';
+$route['api/view-petition-approval'] = 'mobile/api_petition/view_petition_approval';
+$route['api/petition-approval-process'] = 'mobile/api_petition/petition_approval';
 
 $route['api/municipality'] = 'mobile/api_member_registration/municipality';
 $route['api/barangay'] = 'mobile/api_member_registration/barangay';
