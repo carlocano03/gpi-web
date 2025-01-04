@@ -113,6 +113,34 @@ class Api_petition extends RestController
         $this->response($output, RestController::HTTP_OK);
     }
 
+    public function delete_petition_post()
+    {
+        $error = '';
+        $success = '';
+
+        $encodedData = file_get_contents('php://input');
+        $decodedData = json_decode($encodedData, true);
+
+        $petition_id = $decodedData['petition_id'];
+
+        $update_petition = [
+            'is_deleted'  => 'YES',
+            'date_deleted'  => date('Y-m-d H:i:s'),
+        ];
+        $result = $this->api_petition_model->petition_approval_process($update_petition, $petition_id);
+        if ($result == TRUE) {
+            $success = 'Petition request successfully approved.';
+        } else {
+            $error = 'Failed to approve the petition.';
+        }
+
+        $output = array(
+            'success' => $success,
+            'error' => $error,
+        );
+        $this->response($output, RestController::HTTP_OK);
+    }
+
     public function view_petition_get()
     {
         //http://127.0.0.1/gpi-web/api/view-petition?petition_id=0
@@ -155,4 +183,135 @@ class Api_petition extends RestController
         $this->response($output, RestController::HTTP_OK);
     }
 
+    //==========================BOARD MEMBER SIDE===========================
+    public function petition_list_approval_get()
+    {
+        //http://127.0.0.1/gpi-web/api/petition-approval
+
+        $petition = $this->api_petition_model->get_petition_list_approval();
+        $petitionArray = array();
+
+        foreach($petition as $list) {
+
+            if ($list->supporting_documents != '') {
+                if ((file_exists('assets/uploaded_file/supporting_document/'.$list->supporting_documents))) {
+                    $supporting_documents = base_url('assets/uploaded_file/supporting_document/'.$list->supporting_documents);
+                } else {
+                    $supporting_documents = '';
+                }
+            } else {
+                $supporting_documents = '';
+            }
+
+            $petitionArray[] = array(
+                'petition_id'       => $list->petition_id,
+                'petition_title'    => $list->petition_title,
+                'petition_description'  => $list->petition_description,
+                'petition_remarks'  => $list->petition_remarks,
+                'category'          => $list->category,
+                'supporting_documents'   => $supporting_documents,
+                'created_by'        => ucwords($list->created_by),
+                'designation'       => $list->name_type,
+                'province'          => $list->province,
+                'municipality'      => $list->municipality,
+                'barangay'          => $list->barangay,
+                'residence_address' => ucwords($list->residence_address),
+                'date_created'      => date('D M j, Y h:i A', strtotime($list->date_created)),
+            );
+        }
+
+        $output = array(
+            'approvalList' => $petitionArray,
+        );
+        $this->response($output, RestController::HTTP_OK);
+    }
+
+    public function view_petition_approval_get()
+    {
+        //http://127.0.0.1/gpi-web/api/view-petition-approval?petition_id=0
+       $petition_id = $this->input->get('petition_id', true);
+
+       $petition = $this->api_petition_model->get_petition_approval_info($petition_id);
+
+       if ($petition) {
+           if ($petition->supporting_documents != '') {
+               if ((file_exists('assets/uploaded_file/supporting_document/'.$petition->supporting_documents))) {
+                   $supporting_documents = base_url('assets/uploaded_file/supporting_document/'.$petition->supporting_documents);
+               } else {
+                   $supporting_documents = '';
+               }
+           } else {
+               $supporting_documents = '';
+           }
+       } else {
+           $supporting_documents = '';
+       }
+       
+       $petitionData = array(
+           'petition_id'           => $petition_id,
+           'petition_title'        => $petition->petition_title ?? '',
+           'petition_description'  => $petition->petition_description ?? '',
+           'petition_remarks'      => $petition->petition_remarks ?? '',
+           'category'              => $petition->category ?? '',
+           'supporting_documents'  => $supporting_documents,
+           'created_by'            => isset($petition->created_by) ? ucwords($petition->created_by) : '',
+           'designation'           => $petition->name_type ?? '',
+           'province'              => $petition->province ?? '',
+           'municipality'          => $petition->municipality ?? '',
+           'barangay'              => $petition->barangay ?? '',
+           'residence_address'     => isset($petition->residence_address) ? ucwords($petition->residence_address) : '',
+           'date_created'          => isset($petition->date_created) ? date('D M j, Y h:i A', strtotime($petition->date_created)) : '',
+       );
+
+       $output = array(
+           'petitionDataApproval' => $petitionData,
+       );
+
+       $this->response($output, RestController::HTTP_OK);
+    }
+
+    public function petition_approval_post()
+    {
+        $error = '';
+        $success = '';
+
+        $encodedData = file_get_contents('php://input');
+        $decodedData = json_decode($encodedData, true);
+
+        $petition_id = $decodedData['petition_id'];
+        $user_id = $decodedData['user_id'];
+        $action = $decodedData['action']; //Approve or Decline
+
+        if ($action == 'Approve') {
+            $update_petition = [
+                'petition_remarks'  => 'Approved',
+                'approved_by'       => $user_id,
+            ];
+            $result = $this->api_petition_model->petition_approval_process($update_petition, $petition_id);
+            if ($result == TRUE) {
+                $success = 'Petition request successfully approved.';
+            } else {
+                $error = 'Failed to approve the petition.';
+            }
+        } else {
+            //Declined
+            $update_petition = [
+                'petition_remarks'  => 'Declined',
+                'approved_by'       => $user_id,
+            ];
+            $result = $this->api_petition_model->petition_approval_process($update_petition, $petition_id);
+            if ($result == TRUE) {
+                $success = 'Petition request successfully declined.';
+            } else {
+                $error = 'Failed to decline the petition.';
+            }
+        }
+
+        $output = array(
+            'success' => $success,
+            'error' => $error,
+        );
+        $this->response($output, RestController::HTTP_OK);
+    }
+    //==========================END OF BM SIDE==============================
 }
