@@ -96,6 +96,21 @@ class Api_petition_model extends MY_Model
         $query = $this->db->get('petition_request');
         return $query->result();
     }
+
+    function check_member_sign($petition_id, $member_id)
+    {
+        $this->db->where('petition_id', $petition_id);
+        $this->db->where('member_id', $member_id);
+        $this->db->where('status', 0);
+        $query = $this->db->get('community_petition');
+        return $query;
+    }
+
+    function insert_community_petition($insert_signature)
+    {
+        $insert = $this->db->insert('community_petition', $insert_signature);
+        return $insert?TRUE:FALSE;
+    }
     //==========================END OF MEMBER SIDE==============================
 
 }

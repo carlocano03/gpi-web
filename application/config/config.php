@@ -496,6 +496,7 @@ $config['csrf_exclude_uris'] = array(
     'api/create-petition',
     'api/petition-approval-process',
     'api/delete-petition',
+    'api/signature-process',
 );
 
 /*
