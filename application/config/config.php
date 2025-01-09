@@ -494,7 +494,7 @@ $config['csrf_exclude_uris'] = array(
     'api/delete-news',
     'api/delete-comment',
     'api/create-petition',
-    'api/petition-approval',
+    'api/petition-approval-process',
     'api/delete-petition',
 );
 

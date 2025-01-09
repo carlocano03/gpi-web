@@ -85,4 +85,17 @@ class Api_petition_model extends MY_Model
         return $update?TRUE:FALSE;
     }
     //==========================END OF BM SIDE==============================
+
+    //==========================MEMBER SIDE===========================
+    function get_barangay_petition($brgy_code)
+    {
+        $this->db->where('barangay', $brgy_code);
+        $this->db->where('petition_remarks', 'Approved');
+        $this->db->where('is_deleted IS NULL');
+        $this->db->where('status', 0);
+        $query = $this->db->get('petition_request');
+        return $query->result();
+    }
+    //==========================END OF MEMBER SIDE==============================
+
 }

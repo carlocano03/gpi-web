@@ -96,6 +96,10 @@ $route['api/petition-approval-list'] = 'mobile/api_petition/petition_list_approv
 $route['api/view-petition-approval'] = 'mobile/api_petition/view_petition_approval';
 $route['api/petition-approval-process'] = 'mobile/api_petition/petition_approval';
 
+//Member Side
+$route['api/barangay-petition'] = 'mobile/api_petition/brgy_petition';
+$route['api/view-petition-barangay'] = 'mobile/api_petition/view_petition_barangay';
+
 $route['api/municipality'] = 'mobile/api_member_registration/municipality';
 $route['api/barangay'] = 'mobile/api_member_registration/barangay';
 

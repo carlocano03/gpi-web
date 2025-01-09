@@ -314,4 +314,91 @@ class Api_petition extends RestController
         $this->response($output, RestController::HTTP_OK);
     }
     //==========================END OF BM SIDE==============================
+    
+    //==========================MEMBER SIDE===========================
+    public function brgy_petition_get()
+    {
+        //http://127.0.0.1/gpi-web/api/barangay-petition?brgy=0
+
+        $brgy_code = $this->input->get('brgy');
+        $petition = $this->api_petition_model->get_barangay_petition($brgy_code);
+        $petitionArray = array();
+
+        foreach($petition as $list) {
+
+            if ($list->supporting_documents != '') {
+                if ((file_exists('assets/uploaded_file/supporting_document/'.$list->supporting_documents))) {
+                    $supporting_documents = base_url('assets/uploaded_file/supporting_document/'.$list->supporting_documents);
+                } else {
+                    $supporting_documents = '';
+                }
+            } else {
+                $supporting_documents = '';
+            }
+
+            $total_petition_yes = $this->api_petition_model->get_total_community_petition($list->petition_id, 'YES');
+            $total_petition_no = $this->api_petition_model->get_total_community_petition($list->petition_id, 'NO');
+
+            $petitionArray[] = array(
+                'petition_id'       => $list->petition_id,
+                'petition_title'    => $list->petition_title,
+                'petition_description'  => $list->petition_description,
+                'petition_remarks'  => $list->petition_remarks,
+                'category'          => $list->category,
+                'supporting_documents'   => $supporting_documents,
+                'total_yes'         => $total_petition_yes->total_count,
+                'total_no'          => $total_petition_no->total_count,
+                'date_created'      => date('D M j, Y h:i A', strtotime($list->date_created)),
+            );
+        }
+
+        $output = array(
+            'petitionBarangay' => $petitionArray,
+        );
+        $this->response($output, RestController::HTTP_OK);
+    }
+
+    public function view_petition_barangay_get()
+    {
+        //http://127.0.0.1/gpi-web/api/view-petition?petition_id=0
+        $petition_id = $this->input->get('petition_id', true);
+
+        $petition = $this->api_petition_model->get_petition_info($petition_id);
+        $total_petition_yes = $this->api_petition_model->get_total_community_petition($petition_id, 'YES');
+        $total_petition_no = $this->api_petition_model->get_total_community_petition($petition_id, 'NO');
+
+        if ($petition) {
+            if ($petition->supporting_documents != '') {
+                if ((file_exists('assets/uploaded_file/supporting_document/'.$petition->supporting_documents))) {
+                    $supporting_documents = base_url('assets/uploaded_file/supporting_document/'.$petition->supporting_documents);
+                } else {
+                    $supporting_documents = '';
+                }
+            } else {
+                $supporting_documents = '';
+            }
+        } else {
+            $supporting_documents = '';
+        }
+        
+        $petitionData = array(
+            'petition_id'           => $petition_id,
+            'petition_title'        => $petition->petition_title ?? '',
+            'petition_description'  => $petition->petition_description ?? '',
+            'petition_remarks'      => $petition->petition_remarks ?? '',
+            'category'              => $petition->category ?? '',
+            'supporting_documents'  => $supporting_documents,
+            'total_yes'             => $total_petition_yes->total_count ?? '',
+            'total_no'              => $total_petition_no ?? '',
+            'date_created'          => date('D M j, Y h:i A', strtotime($petition->date_created)),
+        );
+
+        $output = array(
+            'petitionDataBarangay' => $petitionData,
+        );
+
+        $this->response($output, RestController::HTTP_OK);
+    }
+    //==========================END OF MEMBER SIDE==============================
+
 }
