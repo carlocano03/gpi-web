@@ -360,12 +360,14 @@ class Api_petition extends RestController
 
     public function view_petition_barangay_get()
     {
-        //http://127.0.0.1/gpi-web/api/view-petition?petition_id=0
+        //http://127.0.0.1/gpi-web/api/view-petition?petition_id=0&member_id=0
         $petition_id = $this->input->get('petition_id', true);
+        $member_id = $this->input->get('member_id', true);
 
         $petition = $this->api_petition_model->get_petition_info($petition_id);
         $total_petition_yes = $this->api_petition_model->get_total_community_petition($petition_id, 'YES');
         $total_petition_no = $this->api_petition_model->get_total_community_petition($petition_id, 'NO');
+        $check_member = $this->api_petition_model->check_member_sign($petition_id, $member_id);
 
         if ($petition) {
             if ($petition->supporting_documents != '') {
@@ -380,6 +382,15 @@ class Api_petition extends RestController
         } else {
             $supporting_documents = '';
         }
+
+        if ($check_member->num_rows() > 0) {
+            $info = $check_member->row();
+            $remarks = 'Already Signed';
+            $date_signed = date('D M j, Y h:i A', strtotime($info->date_created));
+        } else {
+            $remarks = '';
+            $date_signed = '';
+        }
         
         $petitionData = array(
             'petition_id'           => $petition_id,
@@ -390,6 +401,8 @@ class Api_petition extends RestController
             'supporting_documents'  => $supporting_documents,
             'total_yes'             => $total_petition_yes->total_count ?? '',
             'total_no'              => $total_petition_no ?? '',
+            'remarks'               => $remarks,
+            'date_signed'           => $date_signed,
             'date_created'          => date('D M j, Y h:i A', strtotime($petition->date_created)),
         );
 
@@ -397,6 +410,81 @@ class Api_petition extends RestController
             'petitionDataBarangay' => $petitionData,
         );
 
+        $this->response($output, RestController::HTTP_OK);
+    }
+
+    public function signature_process_post()
+    {
+        $error = '';
+        $success = '';
+        $encodedData = file_get_contents('php://input');
+        $decodedData = json_decode($encodedData, true);
+        $dt = Date('His');
+
+        // Signature
+        if (!empty($decodedData['signature'])) {
+            $base64DataSignature = $decodedData['signature'];
+            $base64DataSignature = preg_replace('/^data:image\/(png|jpeg|jpg|gif);base64,/', '', $base64DataSignature);
+            $binaryDataSignature = base64_decode($base64DataSignature);
+
+            if ($binaryDataSignature !== false) {
+                $filename = $decodedData['first_name'] . '_sign' . rand(10000, 99999) . '_' . $dt . '.png';
+                $uploadPath = 'assets/uploaded_file/member_application/signature/';
+                file_put_contents($uploadPath . $filename, $binaryDataSignature);
+            } else {
+                $filename = '';
+            }
+        } else {
+            $filename = '';
+        }
+        // End of Signature
+
+        $petition_id = $decodedData['petition_id'];
+        $member_id = $decodedData['member_id'];
+        $action = $decodedData['action']; //Agree and Disagree
+        
+        $check_member = $this->api_petition_model->check_member_sign($petition_id, $member_id);
+        if ($check_member->num_rows() > 0) {
+            $error = 'Exist';
+        } else {
+            if ($action == 'Agree') {
+                $insert_signature = [
+                    'petition_id'           => $petition_id,
+                    'member_id'             => $member_id,
+                    'signature'             => $filename,
+                    'petition_remarks'      => 'Agree',
+                    'reason_supporting'     => $decodedData['reason_supporting'],
+                    'additional_comment'    => $decodedData['additional_comment'],
+                    'date_created'          => date('Y-m-d H:i:s'),
+                ];
+                $result = $this->api_petition_model->insert_community_petition($insert_signature);
+                if ($result == TRUE) {
+                    $success = 'Your response is successfully submitted.';
+                } else {
+                    $error = 'Failed to submit the response.';
+                }
+            } else {
+                //Disagree
+                $insert_signature = [
+                    'petition_id'           => $petition_id,
+                    'member_id'             => $member_id,
+                    'signature'             => $filename,
+                    'petition_remarks'      => 'Disagree',
+                    'date_created'          => date('Y-m-d H:i:s'),
+                ];
+                $result = $this->api_petition_model->insert_community_petition($insert_signature);
+                if ($result == TRUE) {
+                    $success = 'Your response is successfully submitted.';
+                } else {
+                    $error = 'Failed to submit the response.';
+                }
+            }
+        }
+
+        $output = array(
+            'error' => $error,
+            'success' => $success,
+        );
         $this->response($output, RestController::HTTP_OK);
     }
     //==========================END OF MEMBER SIDE==============================
