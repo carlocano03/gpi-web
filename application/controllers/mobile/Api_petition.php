@@ -54,7 +54,7 @@ class Api_petition extends RestController
             'barangay'              => $decodedData['barangay'],
             'petition_remarks'      => 'For Approval',
             'category'              => $decodedData['category'],
-            'supporting_document'  => $filenameDocument,
+            'supporting_documents'  => $filenameDocument,
             'date_created'          => date('Y-m-d H:i:s'),
         ];
 
