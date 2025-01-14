@@ -122,11 +122,15 @@ class Api_petition_model extends MY_Model
     //==========================MEMBER SIDE===========================
     function get_barangay_petition($brgy_code)
     {
-        $this->db->where('barangay', $brgy_code);
-        $this->db->where('petition_remarks', 'Approved');
-        $this->db->where('is_deleted IS NULL');
-        $this->db->where('status', 0);
-        $query = $this->db->get('petition_request');
+        $this->db->select('PR.*');
+        $this->db->select("CONCAT(MI.first_name, ' ', MI.last_name) as created_by");
+        $this->db->from('petition_request PR');
+        $this->db->join('member_info MI', 'PR.created_by = MI.member_user_id', 'left');
+        $this->db->where('PR.is_deleted IS NULL');
+        $this->db->where('PR.barangay', $brgy_code);
+        $this->db->where('PR.petition_remarks', 'Approved');
+        $this->db->where('PR.status', 0);
+        $query = $this->db->get();
         return $query->result();
     }
 
