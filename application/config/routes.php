@@ -90,6 +90,7 @@ $route['api/create-petition'] = 'mobile/api_petition/create_petition';
 $route['api/petition-list'] = 'mobile/api_petition/petition_list';
 $route['api/delete-petition'] = 'mobile/api_petition/delete_petition';
 $route['api/view-petition'] = 'mobile/api_petition/view_petition';
+$route['api/dashboard-count'] = 'mobile/api_petition/dashboard_count';
 
 //Board Member
 $route['api/petition-approval-list'] = 'mobile/api_petition/petition_list_approval';

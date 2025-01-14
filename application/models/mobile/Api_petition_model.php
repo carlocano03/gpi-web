@@ -51,15 +51,44 @@ class Api_petition_model extends MY_Model
         return $query->row();
     }
 
+    function get_list_member_sign($petition_id)
+    {
+        $this->db->select('CP.petition_remarks, CP.date_created, MI.selfie_img, MI.member_no');
+        $this->db->select("CONCAT(MI.first_name, ' ', MI.last_name) as signed_by");
+        $this->db->from('community_petition CP');
+        $this->db->join('member_info MI', 'CP.member_id = MI.member_id', 'left');
+        $this->db->where('CP.petition_id', $petition_id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    function get_petition_count($status, $user_id)
+    {
+        $this->db->where('petition_remarks', $status);
+        $this->db->where('created_by', $user_id);
+        $this->db->where('is_deleted IS NULL');
+        $query = $this->db->get('petition_request');
+        return $query->num_rows();
+    }
+
+    function get_member_count($barangay)
+    {
+        $this->db->where('brgy_code', $barangay);
+        $this->db->where('status', 0);
+        $this->db->where('member_designation', MEMBER_TYPE);
+        $query = $this->db->get('member_info');
+        return $query->num_rows();
+    }
+
     //==========================BOARD MEMBER SIDE===========================
-    function get_petition_list_approval()
+    function get_petition_list_approval($status)
     {
         $this->db->select('PR.*, MI.province, MI.barangay, MI.municipality, MI.residence_address, UT.name_type');
         $this->db->select("CONCAT(MI.last_name, ', ', MI.first_name, ' ', MI.middle_name) as created_by");
         $this->db->from('petition_request PR');
         $this->db->join('member_info MI', 'PR.created_by = MI.member_user_id', 'left');
         $this->db->join('user_type UT', 'MI.member_designation = UT.user_type_id', 'left');
-        $this->db->where('PR.petition_remarks', 'For Approval');
+        $this->db->where('PR.petition_remarks', $status);
         $this->db->where('PR.is_deleted IS NULL');
         $query = $this->db->get();
         return $query->result();
