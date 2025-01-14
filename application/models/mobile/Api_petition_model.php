@@ -93,7 +93,7 @@ class Api_petition_model extends MY_Model
         $this->db->select('CP.petition_remarks, CP.date_created, MI.selfie_img, MI.member_no, MI.email_address');
         $this->db->select("CONCAT(MI.first_name, ' ', MI.last_name) as signed_by");
         $this->db->from('community_petition CP');
-        $this->db->join('member_info MI', 'CP.member_id = MI.member_id', 'left');
+        $this->db->join('member_info MI', 'CP.member_id = MI.member_user_id', 'left');
         $this->db->where('CP.petition_id', $petition_id);
         $query = $this->db->get();
         return $query->result();
