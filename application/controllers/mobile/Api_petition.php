@@ -176,8 +176,47 @@ class Api_petition extends RestController
             'date_created'          => date('D M j, Y h:i A', strtotime($petition->date_created)),
         );
 
+        $list_member_sign = $this->api_petition_model->get_list_member_sign($petition_id);
+        $signArray = array();
+        foreach($list_member_sign as $list) {
+            $img = base_url()."assets/images/admin/profile.png";
+            if(!empty($list->selfie_img)){
+                if(file_exists('./assets/uploaded_file/member_application/selfie_img/'.$list->selfie_img)){
+                    $img = base_url()."assets/uploaded_file/member_application/selfie_img/".$list->selfie_img;
+                }
+            }
+
+            $signArray[] = array(
+                'petition_remarks'  => $list->petition_remarks,
+                'date_signed'       => date('D M j, Y h:i A', strtotime($list->date_created)),
+                'selfie_img'        => $img,
+                'member_no'         => $list->member_no,
+                'signed_by'         => ucwords($list->signed_by),
+            );
+        }
+
         $output = array(
             'petitionData' => $petitionData,
+            'signData'     => $signArray,
+        );
+
+        $this->response($output, RestController::HTTP_OK);
+    }
+
+    public function dashboard_count_get()
+    {
+        //http://127.0.0.1/gpi-web/api/dashboard-count?user_id=0&brgy=0
+        $user_id = $this->input->get('user_id', true);
+        $barangay = $this->input->get('brgy', true);
+
+        $for_approval = $this->api_petition_model->get_petition_count('For Approval', $user_id);
+        $approve_count = $this->api_petition_model->get_petition_count('Approved', $user_id);
+        $member_count = $this->api_petition_model->get_member_count($barangay);
+
+        $output = array(
+            'for_approval_count' => number_format($for_approval),
+            'approve_count'      => number_format($approve_count),
+            'member_count'       => number_format($member_count),
         );
 
         $this->response($output, RestController::HTTP_OK);
@@ -186,9 +225,10 @@ class Api_petition extends RestController
     //==========================BOARD MEMBER SIDE===========================
     public function petition_list_approval_get()
     {
-        //http://127.0.0.1/gpi-web/api/petition-approval
+        //http://127.0.0.1/gpi-web/api/petition-approval?status="For Approval" //For Approval and Approved
+        $status = $this->input->get('status', true);
 
-        $petition = $this->api_petition_model->get_petition_list_approval();
+        $petition = $this->api_petition_model->get_petition_list_approval($status);
         $petitionArray = array();
 
         foreach($petition as $list) {
