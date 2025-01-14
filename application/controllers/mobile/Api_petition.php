@@ -148,13 +148,18 @@ class Api_petition extends RestController
     {
         //http://127.0.0.1/gpi-web/api/view-petition?petition_id=0&user_id=0
         $petition_id = $this->input->get('petition_id', true);
-        $user_id = $this->input->get('user_id', true);
 
         $petition = $this->api_petition_model->get_petition_info($petition_id);
         $total_petition_yes = $this->api_petition_model->get_total_community_petition($petition_id, 'Agree');
         $total_petition_no = $this->api_petition_model->get_total_community_petition($petition_id, 'Disagree');
 
-        $total_member = $this->api_petition_model->get_total_barangay_member($user_id);
+        $user_id = $this->input->get('user_id', true);
+        if (isset($user_id)) {
+            $total_member = $this->api_petition_model->get_total_barangay_member($user_id);
+        } else {
+            $total_member = $this->api_petition_model->get_total_member_count();
+        }
+        
 
         if ($petition) {
             if ($petition->supporting_documents != '') {
@@ -199,6 +204,7 @@ class Api_petition extends RestController
                 'selfie_img'        => $img,
                 'member_no'         => $list->member_no,
                 'signed_by'         => ucwords($list->signed_by),
+                'email_address'     => $list->email_address,
             );
         }
 

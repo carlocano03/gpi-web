@@ -52,6 +52,14 @@ class Api_petition_model extends MY_Model
 
     }
 
+    function get_total_member_count()
+    {
+        $this->db->where('status', 0);
+        $this->db->where('member_designation', MEMBER_TYPE);
+        $query = $this->db->get('member_info');
+        return $query->num_rows();
+    }
+
     function get_total_member($brgy_code)
     {
         $this->db->where('brgy_code', $brgy_code);
@@ -82,7 +90,7 @@ class Api_petition_model extends MY_Model
 
     function get_list_member_sign($petition_id)
     {
-        $this->db->select('CP.petition_remarks, CP.date_created, MI.selfie_img, MI.member_no');
+        $this->db->select('CP.petition_remarks, CP.date_created, MI.selfie_img, MI.member_no, MI.email_address');
         $this->db->select("CONCAT(MI.first_name, ' ', MI.last_name) as signed_by");
         $this->db->from('community_petition CP');
         $this->db->join('member_info MI', 'CP.member_id = MI.member_id', 'left');
