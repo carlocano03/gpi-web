@@ -104,6 +104,7 @@ class Api_petition extends RestController
                 'total_yes'         => $total_petition_yes->total_count,
                 'total_no'          => $total_petition_no->total_count,
                 'date_created'      => date('D M j, Y h:i A', strtotime($list->date_created)),
+                'created_by'        => ucwords($list->created_by),
             );
         }
 
