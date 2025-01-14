@@ -91,8 +91,8 @@ class Api_petition extends RestController
                 $supporting_documents = '';
             }
 
-            $total_petition_yes = $this->api_petition_model->get_total_community_petition($list->petition_id, 'YES');
-            $total_petition_no = $this->api_petition_model->get_total_community_petition($list->petition_id, 'NO');
+            $total_petition_yes = $this->api_petition_model->get_total_community_petition($list->petition_id, 'Agree');
+            $total_petition_no = $this->api_petition_model->get_total_community_petition($list->petition_id, 'Disagree');
 
             $petitionArray[] = array(
                 'petition_id'       => $list->petition_id,
@@ -148,8 +148,8 @@ class Api_petition extends RestController
         $petition_id = $this->input->get('petition_id', true);
 
         $petition = $this->api_petition_model->get_petition_info($petition_id);
-        $total_petition_yes = $this->api_petition_model->get_total_community_petition($petition_id, 'YES');
-        $total_petition_no = $this->api_petition_model->get_total_community_petition($petition_id, 'NO');
+        $total_petition_yes = $this->api_petition_model->get_total_community_petition($petition_id, 'Agree');
+        $total_petition_no = $this->api_petition_model->get_total_community_petition($petition_id, 'Disagree');
 
         if ($petition) {
             if ($petition->supporting_documents != '') {
@@ -378,8 +378,8 @@ class Api_petition extends RestController
                 $supporting_documents = '';
             }
 
-            $total_petition_yes = $this->api_petition_model->get_total_community_petition($list->petition_id, 'YES');
-            $total_petition_no = $this->api_petition_model->get_total_community_petition($list->petition_id, 'NO');
+            $total_petition_yes = $this->api_petition_model->get_total_community_petition($list->petition_id, 'Agree');
+            $total_petition_no = $this->api_petition_model->get_total_community_petition($list->petition_id, 'Disagree');
 
             $check_member = $this->api_petition_model->check_member_sign($list->petition_id, $member_id);
             if ($check_member->num_rows() > 0) {
@@ -420,8 +420,8 @@ class Api_petition extends RestController
         $member_id = $this->input->get('member_id', true);
 
         $petition = $this->api_petition_model->get_petition_info($petition_id);
-        $total_petition_yes = $this->api_petition_model->get_total_community_petition($petition_id, 'YES');
-        $total_petition_no = $this->api_petition_model->get_total_community_petition($petition_id, 'NO');
+        $total_petition_yes = $this->api_petition_model->get_total_community_petition($petition_id, 'Agree');
+        $total_petition_no = $this->api_petition_model->get_total_community_petition($petition_id, 'Disagree');
         $check_member = $this->api_petition_model->check_member_sign($petition_id, $member_id);
 
         if ($petition) {
