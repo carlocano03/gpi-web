@@ -359,9 +359,10 @@ class Api_petition extends RestController
     //==========================MEMBER SIDE===========================
     public function brgy_petition_get()
     {
-        //http://127.0.0.1/gpi-web/api/barangay-petition?brgy=0
+        //http://127.0.0.1/gpi-web/api/barangay-petition?brgy=0&member_id=0
 
         $brgy_code = $this->input->get('brgy');
+        $member_id = $this->input->get('member_id');
         $petition = $this->api_petition_model->get_barangay_petition($brgy_code);
         $petitionArray = array();
 
@@ -380,6 +381,16 @@ class Api_petition extends RestController
             $total_petition_yes = $this->api_petition_model->get_total_community_petition($list->petition_id, 'YES');
             $total_petition_no = $this->api_petition_model->get_total_community_petition($list->petition_id, 'NO');
 
+            $check_member = $this->api_petition_model->check_member_sign($list->$petition_id, $member_id);
+            if ($check_member->num_rows() > 0) {
+                $info = $check_member->row();
+                $remarks = 'Already Signed';
+                $date_signed = date('D M j, Y h:i A', strtotime($info->date_created));
+            } else {
+                $remarks = '';
+                $date_signed = '';
+            }
+
             $petitionArray[] = array(
                 'petition_id'       => $list->petition_id,
                 'petition_title'    => $list->petition_title,
@@ -391,6 +402,8 @@ class Api_petition extends RestController
                 'total_no'          => $total_petition_no->total_count,
                 'date_created'      => date('D M j, Y h:i A', strtotime($list->date_created)),
                 'created_by'        => ucwords($list->created_by),
+                'remarks'           => $remarks,
+                'date_signed'       => $date_signed,
             );
         }
 
@@ -428,10 +441,12 @@ class Api_petition extends RestController
         if ($check_member->num_rows() > 0) {
             $info = $check_member->row();
             $remarks = 'Already Signed';
+            $status = $info->petition_remarks;
             $date_signed = date('D M j, Y h:i A', strtotime($info->date_created));
         } else {
             $remarks = '';
             $date_signed = '';
+            $status = '';
         }
         
         $petitionData = array(
@@ -446,6 +461,7 @@ class Api_petition extends RestController
             'remarks'               => $remarks,
             'date_signed'           => $date_signed,
             'date_created'          => date('D M j, Y h:i A', strtotime($petition->date_created)),
+            'status'                => $status,
         );
 
         $output = array(
