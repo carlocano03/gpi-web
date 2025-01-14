@@ -172,7 +172,7 @@ class Api_petition extends RestController
             'category'              => $petition->category ?? '',
             'supporting_documents'  => $supporting_documents,
             'total_yes'             => $total_petition_yes->total_count ?? '',
-            'total_no'              => $total_petition_no ?? '',
+            'total_no'              => $total_petition_no->total_count ?? '',
             'date_created'          => date('D M j, Y h:i A', strtotime($petition->date_created)),
         );
 
@@ -360,7 +360,7 @@ class Api_petition extends RestController
 
     public function view_petition_barangay_get()
     {
-        //http://127.0.0.1/gpi-web/api/view-petition?petition_id=0&member_id=0
+        //http://127.0.0.1/gpi-web/api/view-petition-barangay?petition_id=0&member_id=0
         $petition_id = $this->input->get('petition_id', true);
         $member_id = $this->input->get('member_id', true);
 
@@ -400,7 +400,7 @@ class Api_petition extends RestController
             'category'              => $petition->category ?? '',
             'supporting_documents'  => $supporting_documents,
             'total_yes'             => $total_petition_yes->total_count ?? '',
-            'total_no'              => $total_petition_no ?? '',
+            'total_no'              => $total_petition_no->total_count ?? '',
             'remarks'               => $remarks,
             'date_signed'           => $date_signed,
             'date_created'          => date('D M j, Y h:i A', strtotime($petition->date_created)),
