@@ -381,7 +381,7 @@ class Api_petition extends RestController
             $total_petition_yes = $this->api_petition_model->get_total_community_petition($list->petition_id, 'YES');
             $total_petition_no = $this->api_petition_model->get_total_community_petition($list->petition_id, 'NO');
 
-            $check_member = $this->api_petition_model->check_member_sign($list->$petition_id, $member_id);
+            $check_member = $this->api_petition_model->check_member_sign($list->petition_id, $member_id);
             if ($check_member->num_rows() > 0) {
                 $info = $check_member->row();
                 $remarks = 'Already Signed';
