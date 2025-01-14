@@ -25,10 +25,14 @@ class Api_petition_model extends MY_Model
 
     function get_petition_list($user_id)
     {
-        $this->db->where('created_by', $user_id);
-        $this->db->where('is_deleted IS NULL');
-        $this->db->where('status', 0);
-        $query = $this->db->get('petition_request');
+        $this->db->select('PR.*');
+        $this->db->select("CONCAT(MI.first_name, ' ', MI.last_name) as created_by");
+        $this->db->from('petition_request PR');
+        $this->db->join('member_info MI', 'PR.created_by = MI.member_user_id', 'left');
+        $this->db->where('PR.created_by', $user_id);
+        $this->db->where('PR.is_deleted IS NULL');
+        $this->db->where('PR.status', 0);
+        $query = $this->db->get();
         return $query->result();
     }
 
