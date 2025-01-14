@@ -77,6 +77,7 @@ class Api_petition extends RestController
         $user_id = $this->input->get('user_id', true);
 
         $petition = $this->api_petition_model->get_petition_list($user_id);
+        $total_member = $this->api_petition_model->get_total_barangay_member($user_id);
         $petitionArray = array();
 
         foreach($petition as $list) {
@@ -103,6 +104,7 @@ class Api_petition extends RestController
                 'supporting_documents'   => $supporting_documents,
                 'total_yes'         => $total_petition_yes->total_count,
                 'total_no'          => $total_petition_no->total_count,
+                'total_member'      => number_format($total_member),
                 'date_created'      => date('D M j, Y h:i A', strtotime($list->date_created)),
                 'created_by'        => ucwords($list->created_by),
             );
@@ -144,12 +146,15 @@ class Api_petition extends RestController
 
     public function view_petition_get()
     {
-        //http://127.0.0.1/gpi-web/api/view-petition?petition_id=0
+        //http://127.0.0.1/gpi-web/api/view-petition?petition_id=0&user_id=0
         $petition_id = $this->input->get('petition_id', true);
+        $user_id = $this->input->get('user_id', true);
 
         $petition = $this->api_petition_model->get_petition_info($petition_id);
         $total_petition_yes = $this->api_petition_model->get_total_community_petition($petition_id, 'Agree');
         $total_petition_no = $this->api_petition_model->get_total_community_petition($petition_id, 'Disagree');
+
+        $total_member = $this->api_petition_model->get_total_barangay_member($user_id);
 
         if ($petition) {
             if ($petition->supporting_documents != '') {
@@ -174,6 +179,7 @@ class Api_petition extends RestController
             'supporting_documents'  => $supporting_documents,
             'total_yes'             => $total_petition_yes->total_count ?? '',
             'total_no'              => $total_petition_no->total_count ?? '',
+            'total_member'          => number_format($total_member),
             'date_created'          => date('D M j, Y h:i A', strtotime($petition->date_created)),
         );
 
@@ -364,6 +370,7 @@ class Api_petition extends RestController
         $brgy_code = $this->input->get('brgy');
         $member_id = $this->input->get('member_id');
         $petition = $this->api_petition_model->get_barangay_petition($brgy_code);
+        $total_member = $this->api_petition_model->get_total_member($brgy_code);
         $petitionArray = array();
 
         foreach($petition as $list) {
@@ -400,6 +407,7 @@ class Api_petition extends RestController
                 'supporting_documents'   => $supporting_documents,
                 'total_yes'         => $total_petition_yes->total_count,
                 'total_no'          => $total_petition_no->total_count,
+                'total_member'      => number_format($total_member),
                 'date_created'      => date('D M j, Y h:i A', strtotime($list->date_created)),
                 'created_by'        => ucwords($list->created_by),
                 'remarks'           => $remarks,
@@ -415,14 +423,17 @@ class Api_petition extends RestController
 
     public function view_petition_barangay_get()
     {
-        //http://127.0.0.1/gpi-web/api/view-petition-barangay?petition_id=0&member_id=0
+        //http://127.0.0.1/gpi-web/api/view-petition-barangay?petition_id=0&member_id=0&brgy=0
         $petition_id = $this->input->get('petition_id', true);
         $member_id = $this->input->get('member_id', true);
+        $brgy_code = $this->input->get('brgy', true);
 
         $petition = $this->api_petition_model->get_petition_info($petition_id);
         $total_petition_yes = $this->api_petition_model->get_total_community_petition($petition_id, 'Agree');
         $total_petition_no = $this->api_petition_model->get_total_community_petition($petition_id, 'Disagree');
         $check_member = $this->api_petition_model->check_member_sign($petition_id, $member_id);
+
+        $total_member = $this->api_petition_model->get_total_member($brgy_code);
 
         if ($petition) {
             if ($petition->supporting_documents != '') {
@@ -458,6 +469,7 @@ class Api_petition extends RestController
             'supporting_documents'  => $supporting_documents,
             'total_yes'             => $total_petition_yes->total_count ?? '',
             'total_no'              => $total_petition_no->total_count ?? '',
+            'total_member'          => number_format($total_member),
             'remarks'               => $remarks,
             'date_signed'           => $date_signed,
             'date_created'          => date('D M j, Y h:i A', strtotime($petition->date_created)),

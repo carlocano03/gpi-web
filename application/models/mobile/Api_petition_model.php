@@ -36,6 +36,31 @@ class Api_petition_model extends MY_Model
         return $query->result();
     }
 
+    function get_total_barangay_member($user_id)
+    {
+        $this->db->where('member_user_id', $user_id);
+        $leader = $this->db->get('member_info')->row_array();
+        if ($leader) {
+            $this->db->where('brgy_code', $leader['brgy_code']);
+            $this->db->where('status', 0);
+            $this->db->where('member_designation', MEMBER_TYPE);
+            $query = $this->db->get('member_info');
+            return $query->num_rows();
+        } else {
+            return 0;
+        }
+
+    }
+
+    function get_total_member($brgy_code)
+    {
+        $this->db->where('brgy_code', $brgy_code);
+        $this->db->where('status', 0);
+        $this->db->where('member_designation', MEMBER_TYPE);
+        $query = $this->db->get('member_info');
+        return $query->num_rows();
+    }
+
     function get_total_community_petition($petition_id, $remarks)
     {
         $this->db->where('petition_id', $petition_id);
